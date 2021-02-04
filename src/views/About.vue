@@ -1,5 +1,13 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+    <div>
+        this is about
+    </div>
 </template>
+<script>
+import { mutations } from "@/store/store.js";
+export default {
+    created:()=>{
+        mutations.toggleNav();
+    }
+}
+</script>
