@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import { store, mutations } from "@/store/store.js";
+import Constant from '../../store/Constant'
 
 export default {
   // data: () => ({
@@ -19,12 +19,12 @@ export default {
   // }),
   computed: {
     isBurgerActive() {
-      return store.isNavOpen;
+      return this.$store.commit(Constant.ISNAVOPEN);
     }
   },
   methods: {
     toggle() {
-      mutations.toggleNav();
+      this.$store.commit(Constant.TOGGLENAV);
     }
   }
 };

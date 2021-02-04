@@ -1,14 +1,22 @@
 import Vue from "vue";
+import Vuex from 'vuex';
+import Constant from './Constant'
 
-export const store = Vue.observable({
-  isNavOpen: false
-});
+Vue.use(Vuex);
 
-export const mutations = {
-  setIsNavOpen(yesno) {
-    store.isNavOpen = yesno;
+export default new Vuex.Store({
+  state: {
+    isNavOpen : false,
   },
-  toggleNav() {
-    store.isNavOpen = !store.isNavOpen;
+  mutations: {
+    [Constant.SETISNAVOPEN]: (oldState, payload) =>{
+      oldState.isNavOpen = payload;
+    },
+    [Constant.TOGGLENAV]: (oldState) =>{
+      oldState.isNavOpen = !oldState.isNavOpen;
+    },
+    [Constant.ISNAVOPEN]: (oldState) =>{
+      return oldState.isNavOpen;
+    },
   }
-};
+})

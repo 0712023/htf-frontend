@@ -4,10 +4,11 @@
     </div>
 </template>
 <script>
-import { mutations } from "@/store/store.js";
+import Constant from '../store/Constant'
+import store from '../store/store'
 export default {
     created:()=>{
-        mutations.toggleNav();
+        store.commit(Constant.TOGGLENAV)
     }
 }
 </script>

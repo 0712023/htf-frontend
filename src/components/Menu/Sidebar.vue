@@ -10,15 +10,17 @@
     </div>
 </template>
 <script>
-    import { store, mutations } from '@/store/store.js'
-
+    import Constant from '../../store/Constant'
+    import store from '../../store/store'
     export default {
         methods: {
-            closeSidebarPanel: mutations.toggleNav
+            closeSidebarPanel(){
+                this.$store.commit(Constant.TOGGLENAV)
+            },
         },
         computed: {
             isPanelOpen() {
-                return store.isNavOpen
+                return store.state.isNavOpen
             }
         }
     }
