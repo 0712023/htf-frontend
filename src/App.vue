@@ -19,6 +19,9 @@
         <li>
           <router-link to="/test">Test</router-link>
         </li>
+        <li>
+          <router-link to="/three">Three</router-link>
+        </li>
       </ul>
     </Sidebar>
   </div>
