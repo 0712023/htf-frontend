@@ -1,5 +1,6 @@
 export default {
     SETISNAVOPEN : "setIsNavOpen",
     TOGGLENAV : "toggleNav",
-    ISNAVOPEN : "isNavOpen"
+    ISNAVOPEN : "isNavOpen",
+    GETMENU : "getmenu"
 }

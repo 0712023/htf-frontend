@@ -7,6 +7,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isNavOpen : true,
+    menu : ["Main", "Three", "Settings"],
+
   },
   mutations: {
     [Constant.SETISNAVOPEN]: (oldState, payload) =>{
@@ -17,6 +19,9 @@ export default new Vuex.Store({
     },
     [Constant.ISNAVOPEN]: (oldState) =>{
       return oldState.isNavOpen;
+    },
+    [Constant.GETMENU]: (oldState) =>{
+      return oldState.menu;
     },
   }
 })
