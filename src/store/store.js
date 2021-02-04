@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isNavOpen : false,
+    isNavOpen : true,
   },
   mutations: {
     [Constant.SETISNAVOPEN]: (oldState, payload) =>{
