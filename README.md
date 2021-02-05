@@ -1,24 +1,12 @@
 # vue_front
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
+## Required Modules
+Chart.js
 ```
-npm run serve
+npm install --save vue-chartjs
 ```
-
-### Compiles and minifies for production
+Vuex
 ```
-npm run build
+npm install --save vuex
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
