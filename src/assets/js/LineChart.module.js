@@ -13,10 +13,9 @@ export default {
   },
   created() {
     setInterval(() => {
-      console.log(this.chartData);
-      this.chartData.labels.push(Math.floor(Math.random() * (50 - 5 + 1)) + 5);
-      this.chartData.datasets[0].data.push(Math.floor(Math.random() * (50 - 5 + 1)) + 5);
-      this.chartData.datasets[1].data.push(Math.floor(Math.random() * (50 - 5 + 1)) + 5);
+      this.chartData.labels.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
+      this.chartData.datasets[0].data.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
+      this.chartData.datasets[1].data.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
       if (this.chartData.labels.length >= 10) {
         this.chartData.labels.shift();
         for (let dataset of this.chartData.datasets) {
