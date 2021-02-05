@@ -1,16 +1,16 @@
 <template>
   <div class="small">
-    <line-chart :chart-data="datacollection"></line-chart>
+    <Bar-chart :chart-data="datacollection" chart:update="addData()"></Bar-chart>
     <!-- <button @click="fillData()">Randomize</button> -->
   </div>
 </template>
 
 <script>
-  import LineChart from '../../../assets/js/LineChart.module'
+  import BarChart from '../../../assets/js/BarChart.module'
 
   export default {
     components: {
-      LineChart
+      BarChart
     },
     data () {
       return {
