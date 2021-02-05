@@ -10,3 +10,7 @@ Vuex
 ```
 npm install --save vuex
 ```
+Vue-Cookie
+```
+npm install --save vue-cookie
+```
