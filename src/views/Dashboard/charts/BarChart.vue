@@ -29,11 +29,11 @@
           labels: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()],
           datasets: [
             {
-              label: 'Data One',
+              label: '내부 온도',
               backgroundColor: '#999999',
               data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
             }, {
-              label: 'Data One',
+              label: '외부 온도',
               backgroundColor: '#ffffff',
               data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
             }

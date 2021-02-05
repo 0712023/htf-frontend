@@ -1,16 +1,16 @@
 <template>
   <div class="small">
-    <line-chart :chart-data="datacollection"></line-chart>
+    <Radar-chart :chart-data="datacollection" chart:update="addData()"></Radar-chart>
     <!-- <button @click="fillData()">Randomize</button> -->
   </div>
 </template>
 
 <script>
-  import LineChart from '../../../assets/js/LineChart.module'
+  import RadarChart from '../../../assets/js/RadarChart.module'
 
   export default {
     components: {
-      LineChart
+      RadarChart
     },
     data () {
       return {
@@ -29,11 +29,11 @@
           labels: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()],
           datasets: [
             {
-              label: '내부 미세먼지',
+              label: '내부 습도',
               backgroundColor: '#999999',
               data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
             }, {
-              label: '외부 미세먼지',
+              label: '외부 습도',
               backgroundColor: '#ffffff',
               data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
             }
