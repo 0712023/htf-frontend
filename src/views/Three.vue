@@ -4,7 +4,11 @@
         <Render/>
     </div>
 </template>
-
-<style>
- @import '../assets/css/style.css';
-</style>
+<script>
+import Render from '../components/Render'
+export default {
+    components: {
+        Render
+    }
+}
+</script>
