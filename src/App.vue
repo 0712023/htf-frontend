@@ -11,7 +11,7 @@
           <router-link to="/">Home</router-link>
         </li>
         <li>
-          <router-link v-for="route in routes" :key="route.seq" :to="{ name: 'Sensor', params: { desc: route.desc }}">{{ route.desc }}</router-link>
+          <router-link v-for="route in routes" :key="route.seq" :to="'/sensor/'+route.desc">{{ route.desc }}</router-link>
         </li>
         <li>
           <router-link to="/about">About</router-link>
