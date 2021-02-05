@@ -12,24 +12,22 @@ export default {
 
   },
   methods: {
-    chartInsert(){
-      setInterval(() => {
-        this.chartData.labels.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
-        this.chartData.datasets[0].data.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
-        this.chartData.datasets[1].data.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
-        if (this.chartData.labels.length >= 10) {
-          this.chartData.labels.shift();
-          for (let dataset of this.chartData.datasets) {
-            dataset.data.shift();
-          }
-        }
-        this.$data._chart.update()
-      }, 2000);
-    }
   },
   created() {
-    this.chartInsert();
+    this.lineChartInterval = setInterval(() => {
+      this.chartData.labels.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
+      this.chartData.datasets[0].data.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
+      this.chartData.datasets[1].data.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
+      if (this.chartData.labels.length >= 10) {
+        this.chartData.labels.shift();
+        for (let dataset of this.chartData.datasets) {
+          dataset.data.shift();
+        }
+      }
+      this.$data._chart.update()
+    }, 2000);
   },
   destroyed() {
+    clearInterval(this.lineChartInterval);
   },
 }
