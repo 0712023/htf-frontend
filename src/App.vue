@@ -11,6 +11,9 @@
           <router-link to="/">Home</router-link>
         </li>
         <li>
+          <router-link v-for="route in routes" :key="route.path" :to="route.path">{{route.name}}</router-link>
+        </li>
+        <li>
           <router-link to="/about">About</router-link>
         </li>
         <li>
@@ -25,6 +28,13 @@
       </ul>
     </Sidebar>
   </div>
+  <!-- 
+    <nav>
+      <router-link v-for="route in routes" :key="route.path" :to="route.path">
+        {{route.name}}
+      </router-link>
+    </nav> 
+-->
 </template>
 
 <script>
@@ -37,6 +47,9 @@ export default {
     Burger,
     Sidebar,
   },
+  data(){
+    return{routes:[{path:"/senser1", name:"Sensor1"}, {path:"/senser2", name:"Sensor2"}, {path:"/light1", name:"Light1"}]}
+  }
 };
 </script>
 <style>
