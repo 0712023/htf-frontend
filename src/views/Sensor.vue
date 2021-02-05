@@ -1,10 +1,5 @@
 <template>
     <div>
-        this sensor is : {{sensor_desc}}
+        this sensor is : {{$route.params.desc}} <br>
     </div>
 </template>
-<script>
-export default {
-    props:['sensor_desc'],
-}
-</script>
