@@ -98,7 +98,7 @@ opacity: 50%;
   height: 100%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 450px 450px 450px;
+  grid-template-columns: 33% 33% 33%;
 }
 
 .item {
