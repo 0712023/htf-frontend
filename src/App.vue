@@ -67,9 +67,9 @@ body {
   background: rgb(101, 31, 87);
   background: linear-gradient(
     45deg,
-    rgba(101, 31, 87, 1) 0%,
-    rgba(225, 113, 87, 1) 48%,
-    rgba(249, 248, 113, 1) 100%
+    rgba(150,150,150) 0%,
+    rgba(200,200,200) 48%,
+    rgba(255,255,255) 100%
   );
 }
 
