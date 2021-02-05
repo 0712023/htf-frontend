@@ -15,9 +15,9 @@ const routes = [
     component: () => import('../views/About.vue')
   },
   {
-    path: '/contact',
-    name: 'Contact',
-    component: () => import('../views/Contact.vue')
+    path: '/sensor',
+    name: 'Sensor',
+    component: () => import('../views/Sensor.vue')
   },
   {
     path: '/dashboard',
