@@ -78,7 +78,6 @@ export default {
   margin-right: 10px;
   border-bottom: 1px solid #ebebeb;
   margin-bottom: 25px;
-  display: grid;
 
   background: rgba( 255, 255, 255, 0.75 );
 box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
