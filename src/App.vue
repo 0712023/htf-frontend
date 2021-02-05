@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <nav class="main-nav">
-        <router-view></router-view>
-      <Burger></Burger>
+      <Burger></Burger><br>
+      <router-view></router-view>
     </nav>
 
     <Sidebar>
@@ -28,13 +28,6 @@
       </ul>
     </Sidebar>
   </div>
-  <!-- 
-    <nav>
-      <router-link v-for="route in routes" :key="route.path" :to="route.path">
-        {{route.name}}
-      </router-link>
-    </nav> 
--->
 </template>
 
 <script>
