@@ -1,11 +1,11 @@
 <template>
     <div>
-        THree
+        Three
         <Render/>
     </div>
 </template>
 <script>
-import Render from '../components/test'
+import Render from '../components/Render'
 export default {
     components: {
         Render
