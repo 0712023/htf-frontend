@@ -1,7 +1,7 @@
 <template>
   <div class="small">
-    <line-chart :chart-data="datacollection"></line-chart>
-    <button @click="fillData()">Randomize</button>
+    <line-chart :chart-data="datacollection" chart:update="addData()"></line-chart>
+    <!-- <button @click="fillData()">Randomize</button> -->
   </div>
 </template>
 
@@ -14,32 +14,36 @@
     },
     data () {
       return {
-        datacollection: null
+        datacollection: {}
       }
     },
     mounted () {
-      this.fillData()
+      this.fillData();
+    },
+    created: () => {
+      
     },
     methods: {
       fillData () {
         this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
+          labels: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()],
           datasets: [
             {
               label: 'Data One',
               backgroundColor: '#999999',
-              data: [this.getRandomInt(), this.getRandomInt()]
+              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
             }, {
               label: 'Data One',
               backgroundColor: '#ffffff',
-              data: [this.getRandomInt(), this.getRandomInt()]
+              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
             }
           ]
         }
+
       },
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-      }
+      },
     }
   }
 </script>
