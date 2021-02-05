@@ -14,7 +14,7 @@
           <router-link v-for="route in routes" :key="route.seq" :to="'/sensor/'+route.desc">{{ route.desc }}</router-link>
         </li>
         <li>
-          <router-link to="/about">About</router-link>
+          <router-link to="/user">User</router-link>
         </li>
         <li>
           <router-link to="/dashboard">Dashboard</router-link>
@@ -47,54 +47,5 @@ export default {
 };
 </script>
 <style>
-html {
-  height: 100%;
-  overflow: hidden;
-}
-
-main {
-  margin-left: 100px;
-  align-items: center;
-  align-self: center;
-}
-
-body {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  font-family: "Lato";
-  height: 100%;
-  background: rgb(101, 31, 87);
-  background: linear-gradient(
-    45deg,
-    rgba(150,150,150) 0%,
-    rgba(200,200,200) 48%,
-    rgba(255,255,255) 100%
-  );
-}
-
-.logo {
-  align-self: center;
-  color: #fff;
-  font-weight: bold;
-  font-family: "Lato";
-}
-
-.main-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 0.8rem;
-}
-
-ul.sidebar-panel-nav {
-  list-style-type: none;
-}
-
-ul.sidebar-panel-nav > li > a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.5rem;
-  display: block;
-  padding-bottom: 0.5em;
-}
+ @import './assets/css/style.css';
 </style>

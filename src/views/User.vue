@@ -1,7 +1,6 @@
 <template>
-    <div>
-        Three
-        <Render/>
+    <div id="test">
+        this is user
     </div>
 </template>
 
