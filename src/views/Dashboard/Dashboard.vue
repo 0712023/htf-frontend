@@ -5,9 +5,9 @@
     </div>
 </template>
 <script>
-import Constant from '../store/Constant'
-import store from '../store/store'
-import Chart from './Dashboard/Chart'
+import Constant from '../../store/Constant'
+import store from '../../store/store'
+import Chart from './charts/Chart'
 export default {
     components: {
         Chart
