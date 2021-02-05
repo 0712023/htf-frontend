@@ -22,6 +22,9 @@
         <li>
           <router-link to="/three">Three</router-link>
         </li>
+        <li>
+          <router-link to="/cus">Cus</router-link>
+        </li>
       </ul>
     </Sidebar>
   </div>
