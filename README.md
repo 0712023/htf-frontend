@@ -14,3 +14,7 @@ Vue-Cookie
 ```
 npm install --save vue-cookie
 ```
+Axios
+```
+npm install --save axios
+```
