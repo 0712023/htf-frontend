@@ -17,7 +17,7 @@
           <router-link to="/contact">Contact</router-link>
         </li>
         <li>
-          <router-link to="/test">Test</router-link>
+          <router-link to="/dashboard">Dashboard</router-link>
         </li>
         <li>
           <router-link to="/three">Three</router-link>
