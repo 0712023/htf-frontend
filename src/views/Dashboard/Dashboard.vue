@@ -5,18 +5,10 @@
     </div>
 </template>
 <script>
-import Constant from '../../store/Constant'
-import store from '../../store/store'
 import LineChart from './charts/LineChart'
-
-
 export default {
     components: {
         LineChart
-    },
-    created:()=>{
-        store.commit(Constant.TOGGLENAV)
-        // setInterval(this.addLineChartData, 1000);
     },
 }
 </script>
