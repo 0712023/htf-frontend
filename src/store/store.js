@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isNavOpen : true,
-    menu : ["Main", "Three", "Settings"],
+    routes : [{seq:1, desc:"Sensor1"}, {seq:2, desc:"Sensor2"}, {seq:3, desc:"Light1"}],
 
   },
   mutations: {
@@ -19,9 +19,6 @@ export default new Vuex.Store({
     },
     [Constant.ISNAVOPEN]: (oldState) =>{
       return oldState.isNavOpen;
-    },
-    [Constant.GETMENU]: (oldState) =>{
-      return oldState.menu;
     },
   }
 })

@@ -11,7 +11,7 @@
           <router-link to="/">Home</router-link>
         </li>
         <li>
-          <router-link v-for="route in routes" :key="route.path" :to="route.path">{{route.name}}</router-link>
+          <router-link v-for="route in routes" :key="route" to="/sensor" :sensor_desc="route.desc">{{route.desc}}</router-link>
         </li>
         <li>
           <router-link to="/about">About</router-link>
@@ -30,6 +30,7 @@
 <script>
 import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
+import store from './store/store'
 
 export default {
   name: "app",
@@ -38,7 +39,7 @@ export default {
     Sidebar,
   },
   data(){
-    return{routes:[{path:"/senser1", name:"Sensor1"}, {path:"/senser2", name:"Sensor2"}, {path:"/light1", name:"Light1"}]}
+    return{routes:store.state.routes}
   }
 };
 </script>
