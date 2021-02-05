@@ -74,7 +74,6 @@ export default {
     background-color: rgb(144, 27, 247);
   height: 300px;
   width: 300px;
-
   margin-left: 150px;
   margin-right: 10px;
   border-bottom: 1px solid #ebebeb;
@@ -108,10 +107,4 @@ opacity: 50%;
   margin-bottom: 25px;
 }
 
-img {
-  width: 100%;
-  width: 100px;
-  background: #ebebeb;
-  border-radius: 4px;
-}
 </style>

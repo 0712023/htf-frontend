@@ -2,8 +2,8 @@
   <div id="app">
     <nav class="main-nav">
       <Burger></Burger><br />
-      <router-view></router-view>
     </nav>
+    <div class="body"><router-view></router-view></div>
 
     <Sidebar>
       <ul class="sidebar-panel-nav">
@@ -50,6 +50,12 @@ export default {
 html {
   height: 100%;
   overflow: hidden;
+}
+
+main {
+  margin-left: 100px;
+  align-items: center;
+  align-self: center;
 }
 
 body {
