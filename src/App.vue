@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav class="main-nav">
-      <Burger></Burger><br>
+      <Burger></Burger><br />
       <router-view></router-view>
     </nav>
 
@@ -11,7 +11,7 @@
           <router-link to="/">Home</router-link>
         </li>
         <li>
-          <router-link v-for="route in routes" :key="route" to="/sensor" :sensor_desc="route.desc">{{route.desc}}</router-link>
+          <router-link v-for="route in routes" :key="route.seq" :to="{ name: 'Sensor', params: { desc: route.desc }}">{{ route.desc }}</router-link>
         </li>
         <li>
           <router-link to="/about">About</router-link>
@@ -30,7 +30,7 @@
 <script>
 import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
-import store from './store/store'
+import store from "./store/store";
 
 export default {
   name: "app",
@@ -38,9 +38,9 @@ export default {
     Burger,
     Sidebar,
   },
-  data(){
-    return{routes:store.state.routes}
-  }
+  data() {
+    return { routes: store.state.routes };
+  },
 };
 </script>
 <style>

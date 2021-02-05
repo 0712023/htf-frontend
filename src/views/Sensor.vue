@@ -1,10 +1,10 @@
 <template>
     <div>
-        this sensor is : {{sensor_desc}}
+        this sensor is : {{desc}} <br>
     </div>
 </template>
 <script>
 export default {
-    props:['sensor_desc'],
+    props: ['desc']
 }
 </script>
