@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow:scroll; width:100%; height:700px;">
+  <div style="overflow:scroll; width:100%; height:100vh;">
     <div  class="wrap">
       <div v-for="(value, index) in user" :key="index">
         <div class="box1" >
@@ -74,8 +74,8 @@ export default {
     background-color: rgb(144, 27, 247);
   height: 300px;
   width: 300px;
-  margin-left: 150px;
-  margin-right: 10px;
+  margin-left: 25%;
+  margin-right: 20%;
   border-bottom: 1px solid #ebebeb;
   margin-bottom: 25px;
 
