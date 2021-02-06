@@ -10,7 +10,7 @@ const routes = [
     component: () => import('../views/Home.vue')
   },
   {
-    path: '/user',
+    path: '/user/:uid',
     name: 'User',
     component: () => import('../views/User.vue')
   },
