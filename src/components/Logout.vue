@@ -12,6 +12,7 @@ export default {
     },
     methods:{
         hidemenu() {
+            //사이드바 및 로그아웃 버튼 비활성화
             store.state.login = false;
             //토큰을 지움
             this.$cookie.delete("accesstoken");

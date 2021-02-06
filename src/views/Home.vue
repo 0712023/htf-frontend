@@ -1,13 +1,10 @@
 <template>
     <div id="test">
-        this is home <br>
+        this is home <br><br><br>
+        <!-- 로그인하는 form -->
         <input type="text" placeholder="id" id="search" v-model='id'>
         <input type="password" placeholder="pw" id="search" v-model='pw'> <br>
-        <button @click="login">login</button>
-         <br> <br> <br>
-        <button><router-link @click.native="showmenu" to="/user">User</router-link></button>
-        <button><router-link @click.native="showmenu" to="/admin">Admin</router-link></button>
-        <!-- 로그인하는 form -->
+        <button @click="login">login</button><button>sign in</button>
     </div>
 </template>
 
@@ -23,15 +20,15 @@ export default {
     },
     methods:{
         login() {
+            //사이드바 및 로그아웃 버튼 활성화
             store.state.login = true;
             //Axios로 로그인 요청을 함
             axios.post(`http://studioj.ddns.net/login`,{"memId":this.id,"memPw":this.pw})
             .then(response =>{
-                console.log(response.data);
                 //쿠키에 response.data를 넣어줌
                 this.$cookie.set("accesstoken", response.data, 1);
                 axios.defaults.headers.common["x-access-token"] = response.data;
-                this.$router.push('user/'+this.id) 
+                this.$router.push('user/'+this.id);
                 /*
                 axios.post( 여기다가 mchid랑(얘는 꼭 받아와야함. 받아와서 VuexStore에다가 넣어줘야함)
                  userid를 받아오는(안받아와도됨 외냐면 this.id에 아이디값 있긴함) post(또는 get)을 받아옴)
