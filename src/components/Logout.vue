@@ -13,8 +13,8 @@ export default {
     methods:{
         hidemenu() {
             store.state.login = false;
-
             //토큰을 지움
+            this.$cookie.delete("accesstoken");
         }
     }
 }
