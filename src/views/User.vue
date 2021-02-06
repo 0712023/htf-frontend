@@ -14,7 +14,11 @@
 import store from "../store/store";
 export default {
     data() {
-    return { sensors: store.state.routes };
-  },
+        return { sensors: store.state.routes };
+    },
 }
 </script>
+
+<style>
+ @import '../assets/css/style.css';
+</style>

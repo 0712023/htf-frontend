@@ -6,9 +6,9 @@ div#test {
     margin-left: -220px;
     margin-top : -170px;
     display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     color: #fff;
     text-decoration: none;
     font-size: 1.5rem;
@@ -67,11 +67,11 @@ ul.sidebar-panel-nav > li > a {
 
 /* User Page */
 .box1 {
-  background-color: rgb(144, 27, 247);
-height: 300px;
-width: 300px;
-margin-left: 25%;
-margin-right: 20%;
+background-color: rgb(144, 27, 247);
+height: 25vw;
+width: 25vw;
+margin-top: 5vw;
+margin-left: 4.167vw;
 border-bottom: 1px solid #ebebeb;
 margin-bottom: 25px;
 
@@ -81,15 +81,14 @@ backdrop-filter: blur( 6.5px );
 -webkit-backdrop-filter: blur( 6.5px );
 border-radius: 10px;
 border: 1px solid rgba( 255, 255, 255, 0.18 );
-opacity: 50%;
+opacity: 100%;
 }
 
 .box1:hover{
-      opacity: 100%;
-  }
+opacity: 80%;
+}
 
 .wrap {
-
 column-width: 100%;
 height: 100%;
 margin: 0 auto;
@@ -100,4 +99,14 @@ grid-template-columns: 33% 33% 33%;
 .item {
 border-bottom: 1px solid #ebebeb;
 margin-bottom: 25px;
+}
+
+/*chart*/
+.chart{
+  position: absolute;
+  height: 22vw;
+  width: 22vw;
+  top: 5vw;
+  left: 12.5vw;
+  transform: translate(-50%, -50%);
 }
