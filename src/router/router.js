@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import VueCookie from 'vue-cookie'
 Vue.use(VueRouter)
 
 const routes = [
@@ -42,5 +42,17 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach(function (to, from, next) {
+  if (VueCookie.get("accesstoken")!=null) {
+    next();
+  } else if(VueCookie.get("accesstoken")==null && to.fullPath!="/")  {
+    if(confirm("please log in")){
+      router.push("/")
+    }
+  } else{
+    next();
+  }
+});
 
 export default router
