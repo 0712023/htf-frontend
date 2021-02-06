@@ -11,19 +11,16 @@
           <router-link to="/">Home</router-link>
         </li>
         <li>
-          <router-link v-for="route in routes" :key="route.seq" :to="'/sensor/'+route.desc">{{ route.desc }}</router-link>
+          <router-link to="/user">User</router-link>
         </li>
         <li>
-          <router-link to="/user">User</router-link>
+          <router-link v-for="route in routes" :key="route.seq" :to="'/sensor/'+route.desc">{{ route.desc }}</router-link>
         </li>
         <li>
           <router-link to="/dashboard">Dashboard</router-link>
         </li>
         <li>
           <router-link to="/three">Three</router-link>
-        </li>
-        <li>
-          <router-link to="/cus">Cus</router-link>
         </li>
       </ul>
     </Sidebar>

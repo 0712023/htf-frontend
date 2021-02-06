@@ -64,3 +64,40 @@ ul.sidebar-panel-nav > li > a {
   display: block;
   padding-bottom: 0.5em;
 }
+
+/* User Page */
+.box1 {
+  background-color: rgb(144, 27, 247);
+height: 300px;
+width: 300px;
+margin-left: 25%;
+margin-right: 20%;
+border-bottom: 1px solid #ebebeb;
+margin-bottom: 25px;
+
+background: rgba( 255, 255, 255, 0.75 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 6.5px );
+-webkit-backdrop-filter: blur( 6.5px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+opacity: 50%;
+}
+
+.box1:hover{
+      opacity: 100%;
+  }
+
+.wrap {
+
+column-width: 100%;
+height: 100%;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 33% 33% 33%;
+}
+
+.item {
+border-bottom: 1px solid #ebebeb;
+margin-bottom: 25px;
+}
