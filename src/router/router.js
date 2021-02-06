@@ -44,9 +44,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach(function (to, from, next) {
-  if (VueCookie.get("accesstoken")!=null) {
-    next();
-  } else if(VueCookie.get("accesstoken")==null && to.fullPath!="/")  {
+  if(VueCookie.get("accesstoken")==null && to.fullPath!="/")  {
     if(confirm("please log in")){
       router.push("/")
     }
