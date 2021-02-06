@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            this sensor is : <router-link to="/user">{{$route.params.desc}}</router-link> <br>
+            this sensor is : <router-link :to="'/user/'+userId">{{$route.params.desc}}</router-link> <br>
         </div>
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap">
@@ -26,6 +26,9 @@ import RadarChart from './Dashboard/charts/RadarChart'
 export default {
     components:{
         LineChart,BarChart,RadarChart
+    },
+    data(){
+        return {userId:this.$store.state.userId}
     }
 }
 </script>

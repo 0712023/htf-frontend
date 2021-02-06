@@ -16,6 +16,8 @@ export default {
             store.state.login = false;
             //토큰을 지움
             this.$cookie.delete("accesstoken");
+            //VuexStore에 userId를 지움
+            store.state.userId = null;
         }
     }
 }

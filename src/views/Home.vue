@@ -28,6 +28,7 @@ export default {
                 //쿠키에 response.data를 넣어줌
                 this.$cookie.set("accesstoken", response.data, 1);
                 axios.defaults.headers.common["x-access-token"] = response.data;
+                store.state.userId = this.id;
                 this.$router.push('user/'+this.id);
                 /*
                 axios.post( 여기다가 mchid랑(얘는 꼭 받아와야함. 받아와서 VuexStore에다가 넣어줘야함)
