@@ -23,13 +23,12 @@ export default {
             //사이드바 및 로그아웃 버튼 활성화
             store.state.login = true;
             //Axios로 로그인 요청을 함
-            axios.post(`http://studioj.ddns.net/login`,{"memId":this.id,"memPw":this.pw})
+            axios.post(`http://studioj.ddns.net/login`, {"memId":this.id,"memPw":this.pw})
             .then(response =>{
                 //쿠키에 response.data를 넣어줌
                 this.$cookie.set("accesstoken", response.data, 1);
                 axios.defaults.headers.common["x-access-token"] = response.data;
                 store.state.userId = this.id;
-                this.$router.push('user/'+this.id);
                 /*
                 axios.post( 여기다가 mchid랑(얘는 꼭 받아와야함. 받아와서 VuexStore에다가 넣어줘야함)
                  userid를 받아오는(안받아와도됨 외냐면 this.id에 아이디값 있긴함) post(또는 get)을 받아옴)
@@ -37,7 +36,17 @@ export default {
                     //가져온 mchid랑 userid를 갖고 페이지를 이동시키는 방법이 어딘가 있을꺼임
                 })
                 */
-            })
+            }).then(()=>{
+                    //로그인시 기본으로 자료를 받으러 다녀옴
+                    axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": this.id}, 
+                            {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
+                        ).then(response =>{
+                        console.log(response.data);
+                        store.state.routes = response.data;
+                        this.$router.push('user/'+this.id);
+                    })
+                }
+            )
         }
     }
 }

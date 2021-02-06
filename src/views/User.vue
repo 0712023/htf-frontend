@@ -2,8 +2,9 @@
     <div>
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap">
-                <div class="box1" v-for="sensor in sensors" :key="sensor.seq" >
-                    <router-link :to="'/sensor/'+sensor.desc">{{ sensor.desc }}</router-link>
+                <div class="box1" v-for="sensor in sensors" :key="sensor.mch_id" >
+                    <router-link :to="'/sensor/'+sensor.mch_id">{{ sensor.mch_id }}</router-link>
+                    <br><br>{{ sensor.description }}
                 </div>
             </div>
         </div>
@@ -16,6 +17,7 @@ export default {
     data() {
         return { sensors: store.state.routes };
     },
+    // 여기서 만약 토큰 로그인이 유효한 상태라면 액시오스를 다시 날려주는 로직이 있어야 새로고침을 해도 오류가 나지 않을 것으로 생각
 }
 </script>
 
