@@ -9,7 +9,8 @@ export default {
         return{
             scene : null,
             camera : null,
-            renderer: null
+            renderer: null,
+            cube : null
         }
     },
     created: function(){
@@ -24,11 +25,9 @@ export default {
 
         const geometry = new THREE.BoxGeometry(1, 1, 1);
         const material = new THREE.MeshBasicMaterial({ color : 0xFFFFFF, wireframe: true});
-        const cube = new THREE.Mesh(geometry, material);
-        this.scene.add(cube);
-        cube.rotation.x += 0.10;
-        cube.rotation.y += 0.005;
-
+        this.cube = new THREE.Mesh(geometry, material);
+        this.scene.add(this.cube);
+        
         document.body.appendChild(this.renderer.domElement);
         this.animate();
     },
@@ -38,6 +37,7 @@ export default {
     methods:{
         animate:function () {
             requestAnimationFrame(this.animate);
+            this.update();
             this.renderer.render(this.scene, this.camera);
         },
         resize:function () {
@@ -46,6 +46,10 @@ export default {
             this.renderer.setSize(width, height);
             this.camera.aspect = width / height;
             this.camera.updateProjectionMatrix();
+        },
+        update:function(){
+            this.cube.rotation.x += 0.10;
+            this.cube.rotation.y += 0.005;
         }
 
     }
