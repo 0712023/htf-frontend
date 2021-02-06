@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav class="main-nav">
-      <Burger></Burger><br />
+      <Burger/><logout/>
     </nav>
     <div class="body"><router-view></router-view></div>
 
@@ -30,6 +30,7 @@
 <script>
 import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
+import Logout from './components/Logout.vue';
 import store from "./store/store";
 
 export default {
@@ -37,6 +38,7 @@ export default {
   components: {
     Burger,
     Sidebar,
+    Logout,
   },
   data() {
     return { routes: store.state.routes };
