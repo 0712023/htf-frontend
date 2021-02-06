@@ -8,10 +8,10 @@
     <Sidebar>
       <ul class="sidebar-panel-nav">
         <li>
-          <router-link to="/user">User</router-link>
+          <router-link :to="'/user/'+userId">User</router-link>
         </li>
         <li>
-          <router-link v-for="route in routes" :key="route.seq" :to="'/sensor/'+route.desc">{{ route.desc }}</router-link>
+          <router-link v-for="route in sensors" :key="route.seq" :to="'/sensor/'+route.desc">{{ route.desc }}</router-link>
         </li>
         <li>
           <router-link to="/dashboard">Dashboard</router-link>
@@ -38,7 +38,10 @@ export default {
     Logout,
   },
   data() {
-    return { routes: store.state.routes };
+    return { 
+      sensors: store.state.routes,
+      userId:this.$store.state.userId
+    };
   },
 };
 </script>
