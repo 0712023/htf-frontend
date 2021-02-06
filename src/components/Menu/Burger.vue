@@ -1,5 +1,5 @@
 <template>
-  <div id="burger" :class="{ 'active' : isBurgerActive }" @click.prevent="toggle">
+  <div id="burger" :class="{ 'active' : isBurgerActive }" @click.prevent="toggle" v-if="login">
     <slot>
       <button type="button" class="burger-button" title="Menu">
         <span class="hidden">Toggle menu</span>
@@ -12,14 +12,15 @@
 </template>
 <script>
 import Constant from '../../store/Constant'
+import store from '../../store/store'
 
 export default {
-  // data: () => ({
-  //     isBurgerActive: false
-  // }),
   computed: {
     isBurgerActive() {
       return this.$store.commit(Constant.ISNAVOPEN);
+    },
+    login() {
+      return store.state.login
     }
   },
   methods: {
