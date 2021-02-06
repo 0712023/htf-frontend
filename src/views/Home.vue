@@ -2,6 +2,7 @@
     <div id="test">
         this is home <br>
         <button><router-link to="/user">User</router-link></button>
+        <button><router-link to="/admin">Admin</router-link></button>
     </div>
 </template>
 
