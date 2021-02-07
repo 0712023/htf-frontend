@@ -11,7 +11,7 @@
           <router-link :to="'/user/'+userId">User</router-link>
         </li>
         <li>
-          <router-link v-for="route in sensors" :key="route.seq" :to="'/sensor/'+route.desc">{{ route.desc }}</router-link>
+          <router-link v-for="sensor in sensors" :key="sensor.mch_id" :to="'/sensor/'+sensor.mch_id">{{ sensor.mch_id }}</router-link>
         </li>
         <li>
           <router-link to="/dashboard">Dashboard</router-link>
@@ -28,7 +28,6 @@
 import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
 import Logout from './components/Logout.vue';
-import store from "./store/store";
 
 export default {
   name: "app",
@@ -37,12 +36,17 @@ export default {
     Sidebar,
     Logout,
   },
-  data() {
-    return { 
-      sensors: store.state.routes,
-      userId:this.$store.state.userId
-    };
+  computed:{
+    sensors:function(){
+      return this.$store.state.routes;
+    },
+    userId:function(){
+      return this.$store.state.userId;
+    }
   },
+  created:function(){
+    console.log(this.$store.state.routes);
+  }
 };
 </script>
 <style>
