@@ -11,7 +11,6 @@
 </template>
 <script>
     import Constant from '../../store/Constant'
-    import store from '../../store/store'
     export default {
         methods: {
             closeSidebarPanel(){
@@ -19,8 +18,8 @@
             },
         },
         computed: {
-            isPanelOpen() {
-                return store.state.isNavOpen
+            isPanelOpen:function () {
+                return this.$store.state.isNavOpen
             }
         }
     }

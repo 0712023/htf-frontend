@@ -7,10 +7,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isNavOpen : false,
-    routes : [],
-    nowSensor : null,
-    login : false,
-    userId : null
   },
   mutations: {
     [Constant.SETISNAVOPEN]: (oldState, payload) =>{

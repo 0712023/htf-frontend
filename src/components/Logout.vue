@@ -1,23 +1,22 @@
 <template>
-    <button v-if="login"><router-link @click.native="hidemenu" to="/">logout</router-link></button>
+    <button v-if="login" @click="logout">logout</button>
 </template>
 
 <script>
-import store from '../store/store'
 export default {
     computed: {
         login() {
-            return store.state.login
+            return this.$cookie.get("loginStatus");
         }
     },
     methods:{
-        hidemenu() {
-            //사이드바 및 로그아웃 버튼 비활성화
-            store.state.login = false;
-            //토큰을 지움
+        logout:function() {
+            //모든 쿠키를 지움
             this.$cookie.delete("accesstoken");
-            //VuexStore에 userId를 지움
-            store.state.userId = null;
+            this.$cookie.delete("loginStatus");
+            this.$cookie.delete("userId");
+            this.$cookie.delete("sensors");
+            this.$router.push('/');
         }
     }
 }

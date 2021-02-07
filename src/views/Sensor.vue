@@ -27,8 +27,10 @@ export default {
     components:{
         LineChart,BarChart,RadarChart
     },
-    data(){
-        return {userId:this.$store.state.userId}
+    computed:{
+        userId:function(){
+            return this.$cookie.get("userId");
+        }
     }
 }
 </script>

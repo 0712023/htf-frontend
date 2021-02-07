@@ -11,7 +11,7 @@
           <router-link :to="'/user/'+userId">User</router-link>
         </li>
         <li>
-          <router-link v-for="sensor in sensors" :key="sensor.mch_id" :to="'/sensor/'+sensor.mch_id">{{ sensor.mch_id }}</router-link>
+          <router-link v-for="sensor in sensors" :key="sensor.mch_id" :to="'/sensor/'+sensor.description">{{ sensor.description }}</router-link>
         </li>
         <li>
           <router-link to="/dashboard">Dashboard</router-link>
@@ -37,15 +37,12 @@ export default {
     Logout,
   },
   computed:{
-    sensors:function(){
-      return this.$store.state.routes;
+    sensors(){
+      return JSON.parse(this.$cookie.get("sensors"));
     },
-    userId:function(){
-      return this.$store.state.userId;
+    userId(){
+      return this.$cookie.get("userId");
     }
-  },
-  created:function(){
-    console.log(this.$store.state.routes);
   }
 };
 </script>

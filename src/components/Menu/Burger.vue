@@ -12,7 +12,6 @@
 </template>
 <script>
 import Constant from '../../store/Constant'
-import store from '../../store/store'
 
 export default {
   computed: {
@@ -20,7 +19,7 @@ export default {
       return this.$store.commit(Constant.ISNAVOPEN);
     },
     login() {
-      return store.state.login
+      return this.$cookie.get("loginStatus");
     }
   },
   methods: {
