@@ -8,7 +8,6 @@ export default new Vuex.Store({
   state: {
     isNavOpen : false,
     routes : [],
-    //[{seq:1, desc:"Sensor1"}, {seq:2, desc:"Sensor2"}, {seq:3, desc:"Light1"}]
     nowSensor : null,
     login : false,
     userId : null
