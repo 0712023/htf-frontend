@@ -2,7 +2,7 @@
   <div class="small">
     <Radar-chart :chart-data="datacollection" chart:update="addData()"></Radar-chart>
     <!-- <button @click="fillData()">Randomize</button> -->
-    {{$route.params.mch_id}}
+    {{$route.params.mchId}}
   </div>
 </template>
 

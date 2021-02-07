@@ -15,7 +15,7 @@ const routes = [
     component: () => import('../views/User.vue')
   },
   {
-    path: '/sensor/:desc/mchid/:mch_id',
+    path: '/sensor/:desc/mchid/:mchId',
     name: 'Sensor',
     component: () => import('../views/Sensor.vue'),
   },

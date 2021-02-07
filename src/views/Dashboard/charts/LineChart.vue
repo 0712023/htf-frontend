@@ -2,7 +2,7 @@
   <div class="small">
     <line-chart :chart-data="datacollection"></line-chart>
     <!-- <button @click="fillData()">Randomize</button> -->
-    {{$route.params.mch_id}}
+    {{$route.params.mchId}}
   </div>
 </template>
 

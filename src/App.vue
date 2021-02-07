@@ -11,7 +11,7 @@
           <router-link :to="'/user/'+userId">User</router-link>
         </li>
         <li>
-          <router-link v-for="sensor in sensors" :key="sensor.mch_id" :to="'/sensor/'+sensor.description">{{ sensor.description }}</router-link>
+          <router-link v-for="sensor in sensors" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
         </li>
         <li>
           <router-link to="/dashboard">Dashboard</router-link>
