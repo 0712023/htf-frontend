@@ -1,7 +1,6 @@
 <template>
   <div class="small">
     <line-chart :chart-data="datacollection"></line-chart>
-    <!-- <button @click="fillData()">Randomize</button> -->
     {{$route.params.mchId}}
   </div>
 </template>
@@ -20,16 +19,37 @@
       }
     },
     mounted () {
-      this.fillData();
+      this.resetData();
     },
     created () {
-      this.addData();
+      console.log(this.$route.params.mchId);
+
+      this.chartInterval = setInterval(()=>{
+      axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, 
+        {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
+        ).then(response =>{
+          console.log(response.data);
+          console.log(this.$route.params.mchId);
+          this.datacollection.labels.push("");
+          for (let dataset of this.datacollection.datasets) {
+            dataset.data.push((response.data.value));
+          }
+        })
+
+        if (this.datacollection.labels.length>9) {
+          this.datacollection.labels.shift();
+          for (let dataset of this.datacollection.datasets) {
+            dataset.data.shift();
+          }
+        }
+      }, 2000)
     },
     destroyed() {
       clearInterval(this.chartInterval);
+      this.resetData();
     },
     methods: {
-      fillData () {
+      resetData () {
         this.datacollection = {
           labels: [],
           datasets: [
@@ -44,29 +64,6 @@
             }
           ]
         }
-
-      },
-      addData () {
-        console.log(this.$route.params.mchId);
-
-        this.chartInterval = setInterval(()=>{
-        axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, 
-          {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
-          ).then(response =>{
-            console.log(response.data);
-            this.datacollection.labels.push("");
-            for (let dataset of this.datacollection.datasets) {
-              dataset.data.push((response.data.value));
-            }
-          })
-
-          if (this.datacollection.labels.length>9) {
-            this.datacollection.labels.shift();
-            for (let dataset of this.datacollection.datasets) {
-              dataset.data.shift();
-            }
-          }
-        }, 2000)
       },
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
