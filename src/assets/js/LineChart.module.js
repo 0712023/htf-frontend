@@ -9,25 +9,18 @@ export default {
     // this.chartData is created in the mixin.
     // If you want to pass options please create a local options object
     this.renderChart(this.chartData, this.options)
-
-  },
-  methods: {
   },
   created() {
-    this.lineChartInterval = setInterval(() => {
-      this.chartData.labels.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
-      this.chartData.datasets[0].data.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
-      this.chartData.datasets[1].data.push(Math.floor(Math.random() * (25 - 5 + 1)) + 5);
-      if (this.chartData.labels.length >= 10) {
-        this.chartData.labels.shift();
-        for (let dataset of this.chartData.datasets) {
-          dataset.data.shift();
-        }
-      }
+    this.chartInterval = setInterval(() => {
       this.$data._chart.update()
     }, 2000);
   },
   destroyed() {
-    clearInterval(this.lineChartInterval);
+    clearInterval(this.chartInterval);
   },
+  // watch: {
+  //   chartData: function() {
+  //     this.$data._chart.update();
+  //   }
+  // }
 }

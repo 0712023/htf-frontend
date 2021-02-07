@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+  import axios from 'axios';
   import BarChart from '../../../assets/js/BarChart.module'
 
   export default {
@@ -24,26 +24,7 @@ import axios from 'axios';
       this.fillData();
     },
     created() {
-      console.log(this.$route.params.mchId);
-
-      this.chartInterval = setInterval(()=>{
-      axios.post(`http://studioj.ddns.net/getMeasureListByMchId`, {"mchId": this.$route.params.mchId}, 
-        {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
-        ).then(response =>{
-          console.log(response.data);
-          this.datacollection.labels.push("");
-          for (let dataset of this.datacollection.datasets) {
-            dataset.data.push(parseInt(response.data[0].value) + Math.random()*5 );
-          }
-        })
-
-        if (this.datacollection.labels.length>9) {
-          this.datacollection.labels.shift();
-          for (let dataset of this.datacollection.datasets) {
-            dataset.data.shift();
-          }
-        }
-      }, 2000)
+      this.addData();
     },
     destroyed() {
       clearInterval(this.chartInterval);
@@ -51,22 +32,42 @@ import axios from 'axios';
     methods: {
       fillData () {
         this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()],
+          labels: [],
           datasets: [
             {
               label: '내부 온도',
               backgroundColor: '#999999',
-              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+              data: []
             }, {
               label: '외부 온도',
               backgroundColor: '#ffffff',
-              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+              data: []
             }
           ]
         }
 
       },
       addData () {
+        console.log(this.$route.params.mchId);
+
+        this.chartInterval = setInterval(()=>{
+        axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, 
+          {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
+          ).then(response =>{
+            console.log(response.data);
+            this.datacollection.labels.push("");
+            for (let dataset of this.datacollection.datasets) {
+              dataset.data.push((response.data.value));
+            }
+          })
+
+          if (this.datacollection.labels.length>9) {
+            this.datacollection.labels.shift();
+            for (let dataset of this.datacollection.datasets) {
+              dataset.data.shift();
+            }
+          }
+        }, 2000)
       },
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5

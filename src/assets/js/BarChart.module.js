@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import { Bar, mixins } from 'vue-chartjs'
 const { reactiveProp } = mixins
 
