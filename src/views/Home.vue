@@ -33,8 +33,9 @@ export default {
                     ).then(response =>{
                         //사이드바 및 로그아웃 버튼 활성화
                         this.$cookie.set("userId", this.id, 1);
-                        this.$cookie.set("sensors", JSON.stringify(response.data), 1);
                         EventBus.$emit('login', true);
+                        this.$cookie.set("sensors", JSON.stringify(response.data), 1);
+                        EventBus.$emit('sensors', response.data);
                         this.$router.push('user/'+this.id);
                     })
                 }

@@ -38,20 +38,22 @@ export default {
     Logout,
   },
   data(){
-    return {userId:this.$cookie.get("userId")}
+    return {
+      userId:this.$cookie.get("userId"),
+      sensors:JSON.parse(this.$cookie.get("sensors"))
+    }
   },
   created:function(){
     Eventbus.$on('login', this.updatelogin);
-  },
-  computed:{
-    sensors(){
-      return JSON.parse(this.$cookie.get("sensors"));
-    },
+    Eventbus.$on('sensors', this.updatesensors);
   },
   methods:{
     updatelogin:function(s){
       this.userId = s;
-    }
+    },
+    updatesensors:function(s){
+      this.sensors = s;
+    },
   }
 };
 </script>
