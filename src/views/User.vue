@@ -25,7 +25,7 @@ export default {
         return {sensorDataStore:{}}
     },
     created:function(){
-        setInterval(()=>{
+        this.dashboardInterval = setInterval(()=>{
                 for(let index in this.sensors){
                     axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo1`, {"mchId": this.sensors[index].mchId}, 
                         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
@@ -35,6 +35,9 @@ export default {
                 }
                 console.log(this.sensorDataStore)
             }, 2000);
+    },
+    destroyed() {
+      clearInterval(this.dashboardInterval);
     },
 }
 </script>
