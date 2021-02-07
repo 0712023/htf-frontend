@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios'
+import EventBus from '../store/Eventbus'
 export default {
     data () {
         return {
@@ -31,10 +32,9 @@ export default {
                             {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
                     ).then(response =>{
                         //사이드바 및 로그아웃 버튼 활성화
-                        this.$cookie.set("loginStatus", true, 1);
                         this.$cookie.set("userId", this.id, 1);
                         this.$cookie.set("sensors", JSON.stringify(response.data), 1);
-                    }).then(()=>{
+                        EventBus.$emit('login', true);
                         this.$router.push('user/'+this.id);
                     })
                 }

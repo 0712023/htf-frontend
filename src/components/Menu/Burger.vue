@@ -1,5 +1,5 @@
 <template>
-  <div id="burger" :class="{ 'active' : isBurgerActive }" @click.prevent="toggle" v-if="login">
+  <div id="burger" :class="{ 'active' : isBurgerActive }" @click.prevent="toggle">
     <slot>
       <button type="button" class="burger-button" title="Menu">
         <span class="hidden">Toggle menu</span>
@@ -18,9 +18,6 @@ export default {
     isBurgerActive() {
       return this.$store.commit(Constant.ISNAVOPEN);
     },
-    login() {
-      return this.$cookie.get("loginStatus");
-    }
   },
   methods: {
     toggle() {

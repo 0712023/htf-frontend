@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="main-nav">
+    <nav class="main-nav" v-show="userId">
       <Burger/><logout/>
     </nav>
     <div class="body"><router-view></router-view></div>
@@ -28,6 +28,7 @@
 import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
 import Logout from './components/Logout.vue';
+import Eventbus from './store/Eventbus';
 
 export default {
   name: "app",
@@ -36,12 +37,20 @@ export default {
     Sidebar,
     Logout,
   },
+  data(){
+    return {userId:this.$cookie.get("userId")}
+  },
+  created:function(){
+    Eventbus.$on('login', this.updatelogin);
+  },
   computed:{
     sensors(){
       return JSON.parse(this.$cookie.get("sensors"));
     },
-    userId(){
-      return this.$cookie.get("userId");
+  },
+  methods:{
+    updatelogin:function(s){
+      this.userId = s;
     }
   }
 };
