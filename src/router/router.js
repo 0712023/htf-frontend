@@ -44,10 +44,11 @@ const router = new VueRouter({
 })
 
 router.beforeEach(function (to, from, next) {
-  if(VueCookie.get("accesstoken")==null && to.fullPath!="/")  {
-    if(confirm("please log in")){
-      router.push("/")
-    }
+  if(VueCookie.get("userId")==null && to.fullPath!="/")  {
+    alert("please log in");
+    router.push("/");
+  } else if(VueCookie.get("userId") != null && to.fullPath == "/"){
+    router.push("/user/"+VueCookie.get("userId"));
   } else{
     next();
   }
