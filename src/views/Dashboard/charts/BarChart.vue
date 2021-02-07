@@ -1,11 +1,14 @@
 <template>
   <div class="small">
-    <Bar-chart :chart-data="datacollection" chart:update="addData()"></Bar-chart>
-    <!-- <button @click="fillData()">Randomize</button> -->
+    <Bar-chart :chart-data="datacollection"></Bar-chart>
+    <button @click="fillData()">Randomize</button>
+    <button @click="addData()">addData</button>
+    {{$route.params.mch_id}}
   </div>
 </template>
 
 <script>
+import axios from 'axios';
   import BarChart from '../../../assets/js/BarChart.module'
 
   export default {
@@ -21,10 +24,18 @@
       this.fillData();
     },
     created: () => {
-      
+      axios
     },
     methods: {
       fillData () {
+        console.log(this.$route.params.mch_id);
+
+        axios.post(`http://studioj.ddns.net/getMeasureListByMchId`, {"mchId": this.$route.params.mch_id}, 
+          {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
+        ).then(response =>{
+          console.log(response.data);
+        })
+
         this.datacollection = {
           labels: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()],
           datasets: [
@@ -40,11 +51,28 @@
           ]
         }
 
+        setInterval(()=>{
+          this.datacollection.labels.push(this.getRandomInt());
+          for (let dataset of this.datacollection.datasets) {
+            dataset.data.push(this.getRandomInt());
+          }
+
+          if (this.datacollection.labels.length>9) {
+            this.datacollection.labels.shift();
+            for (let dataset of this.datacollection.datasets) {
+              dataset.data.shift();
+            }
+          }
+        }, 2000)
+
+      },
+      addData () {
       },
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
       },
-    }
+    },
+    
   }
 </script>
 

@@ -3,8 +3,9 @@
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap">
                 <div class="box1" v-for="sensor in sensors" :key="sensor.mch_id" >
-                    <router-link :to="'/sensor/'+sensor.description">{{ sensor.description }}</router-link>
-                    <br><br>{{ sensor.description }}
+                    <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mch_id">{{ sensor.description }}</router-link>
+                    <br><br>name : {{ sensor.description }} 
+                    <br><br>mch_id : {{ sensor.mch_id }}
                 </div>
             </div>
         </div>

@@ -24,6 +24,9 @@ import LineChart from './Dashboard/charts/LineChart'
 import BarChart from './Dashboard/charts/BarChart'
 import RadarChart from './Dashboard/charts/RadarChart'
 export default {
+    props:{
+        sensorName: String
+    },
     components:{
         LineChart,BarChart,RadarChart
     },
