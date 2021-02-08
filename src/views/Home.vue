@@ -26,9 +26,7 @@ export default {
                 //쿠키에 access token를 넣어줌
                 this.$cookie.set("accesstoken", response.data, 1);
                 axios.defaults.headers.common["x-access-token"] = response.data;
-            }).then(()=>{
-                //로그인시 기본으로 센서 데이터를 받으러 다녀옴
-                    axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": this.id}, 
+                axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": this.id}, 
                             {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
                     ).then(response =>{
                         //로그인 정보 및 센서 데이터 쿠키에 저장
@@ -39,8 +37,9 @@ export default {
                         EventBus.$emit('sensors', response.data);
                         this.$router.push('user/'+this.id);
                     })
-                }
-            )
+            }).catch(function(error){
+                console.log(error)
+            })
         }
     }
 }
