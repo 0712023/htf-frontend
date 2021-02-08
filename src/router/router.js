@@ -20,11 +20,6 @@ const routes = [
     component: () => import('../views/Sensor.vue'),
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import('../views/Dashboard/Dashboard.vue')
-  },
-  {
     path: '/three',
     name: 'Three',
     component: () => import('../views/Three.vue')
