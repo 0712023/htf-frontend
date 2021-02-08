@@ -1,27 +1,40 @@
 <template>
-    <div id="test">
-        this is home <br><br><br>
+    <div id="standard">
         <!-- 로그인하는 form -->
         Admin Login : <input type="checkbox" v-model="adminLogin">
         <input type="text" placeholder="id" v-model='id'>
         <input type="password" placeholder="pw" v-model='pw'>
-        <button @click="login">login</button> <br>
-        <button>sign in</button>
+        <button @click="login">login</button>
+        <button @click="modalshow">Register</button>
+        <modal name="register"><Register/></modal>
     </div>
 </template>
 
 <script>
+import Register from './Register';
 import axios from 'axios'
 import EventBus from '../store/Eventbus'
 export default {
+    mounted () {
+        this.$modal.hide('register')
+    },
     data () {
         return {
             id: '',
             pw: '',
-            adminLogin: true,
+            adminLogin: false,
         }
     },
+    components:{
+        Register
+    },
+    created:function(){
+        EventBus.$on('modal',()=>this.$modal.hide('register'));
+    },
     methods:{
+        modalshow(){
+            this.$modal.show('register')
+        },
         returnAdminLetter() {
             if (this.adminLogin) {
                 return "Admin";
@@ -59,10 +72,6 @@ export default {
                             this.$router.push('user/'+this.id);
                     })
                 }
-
-
-
-
             }).catch(function(error){
                 console.log(error)
             })

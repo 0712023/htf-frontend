@@ -1,42 +1,44 @@
 <template>
-	<div class="reg_container">
-		<form @submit.prevent="SignupForm">
-            <div>
-				<label for="reg_id">id : </label>
-				<input type="text" id="reg_id" v-model="reg_id" placeholder="Enter your ID" />
-                
-			</div>
-            <div>
-				<label for="reg_pw">pw : </label>
-				<input type="text" id="reg_pw" v-model="reg_pw" />
-			</div>
-			<button type="submit">회원가입</button>
-		</form>
+	<div id="standard2">
+		Register New Admin Account <br><br>
+		<input type="text" placeholder="id" v-model='id'>
+        <input type="password" placeholder="pw" v-model='pw'>
+        <input type="password" placeholder="rewrite pw" v-model='re_pw'>
+		<button @click="checkForm">회원가입</button>
 	</div>
 </template>
 
 <script>
+import axios from 'axios'
+import EventBus from '../store/Eventbus'
 export default {
 	name: 'SignupForm',
 	data() {
 		return {
-            errors: [],
-            reg_id: null,
-            reg_pw: null,
+            id: "",
+            pw: "",
+			re_pw: ""
 		};
 	},
 	methods: {
         checkForm() {
-            this.errors = [];
-            if( !this.reg_id ){
-                this.errors.push("ID error.");
-            }
-            if( !this.reg_pw ){
-                this.errors.push("PW error.");
-            }
-            if( !this.errors.length ) return true;
+			if(this.pw != this.re_pw){
+				alert("password does not match");
+				this.pw = "";
+				this.re_pw = "";
+				this.id = "";
+			} else{
+				axios.post(`http://studioj.ddns.net/insertAdmin`, {"adId":this.id,"adPw":this.pw})
+				.then((res)=>{
+					console.log(res.data);
+					alert("register success!");
+					EventBus.$emit("modal",false);
+				})
+				.catch((error)=>{
+					console.log(error);
+				})
+			}
         },
-        
 	},
 };
 </script>
