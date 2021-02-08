@@ -7,6 +7,7 @@
 import * as THREE from "../assets/js/three.module.js";
 import * as OrbitControls from "../assets/js/OrbitControls.module.js";
 import grass from "@/assets/img/grasslight-big.jpg";
+// import Stats from '../assets/js/stats.module.js';
 // import * as GLTFLoader from "../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
 
@@ -19,9 +20,13 @@ export default {
       renderer: null,
       cube: null,
       controls: null,
+      raycaster : null,
+      mouse : null,
+      stats : null
     };
   },
   created: function () {
+    this.mouse = new THREE.Vector2(1,1);
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xffffff);
 
@@ -105,11 +110,19 @@ export default {
     const geometry = new THREE.BoxGeometry(50, 50, 50);
     const material = new THREE.MeshBasicMaterial({
       color: 0xffffff,
-      wireframe: true,
+      wireframe: false,
     });
     this.cube = new THREE.Mesh(geometry, material);
-    // this.scene.add(this.cube);
+    this.scene.add(this.cube);
 
+
+    // this.stats = new Stats();
+	// document.body.appendChild( this.stats.dom );
+    //event
+    console.log(this.mouse)
+    this.raycaster = new THREE.Raycaster();
+    
+    document.addEventListener( 'mousemove', this.onDocumentMouseMove );
     document.body.appendChild(this.renderer.domElement);
     this.animate();
   },
@@ -119,9 +132,16 @@ export default {
   },
   methods: {
     animate: function () {
+    // this.raycaster.setFromCamera( this.mouse, this.camera );
+    // const intersection = this.raycaster.intersectObject( this.cube );
+    // if ( intersection.length > 0 ) {
+
+	// 			console.log("22222")
+
+	// }
       requestAnimationFrame(this.animate);
-      this.update();
       this.renderer.render(this.scene, this.camera);
+    //   this.stats.update();
     },
     resize: function () {
       var width = window.innerWidth;
@@ -130,16 +150,32 @@ export default {
       this.camera.aspect = width / height;
       this.camera.updateProjectionMatrix();
     },
-    update: function () {
-      this.gui = null;
-    },
     zom: function(){
         if(this.controls.screenSpacePanning==true){
             this.controls.screenSpacePanning=false;
         }else{
             this.controls.screenSpacePanning=true;
         }
-    }
+    },
+    onDocumentMouseMove : function ( event ) {
+
+				event.preventDefault();
+
+				this.mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+
+				this.raycaster.setFromCamera( this.mouse, this.camera );
+
+				const intersects = this.raycaster.intersectObject( this.cube );
+
+				if ( intersects.length > 0 ) {
+
+					// const intersect = intersects[ 0 ];
+
+					window.location.href='http://127.0.0.1:8081/sensor/light1/mchid/4561a65s1f';
+
+                }
+                this.renderer.render(this.scene, this.camera);
+	}
   },
 };
 </script>
