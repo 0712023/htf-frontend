@@ -16,6 +16,11 @@
         <li>
           <router-link to="/three">Three</router-link>
         </li>
+        <li>
+          <router-link to="/setting/">Setting</router-link>
+        </li>
+
+        
         <li v-if="false"> <!-- adminmode true일 경우 보여주는 메뉴 -->
           <router-link :to="'/member/'+memId">회원 관리</router-link>
         </li>
