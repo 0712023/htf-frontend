@@ -39,39 +39,70 @@ export default {
             if (this.adminLogin) {
                 return "Admin";
             } else {
-                return "";
+                return "Member";
             }
         },
         login() {
             //Axios로 로그인 요청을 함
             console.log(this.returnAdminLetter());
-            axios.post(`http://studioj.ddns.net/login` + this.returnAdminLetter(), {"memId":this.id,"memPw":this.pw})
+            if(this.adminLogin) {
+                this.adminLoginMethod();
+            } else {
+                this.memberLoginMethod();
+            }
+        },
+        memberLoginMethod() {
+            axios.post(`http://studioj.ddns.net/loginMember`, {"memId":this.id,"memPw":this.pw})
             .then(response => {
                 if (response.data == '') {
                     alert("login failed")
                     throw new Error("login failed")
-                }
-                //쿠키에 access token를 넣어줌
-                if (this.adminLogin) {
-                    //admin id로 모든 멤버 아이디 불러오기
-
-                    this.$router.push('admin/'+this.id);
                 } else {
-                //유저가 로그인을 시도하는 경우
+                    //쿠키에 access token를 넣어줌
                     this.$cookie.set("accesstoken", response.data, 1);
-                    axios.defaults.headers.common["x-access-token"] = response.data;
-                    axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": this.id}, 
-                            {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
-                        ).then(response =>{
-                            //로그인 정보 및 센서 데이터 쿠키에 저장
-                            this.$cookie.set("userId", this.id, 1);
-                            this.$cookie.set("sensors", JSON.stringify(response.data), 1);
-                            //사이드바 및 로그아웃 버튼 활성화
-                            EventBus.$emit('login', true);
-                            EventBus.$emit('sensors', response.data);
-                            this.$router.push('user/'+this.id);
-                    })
                 }
+
+                //유저가 로그인을 시도하는 경우
+                axios.defaults.headers.common["x-access-token"] = response.data;
+                axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": this.id}, 
+                        {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
+                    ).then(response =>{
+                        //로그인 정보 및 센서 데이터 쿠키에 저장
+                        this.$cookie.set("userId", this.id, 1);
+                        this.$cookie.set("sensors", JSON.stringify(response.data), 1);
+                        //사이드바 및 로그아웃 버튼 활성화
+                        EventBus.$emit('login', true);
+                        EventBus.$emit('sensors', response.data);
+                        this.$router.push('user/'+this.id);
+                })
+               
+            }).catch(function(error){
+                console.log(error)
+            })
+        },
+        adminLoginMethod() {
+            axios.post(`http://studioj.ddns.net/loginAdmin`, {"adId": this.id, "adPw":this.pw})
+            .then(response => {
+                if (response.data == '') {
+                    alert("login failed")
+                    throw new Error("login failed")
+                } else {
+                    //쿠키에 access token를 넣어줌
+                    this.$cookie.set("accesstoken", response.data, 1);
+                }
+                //admin id로 모든 멤버 아이디 불러오기
+                axios.post(`http://studioj.ddns.net/getMemberListByAdId`, {"adId": this.id}, 
+                        {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
+                    ).then(response =>{
+                        //로그인 정보 및 센서 데이터 쿠키에 저장
+                        console.log(response.data);
+                        this.$cookie.set("userId", this.id, 1);
+                        this.$cookie.set("members", JSON.stringify(response.data), 1);
+                        //사이드바 및 로그아웃 버튼 활성화
+                        EventBus.$emit('login', true);
+                        EventBus.$emit('sensors', response.data);
+                        this.$router.push('admin/'+this.id);
+                })
             }).catch(function(error){
                 console.log(error)
             })
