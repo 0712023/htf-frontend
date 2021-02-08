@@ -73,7 +73,7 @@ export default {
                         //사이드바 및 로그아웃 버튼 활성화
                         EventBus.$emit('login', true);
                         EventBus.$emit('sensors', response.data);
-                        this.$router.push('mem/'+this.id);
+                        this.$router.push('member/'+this.id);
                 })
                
             }).catch(function(error){
