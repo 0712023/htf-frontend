@@ -18,3 +18,7 @@ Axios
 ```
 npm install --save axios
 ```
+Modal
+```
+npm i vue-js-modal
+```
