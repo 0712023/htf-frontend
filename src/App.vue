@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <nav class="main-nav" v-show="memId">
+    <nav class="main-nav" v-show="login">
       <Burger/><logout/>
     </nav>
     <div class="body"><router-view></router-view></div>
-
+    
     <Sidebar>
-      <ul class="sidebar-panel-nav" v-if="true">
+      <ul class="sidebar-panel-nav" v-if="memId">
         <li>
           <router-link :to="'/member/'+memId">Member</router-link>
         </li>
@@ -16,17 +16,17 @@
         <li>
           <router-link to="/three">Three</router-link>
         </li>
-        <li v-if="false"> <!-- adminmode true일 경우 보여주는 메뉴 -->
-          <router-link :to="'/member/'+memId">회원 관리</router-link>
-        </li>
-        <li v-if="false">
-          <router-link :to="'/member/'+memId">어드민 모드로 돌아가기</router-link>
+        <li v-if="adminId">
+          <router-link :to="'/admin/'+adminId" v-on:click.native="backToAdmin">Admin</router-link>
         </li>
       </ul>
-      <ul class="sidebar-panel-nav" v-if="false" >
+      <ul class="sidebar-panel-nav" v-if="!memId" >
         <!-- admin의 기본 관리 메뉴 -->
         <li style="color:white;">
-          유저 목록
+          <router-link :to="'/admin/'+this.adminId">Member List</router-link>
+        </li>
+        <li>
+          <router-link :to="'/memberManage'">Member Manager</router-link>
         </li>
       </ul>
     </Sidebar>
@@ -48,25 +48,39 @@ export default {
   },
   data(){
     return {
+      login:this.$cookie.get("login"),
       memId:this.$cookie.get("memId"),
+      adminId:this.$cookie.get("adminId"),
       sensors:JSON.parse(this.$cookie.get("sensors")),
       members:JSON.parse(this.$cookie.get("members")),
     }
   },
   created:function(){
-    Eventbus.$on('login', this.updatelogin);
-    Eventbus.$on('sensors', this.updatesensors);
-    Eventbus.$on('members', this.updatemembers);
+    Eventbus.$on('login', this.updateLogin);
+    Eventbus.$on('member', this.updateMemId);
+    Eventbus.$on('admin', this.updateAdminId);
+    Eventbus.$on('sensors', this.updateSensors);
+    Eventbus.$on('members', this.updateMembers);
   },
   methods:{
-    updatelogin:function(s){
-      this.memId = s;
+    updateLogin:function(s){
+      this.login = s;
     },
-    updatesensors:function(s){
+    updateSensors:function(s){
       this.sensors = s;
     },
-    updatemembers:function(s){
+    updateMembers:function(s){
       this.members = s;
+    },
+    updateMemId:function(){
+      this.memId = this.$cookie.get("memId");
+    },
+    updateAdminId:function(){
+      this.adminId = this.$cookie.get("adminId");
+    },
+    backToAdmin:function(){
+      this.$cookie.delete("memId");
+      this.memId = false;
     },
   }
 };

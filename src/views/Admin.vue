@@ -27,16 +27,18 @@ export default {
     };
   },
   methods: {
-    toUser (v) {
-      console.log(v);
-      axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": v}, 
+    toUser (memberId) {
+      console.log(memberId);
+      axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": memberId}, 
         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
       ).then(response =>{
         console.log(response.data);
         this.$cookie.set("sensors", JSON.stringify(response.data), 1);
+        this.$cookie.set("memId", memberId, 1);
         console.log(this.$cookie.get("sensors"));
         EventBus.$emit('sensors', response.data);
-        this.$router.push('../member/'+v);
+        EventBus.$emit('member', true);
+        this.$router.push('../member/'+memberId);
       })
     }
   }

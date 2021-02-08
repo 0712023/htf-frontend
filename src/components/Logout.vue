@@ -9,11 +9,14 @@ export default {
         logout:function() {
             //모든 쿠키를 지움
             this.$cookie.delete("accesstoken");
+            this.$cookie.delete("login");
             this.$cookie.delete("memId");
             this.$cookie.delete("adminId");
             this.$cookie.delete("sensors");
             this.$cookie.delete("members");
             Eventbus.$emit('login', false);
+            Eventbus.$emit('member', false);
+            Eventbus.$emit('admin', false);
             this.$router.push('/');
         }
     }
