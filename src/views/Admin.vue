@@ -2,9 +2,9 @@
     <div>
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap">
-            <div v-for="(value, index) in user" :key="index">
+            <div v-for="(value, index) in members" :key="index">
                 <div class="box1" >
-                    유저 :<a :href="value.url">{{value.name }}</a> <br>
+                    유저 : <a href="#" @click="toUser(value.memId)">{{value.memId}}</a>
                 </div>
             </div>
             </div>
@@ -14,59 +14,14 @@
 
 <script type="module">
 export default {
+    computed: {
+      members() {
+        return JSON.parse(this.$cookie.get("members"));
+      }
+    },
     data: function () {
     return {
-      user: [
-        { name: "mg" ,url:"/" },
-        { name: "om" ,url:"/home"},
-        { name: "sh" ,url:"/home"},
-        { name: "jw" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-        { name: "ch" ,url:"/home"},
-      ],
+      user: [],
     };
   },
 }

@@ -25,9 +25,14 @@ const routes = [
     component: () => import('../views/Three.vue')
   },
   {
-    path: '/admin',
+    path: '/admin/:aid',
     name: 'Admin',
     component: () => import('../views/Admin.vue')
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/Register.vue')
   }
 ]
 

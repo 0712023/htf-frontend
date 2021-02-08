@@ -6,7 +6,7 @@
     <div class="body"><router-view></router-view></div>
 
     <Sidebar>
-      <ul class="sidebar-panel-nav">
+      <ul class="sidebar-panel-nav" v-if="true">
         <li>
           <router-link :to="'/user/'+userId">User</router-link>
         </li>
@@ -15,6 +15,18 @@
         </li>
         <li>
           <router-link to="/three">Three</router-link>
+        </li>
+        <li v-if="false"> <!-- adminmode true일 경우 보여주는 메뉴 -->
+          <router-link :to="'/user/'+userId">회원 관리</router-link>
+        </li>
+        <li v-if="false">
+          <router-link :to="'/user/'+userId">어드민 모드로 돌아가기</router-link>
+        </li>
+      </ul>
+      <ul class="sidebar-panel-nav" v-if="false" >
+        <!-- admin의 기본 관리 메뉴 -->
+        <li style="color:white;">
+          유저 목록
         </li>
       </ul>
     </Sidebar>

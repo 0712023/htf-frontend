@@ -18,7 +18,8 @@ import axios from 'axios'
 export default {
     computed:{
         sensors(){
-            return JSON.parse(this.$cookie.get("sensors"));
+            return JSON.parse(
+                this.$cookie.get("sensors"));
         },
     },
     data(){
