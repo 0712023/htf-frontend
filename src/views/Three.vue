@@ -1,13 +1,15 @@
 <template>
-  <div></div>
+  <div>
+      <button @click="zom()">sw</button>
+  </div>
 </template>
 <script type="module">
 import * as THREE from "../assets/js/three.module.js";
-import { GUI } from "../assets/js/dat.gui.module.js";
 import * as OrbitControls from "../assets/js/OrbitControls.module.js";
 import grass from "@/assets/img/grasslight-big.jpg";
 // import * as GLTFLoader from "../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
+
 
 export default {
   data: function () {
@@ -52,6 +54,8 @@ export default {
 
     this.controls.maxPolarAngle = Math.PI / 2;
 
+
+    //grass
     const gt = new THREE.TextureLoader().load(grass);
     const gg = new THREE.PlaneGeometry(16000, 16000);
     const gm = new THREE.MeshPhongMaterial({ color: 0xffffff, map: gt });
@@ -67,6 +71,7 @@ export default {
 
     this.scene.add(ground);
 
+    //light
     this.scene.add(new THREE.AmbientLight(0x222222));
 
     const light = new THREE.DirectionalLight(0xffffff, 2.25);
@@ -96,7 +101,7 @@ export default {
     //             this.renderer.render(this.scene,this.camera);
     //     });
 
-
+    //box
     const geometry = new THREE.BoxGeometry(50, 50, 50);
     const material = new THREE.MeshBasicMaterial({
       color: 0xffffff,
@@ -105,19 +110,17 @@ export default {
     this.cube = new THREE.Mesh(geometry, material);
     // this.scene.add(this.cube);
 
-    const gui = new GUI();
-    gui.add(this.controls, "screenSpacePanning");
-
     document.body.appendChild(this.renderer.domElement);
     this.animate();
   },
   destroyed: function () {
     document.body.removeChild(this.renderer.domElement);
+    
   },
   methods: {
     animate: function () {
       requestAnimationFrame(this.animate);
-      // this.update();
+      this.update();
       this.renderer.render(this.scene, this.camera);
     },
     resize: function () {
@@ -128,9 +131,15 @@ export default {
       this.camera.updateProjectionMatrix();
     },
     update: function () {
-      this.cube.rotation.x += 0.1;
-      this.cube.rotation.y += 0.005;
+      this.gui = null;
     },
+    zom: function(){
+        if(this.controls.screenSpacePanning==true){
+            this.controls.screenSpacePanning=false;
+        }else{
+            this.controls.screenSpacePanning=true;
+        }
+    }
   },
 };
 </script>
