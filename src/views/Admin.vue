@@ -4,7 +4,7 @@
             <div  class="wrap">
             <div v-for="(value, index) in members" :key="index">
                 <div class="box1" >
-                    유저 : <router-link :to="'/user/'+value.memId">{{ value.memId }}</router-link>
+                    유저 : <a href="#" @click="toUser(value.memId)">{{value.memId}}</a>
                 </div>
             </div>
             </div>
