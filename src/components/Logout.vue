@@ -10,7 +10,9 @@ export default {
             //모든 쿠키를 지움
             this.$cookie.delete("accesstoken");
             this.$cookie.delete("memId");
+            this.$cookie.delete("adminId");
             this.$cookie.delete("sensors");
+            this.$cookie.delete("members");
             Eventbus.$emit('login', false);
             this.$router.push('/');
         }

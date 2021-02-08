@@ -96,7 +96,7 @@ export default {
                     ).then(response =>{
                         //로그인 정보 및 센서 데이터 쿠키에 저장
                         console.log(response.data);
-                        this.$cookie.set("AdminId", this.id, 1);
+                        this.$cookie.set("adminId", this.id, 1);
                         this.$cookie.set("members", JSON.stringify(response.data), 1);
                         //사이드바 및 로그아웃 버튼 활성화
                         EventBus.$emit('login', true);
