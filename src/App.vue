@@ -60,7 +60,7 @@ export default {
   },
   methods:{
     updatelogin:function(s){
-      this.userId = s;
+      this.memId = s;
     },
     updatesensors:function(s){
       this.sensors = s;
