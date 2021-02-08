@@ -1,6 +1,6 @@
 <template>
   <div>
-      <button @click="zom()">sw</button>
+    <button @click="zom()">sw</button> 
   </div>
 </template>
 <script type="module">
@@ -11,7 +11,6 @@ import grass from "@/assets/img/grasslight-big.jpg";
 // import * as GLTFLoader from "../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
 
-
 export default {
   data: function () {
     return {
@@ -20,13 +19,16 @@ export default {
       renderer: null,
       cube: null,
       controls: null,
-      raycaster : null,
-      mouse : null,
-      stats : null
+      raycaster: null,
+      mouse: null,
+      ground: null,
+      sphere :null,
+      objects2 : null,
     };
   },
   created: function () {
-    this.mouse = new THREE.Vector2(1,1);
+    const objects =[];
+    this.mouse = new THREE.Vector2(1, 1);
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xffffff);
 
@@ -59,7 +61,6 @@ export default {
 
     this.controls.maxPolarAngle = Math.PI / 2;
 
-
     //grass
     const gt = new THREE.TextureLoader().load(grass);
     const gg = new THREE.PlaneGeometry(16000, 16000);
@@ -73,8 +74,9 @@ export default {
     ground.material.map.encoding = THREE.sRGBEncoding;
     // note that because the ground does not cast a shadow, .castShadow is left false
     ground.receiveShadow = true;
-
+    this.ground = ground;
     this.scene.add(ground);
+    objects.push(ground)
 
     //light
     this.scene.add(new THREE.AmbientLight(0x222222));
@@ -97,7 +99,6 @@ export default {
 
     this.scene.add(light);
 
-
     // var loader = new THREE.GLTFLoader.GLTFLoader();
     //         loader.load(house,function(gltf){
     //             let house1 = gltf.scene.children[0];
@@ -107,41 +108,47 @@ export default {
     //     });
 
     //box
-    const geometry = new THREE.BoxGeometry(50, 50, 50);
-    const material = new THREE.MeshBasicMaterial({
+    const geometry1 = new THREE.BoxGeometry(50, 50, 50);
+    const material1 = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       wireframe: false,
     });
-    this.cube = new THREE.Mesh(geometry, material);
+    this.cube = new THREE.Mesh(geometry1, material1);
     this.scene.add(this.cube);
+    this.cube.name="123"
+    objects.push(this.cube)
+    this.cube.url = "http://127.0.0.1:8081/sensor/light1/mchid/4561a65s1f";
 
-
+    // http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48
+    const geometry = new THREE.SphereGeometry(32, 32, 32);
+    const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+    this.sphere = new THREE.Mesh(geometry, material);
+    this.sphere.position.x = 100;
+    this.scene.add(this.sphere);
+    objects.push(this.sphere);
+    this.sphere.url="http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48"
     // this.stats = new Stats();
-	// document.body.appendChild( this.stats.dom );
+    // document.body.appendChild( this.stats.dom );
     //event
-    console.log(this.mouse)
+    console.log(this.mouse);
     this.raycaster = new THREE.Raycaster();
-    
-    document.addEventListener( 'mousemove', this.onDocumentMouseMove );
+
+    document.addEventListener("click", this.click);
+    document.addEventListener( 'keydown', this.onDocumentKeyDown );
+		document.addEventListener( 'keyup', this.onDocumentKeyUp );
+
+    this.objects2 = objects
+    console.log(objects)
     document.body.appendChild(this.renderer.domElement);
     this.animate();
   },
   destroyed: function () {
     document.body.removeChild(this.renderer.domElement);
-    
   },
   methods: {
     animate: function () {
-    // this.raycaster.setFromCamera( this.mouse, this.camera );
-    // const intersection = this.raycaster.intersectObject( this.cube );
-    // if ( intersection.length > 0 ) {
-
-	// 			console.log("22222")
-
-	// }
       requestAnimationFrame(this.animate);
       this.renderer.render(this.scene, this.camera);
-    //   this.stats.update();
     },
     resize: function () {
       var width = window.innerWidth;
@@ -150,32 +157,49 @@ export default {
       this.camera.aspect = width / height;
       this.camera.updateProjectionMatrix();
     },
-    zom: function(){
-        if(this.controls.screenSpacePanning==true){
-            this.controls.screenSpacePanning=false;
-        }else{
-            this.controls.screenSpacePanning=true;
-        }
+    zom: function () {
+      if (this.controls.screenSpacePanning == true) {
+        this.controls.screenSpacePanning = false;
+      } else {
+        this.controls.screenSpacePanning = true;
+      }
     },
-    onDocumentMouseMove : function ( event ) {
+    click: function (event) {
+      event.preventDefault();
 
-				event.preventDefault();
+      this.mouse.set(
+        (event.clientX / window.innerWidth) * 2 - 1,
+        -(event.clientY / window.innerHeight) * 2 + 1
+      );
 
-				this.mouse.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+      this.raycaster.setFromCamera(this.mouse, this.camera);
+      console.log(this.objects2)
+      const intersects = this.raycaster.intersectObject(this.sphere,true);
+      // console.log(intersects.length)
+      if (intersects.length > 0) {
+        // console.log("애기: "+this.objects)
+        const intersect = intersects[0];
+        console.log(intersect.object)
+        window.location.href = intersect.object.url;
+        console.log(this.object.url)
+      }
+      this.renderer.render(this.scene, this.camera);
+    },
+    onDocumentKeyDown: function (event) {
+      switch (event.keyCode) {
+        case 16:
+          this.isShiftDown = true;
+          break;
+      }
+    },
 
-				this.raycaster.setFromCamera( this.mouse, this.camera );
-
-				const intersects = this.raycaster.intersectObject( this.cube );
-
-				if ( intersects.length > 0 ) {
-
-					// const intersect = intersects[ 0 ];
-
-					window.location.href='http://127.0.0.1:8081/sensor/light1/mchid/4561a65s1f';
-
-                }
-                this.renderer.render(this.scene, this.camera);
-	}
+    onDocumentKeyUp: function (event) {
+      switch (event.keyCode) {
+        case 16:
+          this.isShiftDown = false;
+          break;
+      }
+    }
   },
 };
 </script>
@@ -188,4 +212,4 @@ body {
 canvas {
   display: block;
 }
-</style>
+</style>)
