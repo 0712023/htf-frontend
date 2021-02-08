@@ -3,8 +3,9 @@
         this is home <br><br><br>
         <!-- 로그인하는 form -->
         <input type="text" placeholder="id" v-model='id'>
-        <input type="password" placeholder="pw" v-model='pw'> <br>
-        <button @click="login">login</button><button>sign in</button>
+        <input type="password" placeholder="pw" v-model='pw'>
+        <button @click="login">login</button> <br>
+        <button>sign in</button>
     </div>
 </template>
 
@@ -23,6 +24,10 @@ export default {
             //Axios로 로그인 요청을 함
             axios.post(`http://studioj.ddns.net/login`, {"memId":this.id,"memPw":this.pw})
             .then(response =>{
+                if (response.data == '') {
+                    alert("login failed")
+                    throw new Error("login failed")
+                }
                 //쿠키에 access token를 넣어줌
                 this.$cookie.set("accesstoken", response.data, 1);
                 axios.defaults.headers.common["x-access-token"] = response.data;

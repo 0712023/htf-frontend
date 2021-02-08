@@ -24,6 +24,19 @@
     created() {
       console.log(this.$route.params.mchId);
 
+      //처음에 10개 가져오는 것
+      axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId}, 
+        {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
+        ).then(response =>{
+        console.log(response.data);
+        for (let incomingData of response.data) {
+          this.datacollection.labels.push("");
+          for (let dataset of this.datacollection.datasets) {
+            dataset.data.push((incomingData.value));
+          }
+        }
+      })
+
       this.chartInterval = setInterval(()=>{
       axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, 
         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
