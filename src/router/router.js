@@ -10,9 +10,9 @@ const routes = [
     component: () => import('../views/Home.vue')
   },
   {
-    path: '/user/:uid',
-    name: 'User',
-    component: () => import('../views/User.vue')
+    path: '/member/:memId',
+    name: 'Member',
+    component: () => import('../views/Member.vue')
   },
   {
     path: '/sensor/:desc/mchid/:mchId',
@@ -42,13 +42,16 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
 router.beforeEach(function (to, from, next) {
-  if(VueCookie.get("userId")==null && to.fullPath!="/")  {
+  let memId = VueCookie.get("memId");
+  let adminId = VueCookie.get("adminId");
+  if( (memId==null && adminId==null) && to.fullPath!="/")  {
     alert("please log in");
     router.push("/");
-  } else if(VueCookie.get("userId") != null && to.fullPath == "/"){
-    router.push("/user/"+VueCookie.get("userId"));
+  } else if(memId!=null && to.fullPath == "/"){
+    router.push("/member/"+memId);
+  } else if(adminId!=null && to.fullPath == "/"){
+    router.push("/admin/"+adminId);
   } else{
     next();
   }

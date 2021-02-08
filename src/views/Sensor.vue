@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            this sensor is : <router-link :to="'/user/'+userId">{{$route.params.desc}}</router-link> <br>
+            this sensor is : <router-link :to="'/member/'+memId">{{$route.params.desc}}</router-link> <br>
         </div>
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap">
@@ -31,8 +31,8 @@ export default {
         LineChart,BarChart,RadarChart
     },
     computed:{
-        userId:function(){
-            return this.$cookie.get("userId");
+        memId:function(){
+            return this.$cookie.get("memId");
         }
     }
 }
