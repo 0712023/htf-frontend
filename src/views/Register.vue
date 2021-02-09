@@ -28,7 +28,7 @@ export default {
 				this.re_pw = "";
 				this.id = "";
 			} else if(this.$cookie.get("adminId")!=null){
-				axios.post(`http://studioj.ddns.net/insertMember`, {"memId":this.id,"memPw":this.pw,"memRank":"silver","adId":null}
+				axios.post(`http://studioj.ddns.net/insertMember`, {"memId":this.id,"memPw":this.pw,"memRank":"silver","adId":{"adId": this.$cookie.get("adminId")}}
 				,{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
 				.then((res)=>{
 					console.log(res.data);
