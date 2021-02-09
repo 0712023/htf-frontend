@@ -1,7 +1,7 @@
 <template>
   <div id="standard2">
     Update Machine Description <br>
-    <modal name="UpdateMachine" :mchId="mchId"><UpdateMachineModal/></modal>
+    <modal name="UpdateMachine"><UpdateMachineModal :desc.sync="description" :mchIdProps.sync="mchId"/></modal>
     <table border="1" width="1000">
             <thead> 
             <tr><!--template 쓰는 이유 : v-for 이후에 th에서 v-if사용하기 위해서 -->
@@ -34,13 +34,14 @@ export default {
   data() {
     return {
       mchList: JSON.parse(this.$cookie.get("sensors")),
-      description: "",
-      mchId:"",
+      description: "asd",
+      mchId:"sh",
     };
   },
   methods: {
     modalshow(desc,mchIdInPut) {
-        this.mchId = mchIdInPut;
+      this.mchId = mchIdInPut;
+      this.description = desc;
       this.$modal.show("UpdateMachine", {"desc":desc});
     },
   },
