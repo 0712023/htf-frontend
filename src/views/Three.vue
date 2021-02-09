@@ -116,9 +116,11 @@ export default {
     });
     this.cube = new THREE.Mesh(geometry1, material1);
     // this.cube.position.y = 100;
-    this.scene.add(this.cube);
+    this.textmaker(this.cube);
     this.cube.url = "http://127.0.0.1:8081/sensor/light1/mchid/4561a65s1f";
     objects.push(this.cube);
+    this.scene.add(this.cube);
+    this.textmaker(this.cube);
 
     this.cube2 = new THREE.Mesh(geometry1, material1);
     // this.cube2.position.y = 100;
@@ -200,7 +202,6 @@ export default {
           break;
       }
     },
-
     onDocumentKeyUp: function (event) {
       switch (event.keyCode) {
         case 16:
@@ -208,6 +209,39 @@ export default {
           break;
       }
     },
+    textmaker : function(object){
+      const fontLoader = new THREE.FontLoader();
+      fontLoader.load('../assets/fonts/helvetiker_regular.typeface.json', function (font) {
+      let material = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        opacity: 0.8,
+        transparent: true,
+        side: THREE.DoubleSide,
+        wireframe: false
+      })
+
+
+      let fontGeometry = new THREE.TextGeometry('sensor', {
+      font: font,
+      size: 0.8,
+      height: 0.2,
+      curveSegments: 12,
+      bevelEnabled: true,
+      bevelThickness: 0.01,
+      bevelSize: 0.008,
+      bevelOffset: 0,
+      bevelSegments: 5
+      })
+
+      let textGeo = new THREE.BufferGeometry().fromGeometry( fontGeometry );
+
+      let text = new THREE.Mesh( textGeo, material );
+      text.position.x = object.position.x
+      text.position.y = object.position.y+30
+      text.position.z = object.position.z
+      this.scene.add(text);
+      });
+    }
   },
 };
 </script>
