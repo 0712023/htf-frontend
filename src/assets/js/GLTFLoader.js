@@ -61,7 +61,7 @@ import {
 	Vector3,
 	VectorKeyframeTrack,
 	sRGBEncoding
-} from '../../../build/three.module.js';
+} from './three.module.js';
 
 var GLTFLoader = ( function () {
 
@@ -314,9 +314,9 @@ var GLTFLoader = ( function () {
 
 			if ( json.extensionsUsed ) {
 
-				for ( var i = 0; i < json.extensionsUsed.length; ++ i ) {
+				for ( var i1 = 0; i1 < json.extensionsUsed.length; ++ i1 ) {
 
-					var extensionName = json.extensionsUsed[ i ];
+					var extensionName = json.extensionsUsed[ i1 ];
 					var extensionsRequired = json.extensionsRequired || [];
 
 					switch ( extensionName ) {
@@ -1041,15 +1041,15 @@ var GLTFLoader = ( function () {
 
 		for ( attributeName in primitive.attributes ) {
 
-			var threeAttributeName = ATTRIBUTES[ attributeName ] || attributeName.toLowerCase();
+			var threeAttributeName1 = ATTRIBUTES[ attributeName ] || attributeName.toLowerCase();
 
 			if ( gltfAttributeMap[ attributeName ] !== undefined ) {
 
 				var accessorDef = json.accessors[ primitive.attributes[ attributeName ] ];
 				var componentType = WEBGL_COMPONENT_TYPES[ accessorDef.componentType ];
 
-				attributeTypeMap[ threeAttributeName ] = componentType;
-				attributeNormalizedMap[ threeAttributeName ] = accessorDef.normalized === true;
+				attributeTypeMap[ threeAttributeName1 ] = componentType;
+				attributeNormalizedMap[ threeAttributeName1 ] = accessorDef.normalized === true;
 
 			}
 

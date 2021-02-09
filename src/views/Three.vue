@@ -4,12 +4,13 @@
   </div>
 </template>
 <script type="module">
-import * as THREE from "../assets/js/three.module.js";
+import * as THREE from 'three';
 import * as OrbitControls from "../assets/js/OrbitControls.module.js";
 import grass from "@/assets/img/grasslight-big.jpg";
+import fontjson from "../assets/fonts/helvetiker_regular.typeface.json"
 // import Stats from '../assets/js/stats.module.js';
-// import * as GLTFLoader from "../assets/js/GLTFLoader.js";
-// import house from "../assets/img/tower_house_design/scene.gltf";
+import {GLTFLoader} from "../assets/js/GLTFLoader.js";
+import house from "../assets/img/tower_house_design/scene.gltf";
 
 export default {
   data: function () {
@@ -100,13 +101,13 @@ export default {
 
     this.scene.add(light);
 
-    // var loader = new THREE.GLTFLoader.GLTFLoader();
-    //         loader.load(house,function(gltf){
-    //             let house1 = gltf.scene.children[0];
-    //             house1.scale.set(3,3,3)
-    //             this.scene.add(gltf.this.scene);
-    //             this.renderer.render(this.scene,this.camera);
-    //     });
+    this.loader = new GLTFLoader();
+            this.loader.load(house,function(gltf){
+                let house = gltf.scene.children[0];
+                house.scale.set(3,3,3)
+                this.scene.add(gltf.this.scene);
+                this.renderer.render(this.scene,this.camera);
+        });
 
     //box
     const geometry1 = new THREE.BoxGeometry(50, 50, 50);
@@ -116,7 +117,6 @@ export default {
     });
     this.cube = new THREE.Mesh(geometry1, material1);
     // this.cube.position.y = 100;
-    this.textmaker(this.cube);
     this.cube.url = "http://127.0.0.1:8081/sensor/light1/mchid/4561a65s1f";
     objects.push(this.cube);
     this.scene.add(this.cube);
@@ -211,9 +211,12 @@ export default {
     },
     textmaker : function(object){
       const fontLoader = new THREE.FontLoader();
-      fontLoader.load('../assets/fonts/helvetiker_regular.typeface.json', function (font) {
+      console.log(fontjson)
+      const json = JSON.parse(JSON.stringify(fontjson) );
+      console.log(json)
+      fontLoader.load(json, function (font) {
       let material = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
+        color: 0x000000,
         opacity: 0.8,
         transparent: true,
         side: THREE.DoubleSide,
