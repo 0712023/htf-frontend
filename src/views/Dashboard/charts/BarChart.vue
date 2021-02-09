@@ -1,5 +1,6 @@
 <template>
   <div class="small">
+    현재 외부 온도 : <span id="outdoor"></span> C
     <Bar-chart :chart-data="datacollection"></Bar-chart>
     {{$route.params.mchId}}
   </div>
@@ -22,8 +23,10 @@
       this.fillData();
     },
     created() {
-      console.log(this.$route.params.mchId);
-
+      this.getWeather();
+      this.weatherInterval = setInterval(()=>{
+        this.getWeather();
+      },600000);
       //처음에 10개 가져오는 것
       axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId}, 
         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
@@ -41,11 +44,8 @@
       axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, 
         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
         ).then(response =>{
-          console.log(response.data);
           this.datacollection.labels.push("");
-          for (let dataset of this.datacollection.datasets) {
-            dataset.data.push((response.data.value));
-          }
+          this.datacollection.datasets[0].data.push((response.data.value));
         })
 
         if (this.datacollection.labels.length>9) {
@@ -58,6 +58,7 @@
     },
     destroyed() {
       clearInterval(this.chartInterval);
+      clearInterval(this.weatherInterval);
     },
     methods: {
       fillData () {
@@ -68,14 +69,16 @@
               label: '내부 온도',
               backgroundColor: '#999999',
               data: []
-            }, {
-              label: '외부 온도',
-              backgroundColor: '#ffffff',
-              data: []
-            }
+            },
           ]
         }
-
+      },
+      getWeather () {
+        axios.get(`http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=a4e87aed6466e3d8b4c848fd3b150d74`).then(response =>{
+          console.log(response.data);
+          console.log(response.data.main.temp - 273.15);
+          document.getElementById("outdoor").innerHTML = parseInt((response.data.main.temp - 273.15)*10)/10;
+        })
       },
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
