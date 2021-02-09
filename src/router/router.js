@@ -40,9 +40,14 @@ const routes = [
     component: () => import('../views/Setting.vue')
   },
   {
-    path: '/UpdateMember/',
+    path: '/UpdateMember',
     name: 'UpdateMember',
     component: () => import('../views/UpdateMember.vue')
+  },
+  {
+    path: '/memberManage',
+    name: 'MemberManage',
+    component: () => import('../views/MemberManage.vue')
   }
 ]
 

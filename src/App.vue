@@ -6,6 +6,7 @@
     <div class="body"><router-view></router-view></div>
     
     <Sidebar>
+      <!-- member의 기본 관리 메뉴 -->
       <ul class="sidebar-panel-nav" v-if="memId">
         <li>
           <router-link :to="'/member/'+memId">Member</router-link>
@@ -23,8 +24,8 @@
           <router-link :to="'/admin/'+adminId" v-on:click.native="backToAdmin">Admin</router-link>
         </li>
       </ul>
-      <ul class="sidebar-panel-nav" v-if="!memId" >
         <!-- admin의 기본 관리 메뉴 -->
+      <ul class="sidebar-panel-nav" v-if="!memId" >
         <li style="color:white;">
           <router-link :to="'/admin/'+this.adminId">Member List</router-link>
         </li>
