@@ -1,12 +1,19 @@
 <template>
   <div id="standard">
-    <button @click="modalshow">회원정보수정</button>
-    <modal name="UpdateMember"><UpdateMember /></modal>
+    <modal name="UpdateMember"><UpdateMember /></modal> <br>
+    <div>
+      <button @click="modalshow">회원정보수정</button> <br>
+    </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div>
+      <UpdateMachine />
+    </div>
   </div>
 </template>
 
 <script>
-import UpdateMember from "./UpdateMember";
+import UpdateMember from "./Updates/UpdateMember";
+import UpdateMachine from "./Updates/UpdateMachine";
 import EventBus from "../store/Eventbus";
 export default {
   name: "setting",
@@ -14,7 +21,7 @@ export default {
     this.$modal.hide("UpdateMember");
   },
   components: {
-    UpdateMember,
+    UpdateMember, UpdateMachine
   },
   created: function () {
     EventBus.$on("modal", () => this.$modal.hide("UpdateMember"));
