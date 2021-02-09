@@ -32,7 +32,7 @@ export default {
           },{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
           .then((response) => {
             alert("register success!");
-            console.log(response.data);
+            console.log(response.data + "???");
             EventBus.$emit("modal", false);
           })
           .catch(function (error) {

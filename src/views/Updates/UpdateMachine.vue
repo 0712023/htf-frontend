@@ -1,24 +1,27 @@
 <template>
   <div id="standard2">
     Update Machine Description <br>
-    <modal name="UpdateMachine"><UpdateMachineModal/></modal>
+    <modal name="UpdateMachine" :mchId="mchId"><UpdateMachineModal/></modal>
     <table border="1" width="1000">
             <thead> 
-            <tr>
-                <th width="500" v-for="(val, key) in mchList[0]" :key="key">{{key}}</th>
-                <!-- <th width="500">new description</th> -->
+            <tr><!--template 쓰는 이유 : v-for 이후에 th에서 v-if사용하기 위해서 -->
+                <template v-for="(val, key) in mchList[0]">
+                    <th width="500" :key="key" v-if="key!='memId'" >{{key}}</th>
+                    <!-- <th width="500">new description</th> -->
+                </template>
                 <th width="500">수정</th>
             </tr>
             </thead>
             <tbody>
                 <tr v-for="machine in mchList" :key="machine.mchId">
-                    <td width="500" v-for="(val, key) in machine" :key="key">{{val}}</td>
+                    <template v-for="(val, key) in machine" >
+                        <td width="500" :key="key" v-if="key!='memId'">{{val}}</td>
+                    </template>
                     <!-- <td width="500"><input type="text" v-model="description"></td> -->
-                    <td width="500"><button @click="modalshow(machine.description)">수정하기</button></td>
+                    <td width="500"><button @click="modalshow(machine.description, machine.mchId)">수정하기</button></td>
                 </tr>
             </tbody>
         </table> 
-
   </div>
 </template>
 
@@ -32,10 +35,12 @@ export default {
     return {
       mchList: JSON.parse(this.$cookie.get("sensors")),
       description: "",
+      mchId:"",
     };
   },
   methods: {
-    modalshow(desc) {
+    modalshow(desc,mchIdInPut) {
+        this.mchId = mchIdInPut;
       this.$modal.show("UpdateMachine", {"desc":desc});
     },
   },
