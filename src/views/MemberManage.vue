@@ -22,20 +22,14 @@ export default {
         return {memberList:[]}
     },
     mounted() {
-      this.getMember();
-    },
-    methods:{
-        getMember:function(){
-            axios.post(`http://studioj.ddns.net/getMemberListByAdId`,{"adId":this.$cookie.get("adminId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      axios.post(`http://studioj.ddns.net/getMemberListByAdId`,{"adId":this.$cookie.get("adminId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then((res)=>{
                 console.log({manager:res.data});
                 this.memberList = this.memberList.concat(res.data);
-                // this.$set(this.memberList, this , res.data);
             })
             .catch((err)=>{
                 console.log(err);
             })
-        }
-    }
+    },
 }
 </script>
