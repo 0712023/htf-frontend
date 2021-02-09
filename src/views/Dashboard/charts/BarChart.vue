@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    현재 외부 온도 : <span id="outdoor"></span> C
+    현재 외부 온도 : <span id="outdoor"></span> °C
     <Bar-chart :chart-data="datacollection"></Bar-chart>
     {{$route.params.mchId}}
   </div>
@@ -31,7 +31,6 @@
       axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId}, 
         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
         ).then(response =>{
-        console.log(response.data);
         for (let incomingData of response.data) {
           this.datacollection.labels.push("");
           for (let dataset of this.datacollection.datasets) {
@@ -75,8 +74,6 @@
       },
       getWeather () {
         axios.get(`http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=a4e87aed6466e3d8b4c848fd3b150d74`).then(response =>{
-          console.log(response.data);
-          console.log(response.data.main.temp - 273.15);
           document.getElementById("outdoor").innerHTML = parseInt((response.data.main.temp - 273.15)*10)/10;
         })
       },

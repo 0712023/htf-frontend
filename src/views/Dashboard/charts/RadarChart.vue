@@ -66,8 +66,6 @@
       },
       getWeather () {
         axios.get(`http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=a4e87aed6466e3d8b4c848fd3b150d74`).then(response =>{
-          console.log(response.data);
-          console.log(response.data.main.humidity);
           document.getElementById("outdoorHumidity").innerHTML = response.data.main.humidity;
         })
       },
