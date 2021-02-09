@@ -27,7 +27,18 @@ export default {
 				this.pw = "";
 				this.re_pw = "";
 				this.id = "";
-			} else{
+			} else if(this.$cookie.get("adminId")!=null){
+				axios.post(`http://studioj.ddns.net/insertMember`, {"memId":this.id,"memPw":this.pw,"memRank":"silver","adId":null}
+				,{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+				.then((res)=>{
+					console.log(res.data);
+					alert("member add success!");
+					EventBus.$emit("modal",false);
+				})
+				.catch((error)=>{
+					console.log(error);
+				})
+			} else {
 				axios.post(`http://studioj.ddns.net/insertAdmin`, {"adId":this.id,"adPw":this.pw})
 				.then((res)=>{
 					console.log(res.data);
