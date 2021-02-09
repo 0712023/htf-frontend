@@ -9,7 +9,7 @@
 
 <script>
 import axios from "axios";
-import EventBus from "../store/Eventbus";
+import EventBus from "../../store/Eventbus";
 export default {
   data() {
     return {
