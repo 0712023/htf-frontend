@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="zom()">sw</button> 
+    <button @click="zom()">sw</button>
   </div>
 </template>
 <script type="module">
@@ -18,16 +18,17 @@ export default {
       camera: null,
       renderer: null,
       cube: null,
+      cube2: null,
       controls: null,
       raycaster: null,
       mouse: null,
       ground: null,
-      sphere :null,
-      objects2 : null,
+      sphere: null,
+      objects2: null,
     };
   },
   created: function () {
-    const objects =[];
+    const objects = [];
     this.mouse = new THREE.Vector2(1, 1);
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xffffff);
@@ -76,7 +77,7 @@ export default {
     ground.receiveShadow = true;
     this.ground = ground;
     this.scene.add(ground);
-    objects.push(ground)
+    // objects.push(ground);
 
     //light
     this.scene.add(new THREE.AmbientLight(0x222222));
@@ -114,19 +115,27 @@ export default {
       wireframe: false,
     });
     this.cube = new THREE.Mesh(geometry1, material1);
+    // this.cube.position.y = 100;
     this.scene.add(this.cube);
-    this.cube.name="123"
-    objects.push(this.cube)
     this.cube.url = "http://127.0.0.1:8081/sensor/light1/mchid/4561a65s1f";
+    objects.push(this.cube);
+
+    this.cube2 = new THREE.Mesh(geometry1, material1);
+    // this.cube2.position.y = 100;
+    this.cube2.position.z = 100;
+    this.scene.add(this.cube2);
+    this.cube2.url = "http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48";
+    objects.push(this.cube2);
 
     // http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48
     const geometry = new THREE.SphereGeometry(32, 32, 32);
     const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
     this.sphere = new THREE.Mesh(geometry, material);
     this.sphere.position.x = 100;
+    this.sphere.position.y = 100;
     this.scene.add(this.sphere);
-    objects.push(this.sphere);
-    this.sphere.url="http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48"
+    // objects.push(this.sphere);
+    this.sphere.url = "http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48";
     // this.stats = new Stats();
     // document.body.appendChild( this.stats.dom );
     //event
@@ -134,11 +143,11 @@ export default {
     this.raycaster = new THREE.Raycaster();
 
     document.addEventListener("click", this.click);
-    document.addEventListener( 'keydown', this.onDocumentKeyDown );
-		document.addEventListener( 'keyup', this.onDocumentKeyUp );
+    document.addEventListener("keydown", this.onDocumentKeyDown);
+    document.addEventListener("keyup", this.onDocumentKeyUp);
 
-    this.objects2 = objects
-    console.log(objects)
+    this.objects2 = objects;
+    console.log(objects);
     document.body.appendChild(this.renderer.domElement);
     this.animate();
   },
@@ -173,16 +182,15 @@ export default {
       );
 
       this.raycaster.setFromCamera(this.mouse, this.camera);
-      console.log(this.objects2)
-      const intersects = this.raycaster.intersectObject(this.sphere,true);
-      // console.log(intersects.length)
-      if (intersects.length > 0) {
-        // console.log("애기: "+this.objects)
-        const intersect = intersects[0];
-        console.log(intersect.object)
-        window.location.href = intersect.object.url;
-        console.log(this.object.url)
+      for (let i = 0; i < this.objects2.length; i++) {
+        const intersects1 = this.raycaster.intersectObject(this.objects2[i],true);
+        if (intersects1.length > 0) {
+          // console.log("애기: "+this.objects)
+          const intersect = intersects1[0];
+          window.location.href = intersect.object.url;
+        }
       }
+
       this.renderer.render(this.scene, this.camera);
     },
     onDocumentKeyDown: function (event) {
@@ -199,7 +207,7 @@ export default {
           this.isShiftDown = false;
           break;
       }
-    }
+    },
   },
 };
 </script>
