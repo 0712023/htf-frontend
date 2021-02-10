@@ -4,12 +4,16 @@
         <table border="1" width="1000">
             <thead> 
             <tr>
-                <th width="500" v-for="(val, key) in memberList[0]" :key="key">{{key}}</th>
+                <template v-for="(val, key) in memberList[0]">
+                    <th width="500" :key="key" v-if="key=='memId' || key=='memRank'">{{key}}</th>
+                </template>
             </tr>
             </thead>
             <tbody>
                 <tr v-for="member in memberList" :key="member.memId">
-                    <td width="500" v-for="(val, key) in member" :key="key">{{val}}</td>
+                    <template v-for="(val, key) in member">
+                        <td width="500" :key="key" v-if="key=='memId' || key=='memRank'">{{val}}</td>
+                    </template>
                 </tr>
             </tbody>
         </table> 
