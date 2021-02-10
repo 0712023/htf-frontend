@@ -6,17 +6,17 @@
         <input type="password" placeholder="pw" v-model='pw'>
         <button @click="login">login</button>
         <button @click="modalshow">Register</button>
-        <modal name="register"><Register/></modal>
+        <modal name="AdminRegister"><AdminRegister/></modal>
     </div>
 </template>
 
 <script>
-import Register from './Modal/Register';
+import AdminRegister from './Modal/AdminRegister';
 import axios from 'axios';
 import EventBus from '../store/Eventbus';
 export default {
     mounted () {
-        this.$modal.hide('register')
+        this.$modal.hide('AdminRegister')
     },
     data () {
         return {
@@ -26,14 +26,14 @@ export default {
         }
     },
     components:{
-        Register
+        AdminRegister
     },
     created:function(){
-        EventBus.$on('modal',()=>this.$modal.hide('register'));
+        EventBus.$on('modal',()=>this.$modal.hide('AdminRegister'));
     },
     methods:{
         modalshow(){
-            this.$modal.show('register')
+            this.$modal.show('AdminRegister')
         },
         returnAdminLetter() {
             if (this.adminLogin) {
