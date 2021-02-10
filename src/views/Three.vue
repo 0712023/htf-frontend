@@ -135,7 +135,7 @@ export default {
     this.sphere = new THREE.Mesh(geometry, material);
     this.sphere.position.x = 100;
     this.sphere.position.y = 100;
-    this.scene.add(this.sphere);
+    // this.scene.add(this.sphere);
     // objects.push(this.sphere);
     this.sphere.url = "http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48";
     // this.stats = new Stats();
@@ -214,7 +214,7 @@ export default {
       console.log(fontjson)
       const json = JSON.parse(JSON.stringify(fontjson) );
       console.log(json)
-      fontLoader.load(json, function (font) {
+      fontLoader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
       let material = new THREE.MeshBasicMaterial({
         color: 0x000000,
         opacity: 0.8,
