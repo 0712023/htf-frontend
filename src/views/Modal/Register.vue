@@ -4,15 +4,14 @@
 		<input type="text" placeholder="id" v-model='id'>
         <input type="password" placeholder="pw" v-model='pw'>
         <input type="password" placeholder="rewrite pw" v-model='re_pw'>
-		<button @click="checkForm">회원가입</button>
+		<button @click="register">회원가입</button>
 	</div>
 </template>
 
 <script>
 import axios from 'axios'
-import EventBus from '../store/Eventbus'
+import EventBus from '../../store/Eventbus'
 export default {
-	name: 'SignupForm',
 	data() {
 		return {
             id: "",
@@ -21,7 +20,7 @@ export default {
 		};
 	},
 	methods: {
-        checkForm() {
+        register() {
 			if(this.pw != this.re_pw){
 				alert("password does not match");
 				this.pw = "";

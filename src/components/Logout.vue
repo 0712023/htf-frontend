@@ -12,7 +12,7 @@ export default {
             this.$cookie.delete("login");
             this.$cookie.delete("memId");
             this.$cookie.delete("adminId");
-            this.$cookie.delete("sensors");
+            this.$cookie.delete("mchList");
             this.$cookie.delete("members");
             Eventbus.$emit('login', false);
             Eventbus.$emit('member', false);

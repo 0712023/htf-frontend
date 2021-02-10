@@ -21,7 +21,7 @@
 
 <script>
 import axios from 'axios'
-import Register from './Register'
+import Register from './Modal/Register'
 import EventBus from '../store/Eventbus'
 export default {
     data(){

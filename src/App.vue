@@ -12,7 +12,7 @@
           <router-link :to="'/member/'+memId">Member</router-link>
         </li>
         <li>
-          <router-link v-for="sensor in sensors" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
+          <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
         </li>
         <li>
           <router-link to="/three">Three</router-link>
@@ -42,6 +42,7 @@ import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
 import Logout from './components/Logout.vue';
 import Eventbus from './store/Eventbus';
+import axios from 'axios';
 
 export default {
   name: "app",
@@ -55,7 +56,7 @@ export default {
       login:this.$cookie.get("login"),
       memId:this.$cookie.get("memId"),
       adminId:this.$cookie.get("adminId"),
-      sensors:JSON.parse(this.$cookie.get("sensors")),
+      mchList:JSON.parse(this.$cookie.get("mchList")),
       members:JSON.parse(this.$cookie.get("members")),
     }
   },
@@ -63,15 +64,16 @@ export default {
     Eventbus.$on('login', this.updateLogin);
     Eventbus.$on('member', this.updateMemId);
     Eventbus.$on('admin', this.updateAdminId);
-    Eventbus.$on('sensors', this.updateSensors);
+    Eventbus.$on('mchList', this.updatemchList);
     Eventbus.$on('members', this.updateMembers);
+    Eventbus.$on('modal', this.getMachineList);
   },
   methods:{
     updateLogin:function(s){
       this.login = s;
     },
-    updateSensors:function(s){
-      this.sensors = s;
+    updatemchList:function(s){
+      this.mchList = s;
     },
     updateMembers:function(s){
       this.members = s;
@@ -86,6 +88,17 @@ export default {
       this.$cookie.delete("memId");
       this.memId = false;
     },
+    getMachineList(){
+      axios.post(`http://studioj.ddns.net/getMachineListByMemId`,{"memId":this.$cookie.get("memId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      .then((res)=>{
+          console.log({machinList:res.data});
+          this.$cookie.set("mchList", JSON.stringify(res.data))
+          this.mchList = res.data
+      })
+      .catch((err)=>{
+          console.log(err);
+      })
+    }
   }
 };
 </script>

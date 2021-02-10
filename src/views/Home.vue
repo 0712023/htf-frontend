@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Register from './Register';
+import Register from './Modal/Register';
 import axios from 'axios';
 import EventBus from '../store/Eventbus';
 export default {
@@ -70,11 +70,11 @@ export default {
                         //로그인 정보 및 센서 데이터 쿠키에 저장
                         this.$cookie.set("memId", this.id, 1);
                         this.$cookie.set("login", "login", 1);
-                        this.$cookie.set("sensors", JSON.stringify(response.data), 1);
+                        this.$cookie.set("mchList", JSON.stringify(response.data), 1);
                         //사이드바 및 로그아웃 버튼 활성화
                         EventBus.$emit('login', true);
                         EventBus.$emit('member', true);
-                        EventBus.$emit('sensors', response.data);
+                        EventBus.$emit('mchList', response.data);
                         this.$router.push('member/'+this.id);
                 })
             }).catch(function(error){
