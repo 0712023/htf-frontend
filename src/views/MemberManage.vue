@@ -19,31 +19,31 @@
         </table> 
         <br>
         <button @click="modalshow">Add Member</button>
-        <modal name="register"><Register/></modal>
+        <modal name="MemberRegister"><MemberRegister/></modal>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
-import Register from './Modal/Register'
+import MemberRegister from './Modal/MemberRegister'
 import EventBus from '../store/Eventbus'
 export default {
     data(){
         return {memberList:[]}
     },
     components:{
-        Register
+        MemberRegister
     },
     mounted() {
-        this.$modal.hide('register');
+        this.$modal.hide('MemberRegister');
         this.getMemberList();
     },
     created:function(){
-        EventBus.$on('modal',()=>{this.$modal.hide('register');this.getMemberList();});
+        EventBus.$on('modal',()=>{this.$modal.hide('MemberRegister');this.getMemberList();});
     },
     methods:{
         modalshow(){
-            this.$modal.show('register')
+            this.$modal.show('MemberRegister')
         },
         getMemberList(){
             axios.post(`http://studioj.ddns.net/getMemberListByAdId`,{"adId":this.$cookie.get("adminId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
