@@ -14,7 +14,7 @@
         <li>
           <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
         </li>
-        <li>
+        <li v-if="!adminId">
           <router-link to="/three">Three</router-link>
         </li>
         <li v-if="!adminId">
