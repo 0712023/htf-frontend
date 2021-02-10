@@ -18,7 +18,7 @@
             </tbody>
         </table> 
         <br>
-        <button @click="modalshow">Add Member</button>
+        <button @click="modalshow">Add</button>
         <modal name="MemberRegister"><MemberRegister/></modal>
     </div>
 </template>

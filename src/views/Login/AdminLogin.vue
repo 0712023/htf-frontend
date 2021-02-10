@@ -1,10 +1,13 @@
 <template>
-    <div id="standard">
+    <div>
         <!-- 로그인하는 form -->
-        <input type="text" placeholder="admin id" v-model='id'>
-        <input type="password" placeholder="pw" v-model='pw'>
-        <button @click="adminLogin">login</button>
-        <button @click="modalshow">Register</button>
+        <input type="text" placeholder="admin id" v-model='id' class="login-input-wrap input-id">
+        <input type="password" placeholder="pw" v-model='pw' class="login-input-wrap input-id"><br><br>
+        <button @click="adminLogin">login</button><br><br><br>
+        <div class="login-top-wrap">
+            <span>Don't have an account?</span>
+            <button @click="modalshow" class="create-account-btn shadow-light">Register</button>
+        </div>
         <modal name="AdminRegister"><AdminRegister/></modal>
     </div>
 </template>

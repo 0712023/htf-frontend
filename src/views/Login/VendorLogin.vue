@@ -1,7 +1,7 @@
 <template>
-    <div id="standard">
-        <input type="text" placeholder="vendor id" v-model='id'>
-        <input type="password" placeholder="pw" v-model='pw'>
+    <div>
+        <input type="text" placeholder="vendor id" v-model='id' class="login-input-wrap input-id">
+        <input type="password" placeholder="pw" v-model='pw' class="login-input-wrap input-id"><br><br>
         <button @click="vendorLogin">login</button>
     </div>
 </template>
