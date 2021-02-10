@@ -7,7 +7,7 @@
 import * as THREE from 'three';
 import * as OrbitControls from "../assets/js/OrbitControls.module.js";
 import grass from "@/assets/img/grasslight-big.jpg";
-import fontjson from "../assets/fonts/helvetiker_regular.typeface.json"
+// import fontjson from "../assets/fonts/helvetiker_regular.typeface.json"
 // import Stats from '../assets/js/stats.module.js';
 // import {GLTFLoader} from "../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
@@ -26,6 +26,7 @@ export default {
       ground: null,
       sphere: null,
       objects2: null,
+      text : null,
     };
   },
   created: function () {
@@ -112,7 +113,7 @@ export default {
     //box
     const geometry1 = new THREE.BoxGeometry(50, 50, 50);
     const material1 = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
+      color: 0xffff00,
       wireframe: false,
     });
     this.cube = new THREE.Mesh(geometry1, material1);
@@ -121,8 +122,15 @@ export default {
     objects.push(this.cube);
     this.scene.add(this.cube);
     this.textmaker(this.cube);
+    console.log(this.text)
+    this.scene.add(this.text)
 
-    this.cube2 = new THREE.Mesh(geometry1, material1);
+    const geometry2 = new THREE.BoxGeometry(50, 50, 50);
+    const material2 = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      wireframe: false,
+    });
+    this.cube2 = new THREE.Mesh(geometry2, material2);
     // this.cube2.position.y = 100;
     this.cube2.position.z = 100;
     this.scene.add(this.cube2);
@@ -211,9 +219,9 @@ export default {
     },
     textmaker : function(object){
       const fontLoader = new THREE.FontLoader();
-      console.log(fontjson)
-      const json = JSON.parse(JSON.stringify(fontjson) );
-      console.log(json)
+      // console.log(fontjson)
+      // const json = JSON.parse(JSON.stringify(fontjson) );
+      // console.log(json)
       fontLoader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
       let material = new THREE.MeshBasicMaterial({
         color: 0x000000,
@@ -224,25 +232,37 @@ export default {
       })
 
 
-      let fontGeometry = new THREE.TextGeometry('sensor', {
-      font: font,
-      size: 0.8,
-      height: 0.2,
-      curveSegments: 12,
-      bevelEnabled: true,
-      bevelThickness: 0.01,
-      bevelSize: 0.008,
-      bevelOffset: 0,
-      bevelSegments: 5
-      })
+      // let fontGeometry = new THREE.TextGeometry('sensor', {
+      // font: font,
+      // size: 0.8,
+      // height: 0.2,
+      // curveSegments: 12,
+      // bevelEnabled: true,
+      // bevelThickness: 0.01,
+      // bevelSize: 0.008,
+      // bevelOffset: 0,
+      // bevelSegments: 5
+      // })
 
-      let textGeo = new THREE.BufferGeometry().fromGeometry( fontGeometry );
+      let textGeo = new THREE.TextGeometry( 'sensor', {
+
+					font: font,
+
+					size: 0.8,
+					height: 0.2,
+					curveSegments: 12,
+
+					bevelThickness: 0.01,
+					bevelSize: 0.008,
+					bevelEnabled: true,
+				} );
 
       let text = new THREE.Mesh( textGeo, material );
+      console.log(text);
       text.position.x = object.position.x
       text.position.y = object.position.y+30
       text.position.z = object.position.z
-      this.scene.add(text);
+      this.text = text;
       });
     }
   },
