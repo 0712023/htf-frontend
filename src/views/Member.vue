@@ -1,6 +1,10 @@
 <template>
     <div>
-        <button @click="test">테스트</button>
+        <template>
+            <div>
+                <button @click="getKakaoToken">카카오 토큰 가입하기!</button>
+            </div>
+        </template>
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap" >
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
@@ -19,7 +23,7 @@
 import axios from 'axios'
 export default {
     methods:{
-        test(){
+        getKakaoToken(){
             location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.RESTAPIKEY+'&redirect_uri='+this.REDIRECT_URI+'&response_type=code'
         },
     },
