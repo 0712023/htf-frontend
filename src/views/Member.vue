@@ -32,7 +32,7 @@ export default {
     data(){
         return {sensorDataStore:{}
         ,RESTAPIKEY:'2de887fb3941336bf23b2d3a76d82991',
-        REDIRECT_URI:'http://192.168.168.162:8080/kakaoLogin',
+        REDIRECT_URI:'http://localhost:8080/kakaoLogin', //front server
         }
     },
     created:function(){

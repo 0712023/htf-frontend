@@ -10,7 +10,7 @@ export default {
     data(){
         return {
             RESTAPIKEY:'2de887fb3941336bf23b2d3a76d82991',
-            REDIRECT_URI:'http://192.168.168.162:8080/kakaoLogin', //백에서 token 컬럼 update하는 url로 보내면 됨
+            REDIRECT_URI:'http://localhost:8080/kakaoLogin', //front server
         }
     },
     mounted:function(){
@@ -22,6 +22,10 @@ export default {
         params.append('client_secret', '1yEGMIcIASa5ceBAo5ZZzh1Zld4R2fmO');
         axios.post(`https://kauth.kakao.com/oauth/token`, params, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
         .then((res)=>{
+            axios.post(`http://studioj.ddns.net/updateMemberToken`, {memId:this.$cookie.get("memId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+            .then(()=>{
+                this.$router.push('/');
+            })
             console.log(res.data)
         })
         .catch((err)=>{
