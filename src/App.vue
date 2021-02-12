@@ -7,25 +7,27 @@
     
     <Sidebar>
       <!-- member의 기본 관리 메뉴 -->
-      <ul class="sidebar-panel-nav" v-if="memId">
-        <li>
+      <ul class="sidebar-panel-nav">
+        <li v-if="memId">
           <router-link :to="'/member/'+memId">Member</router-link>
         </li>
-        <li>
+        <li v-if="memId || vendorId">
           <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
         </li>
-        <li v-if="!adminId">
-          <router-link to="/three">Three</router-link>
-        </li>
-        <li v-if="!adminId">
-          <router-link to="/setting/">Setting</router-link>
-        </li>
+        <template v-if="memId">
+          <li>
+            <router-link to="/three">Three</router-link>
+          </li>
+          <li>
+            <router-link to="/setting/">Setting</router-link>
+          </li>
+        </template>
         <li v-if="adminId">
-          <router-link :to="'/admin/'+adminId" v-on:click.native="backToAdmin">Admin</router-link>
+          <router-link :to="'/admin/'+adminId" v-on:click.native="backToAdmin">Back to Admin</router-link>
         </li>
       </ul>
         <!-- admin의 기본 관리 메뉴 -->
-      <ul class="sidebar-panel-nav" v-if="!memId" >
+      <ul class="sidebar-panel-nav" v-if="adminId" >
         <li style="color:white;">
           <router-link :to="'/admin/'+this.adminId">Member List</router-link>
         </li>
@@ -56,12 +58,14 @@ export default {
       login:this.$cookie.get("login"),
       memId:this.$cookie.get("memId"),
       adminId:this.$cookie.get("adminId"),
+      vendorId:this.$cookie.get("vendorId"),
       mchList:JSON.parse(this.$cookie.get("mchList")),
       members:JSON.parse(this.$cookie.get("members")),
     }
   },
   created:function(){
     Eventbus.$on('login', this.updateLogin);
+    Eventbus.$on('vendor', this.updateVendorId);
     Eventbus.$on('member', this.updateMemId);
     Eventbus.$on('admin', this.updateAdminId);
     Eventbus.$on('mchList', this.updatemchList);
@@ -83,6 +87,9 @@ export default {
     },
     updateAdminId:function(){
       this.adminId = this.$cookie.get("adminId");
+    },
+    updateVendorId:function(){
+      this.vendorId = this.$cookie.get("vendorId");
     },
     backToAdmin:function(){
       this.$cookie.delete("memId");

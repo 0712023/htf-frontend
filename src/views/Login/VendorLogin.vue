@@ -18,7 +18,6 @@ export default {
     },
     methods:{
         vendorLogin() {
-            alert('test login');
             axios.post(`http://studioj.ddns.net/loginVendor`, {"vendorId":this.id,"vendorPw":this.pw})
             .then(res => {
                 if (res.data == '') {
@@ -32,15 +31,15 @@ export default {
                 axios.post(`http://studioj.ddns.net/getMachineListByVendorId`, {"vendorId": this.id},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
                 .then(res =>{
                     //로그인 정보 및 센서 데이터 쿠키에 저장
-                    this.$cookie.set("memId", this.id, 1);
+                    this.$cookie.set("vendorId", this.id, 1);
                     this.$cookie.set("login", "login", 1);
                     this.$cookie.set("mchList", JSON.stringify(res.data), 1);
                     //사이드바 및 로그아웃 버튼 활성화
                     EventBus.$emit('login', true);
                     EventBus.$emit('mchList', res.data);
 
-                    EventBus.$emit('member', true);
-                    this.$router.push('member/'+this.id);
+                    EventBus.$emit('vendor', true);
+                    this.$router.push('vendor/'+this.id);
                 })
             }).catch(function(error){
                 console.log(error)

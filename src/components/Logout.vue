@@ -11,12 +11,14 @@ export default {
             this.$cookie.delete("accesstoken");
             this.$cookie.delete("login");
             this.$cookie.delete("memId");
+            this.$cookie.delete("vendorId");
             this.$cookie.delete("adminId");
             this.$cookie.delete("mchList");
             this.$cookie.delete("members");
             Eventbus.$emit('login', false);
             Eventbus.$emit('member', false);
             Eventbus.$emit('admin', false);
+            Eventbus.$emit('vendor', false);
             this.$router.push('/');
         }
     }

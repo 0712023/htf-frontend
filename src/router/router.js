@@ -15,6 +15,11 @@ const routes = [
     component: () => import('../views/Member.vue')
   },
   {
+    path: '/vendor/:vendorId',
+    name: 'Vendor',
+    component: () => import('../views/Vendor.vue')
+  },
+  {
     path: '/sensor/:desc/mchid/:mchId',
     name: 'Sensor',
     component: () => import('../views/Sensor.vue'),
@@ -55,13 +60,16 @@ const router = new VueRouter({
 router.beforeEach(function (to, from, next) {
   let memId = VueCookie.get("memId");
   let adminId = VueCookie.get("adminId");
-  if( (memId==null && adminId==null) && to.fullPath!="/")  {
+  let vendorId = VueCookie.get("vendorId");
+  if( (memId==null && adminId==null && vendorId==null) && to.fullPath!="/")  {
     alert("please log in");
     router.push("/");
   } else if(memId!=null && to.fullPath == "/"){
     router.push("/member/"+memId);
   } else if(adminId!=null && to.fullPath == "/"){
     router.push("/admin/"+adminId);
+  } else if(vendorId!=null && to.fullPath == "/"){
+    router.push("/vendor/"+vendorId);
   } else{
     next();
   }
