@@ -1,119 +1,45 @@
 <template>
     <div id="standard">
-        <!-- 로그인하는 form -->
-        Admin Login : <input type="checkbox" v-model="adminLogin">
-        <input type="text" placeholder="id" v-model='id'>
-        <input type="password" placeholder="pw" v-model='pw'>
-        <button @click="login">login</button>
-        <button @click="modalshow">Register</button>
-        <modal name="AdminRegister"><AdminRegister/></modal>
+        <div class="login-form-container shadow">
+            <div class="login-form-right-side">
+                <h1>What's the difference from the Legacy IoT Projects?</h1>
+                <p>We are trying to deliver integrated managing system, which can make users helpful for each other by sharing their emergency informations. Fire Downstairs also means the users upstairs are in danger. Warning by Air pollution status can also help their safety.</p>
+            </div>
+            <div class="login-form-left-side">
+                <div class="login-input-container">
+                    <select class="form-select" id="specificSizeSelect" v-model="mode">
+                        <option value="admin" selected>admin</option>
+                        <option value="member">member</option>
+                        <option value="vendor">Vendor</option>
+                    </select>
+                <AdminLogin v-if="mode=='admin'"/>
+                <MemberLogin v-if="mode=='member'"/>
+                <VendorLogin v-if="mode=='vendor'"/>
+                </div>
+                <div class="login-btn-wrap">
+                    <!-- <a href="#" >Forgot password?</a> -->
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
+
 <script>
-import AdminRegister from './Modal/AdminRegister';
-import axios from 'axios';
-import EventBus from '../store/Eventbus';
+import AdminLogin from './Login/AdminLogin'
+import MemberLogin from './Login/MemberLogin'
+import VendorLogin from './Login/VendorLogin'
 export default {
-    mounted () {
-        this.$modal.hide('AdminRegister')
-    },
-    data () {
-        return {
-            id: '',
-            pw: '',
-            adminLogin: false,
-        }
+    data(){
+        return {mode:"admin"}
     },
     components:{
-        AdminRegister
-    },
-    created:function(){
-        EventBus.$on('modal',()=>this.$modal.hide('AdminRegister'));
-    },
-    methods:{
-        modalshow(){
-            this.$modal.show('AdminRegister')
-        },
-        returnAdminLetter() {
-            if (this.adminLogin) {
-                return "Admin";
-            } else {
-                return "Member";
-            }
-        },
-        login() {
-            //Axios로 로그인 요청을 함
-            console.log(this.returnAdminLetter());
-            if(this.adminLogin) {
-                this.adminLoginMethod();
-            } else {
-                this.memberLoginMethod();
-            }
-        },
-        memberLoginMethod() {
-            axios.post(`http://studioj.ddns.net/loginMember`, {"memId":this.id,"memPw":this.pw})
-            .then(response => {
-                if (response.data == '') {
-                    alert("login failed")
-                    throw new Error("login failed")
-                } else {
-                    //쿠키에 access token를 넣어줌
-                    this.$cookie.set("accesstoken", response.data, 1);
-                }
-
-                //유저가 로그인을 시도하는 경우
-                axios.defaults.headers.common["x-access-token"] = response.data;
-                axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": this.id}, 
-                        {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
-                    ).then(response =>{
-                        //로그인 정보 및 센서 데이터 쿠키에 저장
-                        this.$cookie.set("memId", this.id, 1);
-                        this.$cookie.set("login", "login", 1);
-                        this.$cookie.set("mchList", JSON.stringify(response.data), 1);
-                        //사이드바 및 로그아웃 버튼 활성화
-                        EventBus.$emit('login', true);
-                        EventBus.$emit('member', true);
-                        EventBus.$emit('mchList', response.data);
-                        this.$router.push('member/'+this.id);
-                })
-            }).catch(function(error){
-                console.log(error)
-            })
-        },
-        adminLoginMethod() {
-            axios.post(`http://studioj.ddns.net/loginAdmin`, {"adId": this.id, "adPw":this.pw})
-            .then(response => {
-                if (response.data == '') {
-                    alert("login failed")
-                    throw new Error("login failed")
-                } else {
-                    //쿠키에 access token를 넣어줌
-                    this.$cookie.set("accesstoken", response.data, 1);
-                }
-                //admin id로 모든 멤버 아이디 불러오기
-                axios.post(`http://studioj.ddns.net/getMemberListByAdId`, {"adId": this.id}, 
-                        {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
-                    ).then(response =>{
-                        //로그인 정보 및 센서 데이터 쿠키에 저장
-                        console.log(response.data);
-                        this.$cookie.set("adminId", this.id, 1);
-                        this.$cookie.set("login", "login", 1);
-                        this.$cookie.set("members", JSON.stringify(response.data), 1);
-                        //사이드바 및 로그아웃 버튼 활성화
-                        EventBus.$emit('login', true);
-                        EventBus.$emit('admin', true);
-                        EventBus.$emit('members', response.data);
-                        this.$router.push('admin/'+this.id);
-                })
-            }).catch(function(error){
-                console.log(error)
-            })
-        }
+        AdminLogin, MemberLogin, VendorLogin
     }
 }
 </script>
 
 <style>
  @import '../assets/css/style.css';
+ @import '../assets/css/login.css';
 </style>

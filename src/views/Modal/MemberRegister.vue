@@ -1,10 +1,10 @@
 <template>
-	<div id="standard2">
-		Register New Member Account <br><br>
+	<div id="standard2"><br><br>
+		Register New Member Account 
 		<input type="text" placeholder="id" v-model='id'>
         <input type="password" placeholder="pw" v-model='pw'>
-        <input type="password" placeholder="rewrite pw" v-model='re_pw'>
-		<button @click="register">회원가입</button>
+        <input type="password" placeholder="rewrite pw" v-model='re_pw'><br>
+		<button @click="register">register</button>
 	</div>
 </template>
 
