@@ -7,32 +7,36 @@
     
     <Sidebar>
       <!-- member의 기본 관리 메뉴 -->
-      <ul class="sidebar-panel-nav">
-        <li v-if="memId">
+      <ul class="sidebar-panel-nav" v-if="memId">
+        <li>
           <router-link :to="'/member/'+memId">Member</router-link>
         </li>
-        <li v-if="memId || vendorId">
+        <li>
           <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
         </li>
-        <template v-if="memId">
-          <li>
-            <router-link to="/three">Three</router-link>
-          </li>
-          <li>
-            <router-link to="/setting/">Setting</router-link>
-          </li>
-        </template>
+        <li v-if="!adminId">
+          <router-link to="/three">Three</router-link>
+        </li>
+        <li v-if="!adminId">
+          <router-link to="/setting/">Setting</router-link>
+        </li>
         <li v-if="adminId">
           <router-link :to="'/admin/'+adminId" v-on:click.native="backToAdmin">Back to Admin</router-link>
         </li>
       </ul>
         <!-- admin의 기본 관리 메뉴 -->
-      <ul class="sidebar-panel-nav" v-if="adminId" >
+      <ul class="sidebar-panel-nav" v-if="!memId && adminId" >
         <li style="color:white;">
           <router-link :to="'/admin/'+this.adminId">Member List</router-link>
         </li>
         <li>
           <router-link :to="'/memberManage'">Member Manager</router-link>
+        </li>
+      </ul>
+      <!-- vendor 의 기본 메뉴-->
+      <ul class="sidebar-panel-nav" v-if="vendorId">
+        <li>
+        <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
         </li>
       </ul>
     </Sidebar>
