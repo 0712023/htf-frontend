@@ -9,6 +9,7 @@ export default {
         logout:function() {
             //모든 쿠키를 지움
             this.$cookie.delete("accesstoken");
+            this.$cookie.delete("kakaoToken");
             this.$cookie.delete("login");
             this.$cookie.delete("memId");
             this.$cookie.delete("vendorId");

@@ -25,7 +25,8 @@ export default {
                     throw new Error("login failed")
                 } else {
                     //쿠키에 access token를 넣어줌
-                    this.$cookie.set("accesstoken", res.data, 1);
+                    this.$cookie.set("accesstoken", res.data["htfToken"], 1);
+                    this.$cookie.set("kakaoToken", res.data["kakaoToken"], 1);
                 }
 
                 //유저가 로그인을 시도하는 경우
@@ -36,6 +37,7 @@ export default {
                     this.$cookie.set("memId", this.id, 1);
                     this.$cookie.set("login", "login", 1);
                     this.$cookie.set("mchList", JSON.stringify(res.data), 1);
+                    
                     //사이드바 및 로그아웃 버튼 활성화
                     EventBus.$emit('login', true);
                     EventBus.$emit('member', true);
