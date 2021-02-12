@@ -1,5 +1,6 @@
 <template>
     <div>
+        <button @click="test">테스트</button>
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap" >
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
@@ -17,6 +18,11 @@
 <script>
 import axios from 'axios'
 export default {
+    methods:{
+        test(){
+            location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.RESTAPIKEY+'&redirect_uri='+this.REDIRECT_URI+'&response_type=code'
+        },
+    },
     computed:{
         mchList(){
             return JSON.parse(
@@ -24,7 +30,10 @@ export default {
         },
     },
     data(){
-        return {sensorDataStore:{}}
+        return {sensorDataStore:{}
+        ,RESTAPIKEY:'2de887fb3941336bf23b2d3a76d82991',
+        REDIRECT_URI:'http://192.168.168.162:8080/kakaoLogin',
+        }
     },
     created:function(){
         this.dashboardInterval = setInterval(()=>{

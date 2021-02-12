@@ -2,7 +2,7 @@
     <div>
         <input type="text" placeholder="member id" v-model='id' class="login-input-wrap input-id">
         <input type="password" placeholder="pw" v-model='pw' class="login-input-wrap input-id"><br><br>
-        <button @click="memberLogin">login</button>
+        <button @click="memberLogin">login</button> 
     </div>
 </template>
 

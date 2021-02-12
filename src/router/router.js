@@ -38,6 +38,11 @@ const routes = [
     path: '/memberManage',
     name: 'MemberManage',
     component: () => import('../views/MemberManage.vue')
+  },
+  {
+    path: '/kakaoLogin',
+    name: 'KakaoLogin',
+    component: () => import('../views/KakaoLogin.vue')
   }
 ]
 
