@@ -7,6 +7,7 @@
                     <br><br>name : {{ sensor.description }} 
                     <br><br>mchId : {{ sensor.mchId }}
                     <br><br>value : {{ sensorDataStore[sensor.mchId] }}
+                    <br><br>vendorId : {{ sensor.vendorId.vendorId }}
                 </div>
             </div>
         </div>
