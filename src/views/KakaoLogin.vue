@@ -6,6 +6,7 @@
 
 <script>
 import axios from 'axios'
+import EventBus from '../store/Eventbus'
 export default {
     data(){
         return {
@@ -26,6 +27,7 @@ export default {
             console.log({"access_token":res.data.access_token})
             axios.post(`http://studioj.ddns.net/updateMemberToken`, {memId:this.$cookie.get("memId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then(()=>{
+                EventBus.$emit("kakao", null)
                 this.$router.push('/');
             })
         })

@@ -3,6 +3,7 @@
     <nav class="main-nav" v-show="login">
       <Burger/><logout/>
     </nav>
+    <kakaoRegister v-if="memId && (kakaoToken=='null')"/>
     <div class="body"><router-view></router-view></div>
     
     <Sidebar>
@@ -48,6 +49,7 @@ import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
 import Logout from './components/Logout.vue';
 import Eventbus from './store/Eventbus';
+import kakaoRegister from './components/KakaoRegister'
 import axios from 'axios';
 
 export default {
@@ -56,6 +58,7 @@ export default {
     Burger,
     Sidebar,
     Logout,
+    kakaoRegister
   },
   data(){
     return {
@@ -65,6 +68,7 @@ export default {
       vendorId:this.$cookie.get("vendorId"),
       mchList:JSON.parse(this.$cookie.get("mchList")),
       members:JSON.parse(this.$cookie.get("members")),
+      kakaoToken:this.$cookie.get("kakaoToken"),
     }
   },
   created:function(){
@@ -75,6 +79,7 @@ export default {
     Eventbus.$on('mchList', this.updatemchList);
     Eventbus.$on('members', this.updateMembers);
     Eventbus.$on('modal', this.getMachineList);
+    Eventbus.$on('kakao', this.setKakaoToken);
   },
   methods:{
     updateLogin:function(s){
@@ -85,6 +90,9 @@ export default {
     },
     updateMembers:function(s){
       this.members = s;
+    },
+    setKakaoToken:function(s){
+      this.kakaoToken = s;
     },
     updateMemId:function(){
       this.memId = this.$cookie.get("memId");
