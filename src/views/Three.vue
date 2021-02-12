@@ -122,8 +122,38 @@ export default {
     objects.push(this.cube);
     this.scene.add(this.cube);
     this.textmaker(this.cube);
-    console.log(this.text)
-    this.scene.add(this.text)
+
+    const loader = new THREE.FontLoader();
+				loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+
+					const color = 0x006699;
+
+
+					const matLite = new THREE.MeshBasicMaterial( {
+						color: color,
+						transparent: true,
+						opacity: 0.4,
+						side: THREE.DoubleSide
+					} );
+
+					const message = "   Three.js\nSimple text.";
+
+					const shapes = font.generateShapes( message, 100 );
+
+					const geometry = new THREE.ShapeGeometry( shapes );
+
+					geometry.computeBoundingBox();
+
+					const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+
+					geometry.translate( xMid, 0, 0 );
+
+					// make shape ( N.B. edge view not visible )
+
+					const text = new THREE.Mesh( geometry, matLite );
+					text.position.z = - 150;
+					this.scene.add( text );
+        })
 
     const geometry2 = new THREE.BoxGeometry(50, 50, 50);
     const material2 = new THREE.MeshBasicMaterial({
@@ -138,9 +168,9 @@ export default {
     objects.push(this.cube2);
 
     // http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48
-    const geometry = new THREE.SphereGeometry(32, 32, 32);
+    const Geometry = new THREE.SphereGeometry(32, 32, 32);
     const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-    this.sphere = new THREE.Mesh(geometry, material);
+    this.sphere = new THREE.Mesh(Geometry, material);
     this.sphere.position.x = 100;
     this.sphere.position.y = 100;
     // this.scene.add(this.sphere);
