@@ -1,13 +1,15 @@
 <template>
   <div>
-    <button @click="zom()">sw</button>
+    <canvas id="three"></canvas>
+    <button>sse</button>
   </div>
 </template>
 <script type="module">
-import * as THREE from 'three';
+import * as THREE from "../assets/js/three.module.js";
 import * as OrbitControls from "../assets/js/OrbitControls.module.js";
-import grass from "@/assets/img/grasslight-big.jpg";
+// import grass from "@/assets/img/grasslight-big.jpg";
 // import fontjson from "../assets/fonts/helvetiker_regular.typeface.json"
+
 // import Stats from '../assets/js/stats.module.js';
 // import {GLTFLoader} from "../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
@@ -26,185 +28,204 @@ export default {
       ground: null,
       sphere: null,
       objects2: null,
-      text : null,
+      text: null,
+      group: null,
+      ge1: null,
     };
   },
-  created: function () {
-    const objects = [];
-    this.mouse = new THREE.Vector2(1, 1);
-    this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xffffff);
-
-    this.camera = new THREE.PerspectiveCamera(
-      50,
-      window.innerWidth / window.innerHeight,
-      1,
-      1000
-    );
-    this.camera.position.set(400, 200, 0);
-
-    this.renderer = new THREE.WebGL1Renderer({ antialias: true });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.camera.position.z = 5;
-    window.addEventListener("resize", this.resize);
-    this.controls = new OrbitControls.OrbitControls(
-      this.camera,
-      this.renderer.domElement
-    );
-
-    //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
-
-    this.controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-    this.controls.dampingFactor = 0.05;
-
-    this.controls.screenSpacePanning = true;
-
-    this.controls.minDistance = 100;
-    this.controls.maxDistance = 500;
-
-    this.controls.maxPolarAngle = Math.PI / 2;
-
-    //grass
-    const gt = new THREE.TextureLoader().load(grass);
-    const gg = new THREE.PlaneGeometry(16000, 16000);
-    const gm = new THREE.MeshPhongMaterial({ color: 0xffffff, map: gt });
-
-    const ground = new THREE.Mesh(gg, gm);
-    ground.rotation.x = -Math.PI / 2;
-    ground.material.map.repeat.set(64, 64);
-    ground.material.map.wrapS = THREE.RepeatWrapping;
-    ground.material.map.wrapT = THREE.RepeatWrapping;
-    ground.material.map.encoding = THREE.sRGBEncoding;
-    // note that because the ground does not cast a shadow, .castShadow is left false
-    ground.receiveShadow = true;
-    this.ground = ground;
-    this.scene.add(ground);
-    // objects.push(ground);
-
-    //light
-    this.scene.add(new THREE.AmbientLight(0x222222));
-
-    const light = new THREE.DirectionalLight(0xffffff, 2.25);
-    light.position.set(200, 450, 500);
-
-    light.castShadow = true;
-
-    light.shadow.mapSize.width = 1024;
-    light.shadow.mapSize.height = 512;
-
-    light.shadow.camera.near = 100;
-    light.shadow.camera.far = 1200;
-
-    light.shadow.camera.left = -1000;
-    light.shadow.camera.right = 1000;
-    light.shadow.camera.top = 350;
-    light.shadow.camera.bottom = -350;
-
-    this.scene.add(light);
-
-    // this.loader = new GLTFLoader();
-    //         this.loader.load(house,function(gltf){
-    //             let house = gltf.scene.children[0];
-    //             house.scale.set(3,3,3)
-    //             this.scene.add(gltf.this.scene);
-    //             this.renderer.render(this.scene,this.camera);
-    //     });
-
-    //box
-    const geometry1 = new THREE.BoxGeometry(50, 50, 50);
-    const material1 = new THREE.MeshBasicMaterial({
-      color: 0xffff00,
-      wireframe: false,
-    });
-    this.cube = new THREE.Mesh(geometry1, material1);
-    // this.cube.position.y = 100;
-    this.cube.url = "http://127.0.0.1:8081/sensor/light1/mchid/4561a65s1f";
-    objects.push(this.cube);
-    this.scene.add(this.cube);
-    this.textmaker(this.cube);
-
-    const loader = new THREE.FontLoader();
-				loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
-
-					const color = 0x006699;
-
-
-					const matLite = new THREE.MeshBasicMaterial( {
-						color: color,
-						transparent: true,
-						opacity: 0.4,
-						side: THREE.DoubleSide
-					} );
-
-					const message = "   Three.js\nSimple text.";
-
-					const shapes = font.generateShapes( message, 100 );
-
-					const geometry = new THREE.ShapeGeometry( shapes );
-
-					geometry.computeBoundingBox();
-
-					const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
-
-					geometry.translate( xMid, 0, 0 );
-
-					// make shape ( N.B. edge view not visible )
-
-					const text = new THREE.Mesh( geometry, matLite );
-					text.position.z = - 150;
-					this.scene.add( text );
-        })
-
-    const geometry2 = new THREE.BoxGeometry(50, 50, 50);
-    const material2 = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      wireframe: false,
-    });
-    this.cube2 = new THREE.Mesh(geometry2, material2);
-    // this.cube2.position.y = 100;
-    this.cube2.position.z = 100;
-    this.scene.add(this.cube2);
-    this.cube2.url = "http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48";
-    objects.push(this.cube2);
-
-    // http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48
-    const Geometry = new THREE.SphereGeometry(32, 32, 32);
-    const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-    this.sphere = new THREE.Mesh(Geometry, material);
-    this.sphere.position.x = 100;
-    this.sphere.position.y = 100;
-    // this.scene.add(this.sphere);
-    // objects.push(this.sphere);
-    this.sphere.url = "http://127.0.0.1:8081/sensor/light2/mchid/7879awdd48";
-    // this.stats = new Stats();
-    // document.body.appendChild( this.stats.dom );
-    //event
-    console.log(this.mouse);
-    this.raycaster = new THREE.Raycaster();
-
-    document.addEventListener("click", this.click);
-    document.addEventListener("keydown", this.onDocumentKeyDown);
-    document.addEventListener("keyup", this.onDocumentKeyUp);
-
-    this.objects2 = objects;
-    console.log(objects);
-    document.body.appendChild(this.renderer.domElement);
-    this.animate();
-  },
-  destroyed: function () {
-    document.body.removeChild(this.renderer.domElement);
+  mounted() {
+    this.initThree();
   },
   methods: {
-    animate: function () {
-      requestAnimationFrame(this.animate);
-      this.renderer.render(this.scene, this.camera);
-    },
-    resize: function () {
-      var width = window.innerWidth;
-      var height = window.innerHeight;
-      this.renderer.setSize(width, height);
-      this.camera.aspect = width / height;
-      this.camera.updateProjectionMatrix();
+    initThree() {
+      const objects = [];
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color("#eee");
+      //   scene.fog = new THREE.Fog('#eee', 20, 100)
+
+      const canvas = document.querySelector("#three");
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+      renderer.shadowMap.enabled = true;
+
+      const camera = new THREE.PerspectiveCamera(
+        50,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      camera.position.z = 10;
+
+      const hemLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+      hemLight.position.set(0, 48, 0);
+      scene.add(hemLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+      //光源等位置
+      dirLight.position.set(-10, 8, -5);
+      //可以产生阴影
+      dirLight.castShadow = true;
+      dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
+      scene.add(dirLight);
+
+      let floorGeometry = new THREE.PlaneGeometry(8000, 8000);
+      let floorMaterial = new THREE.MeshPhongMaterial({
+        color: 0x857ebb,
+        shininess: 0,
+      });
+
+      let floor = new THREE.Mesh(floorGeometry, floorMaterial);
+      floor.rotation.x = -0.5 * Math.PI;
+      floor.receiveShadow = true;
+      floor.position.y = -0.001;
+      scene.add(floor);
+
+      const controls = new OrbitControls.OrbitControls(
+        camera,
+        renderer.domElement
+      );
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+
+      controls.screenSpacePanning = true;
+
+      controls.minDistance = 100;
+      controls.maxDistance = 500;
+
+      controls.maxPolarAngle = Math.PI / 2;
+
+      const geometry1 = new THREE.BoxGeometry(50, 50, 50);
+      const material1 = new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        wireframe: false,
+      });
+      const cube = new THREE.Mesh(geometry1, material1);
+      // cube.position.y = 100;
+      cube.url = "http://127.0.0.1:8081/sensor/light1/mchid/4561a65s1f";
+
+      scene.add(cube);
+      objects.push(cube);
+      // const loader = new THREE.FontLoader();
+      // loader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
+      //   const color = 0x006699;
+
+      //   const matLite = new THREE.MeshBasicMaterial({
+      //     color: color,
+      //     transparent: true,
+      //     opacity: 0.4,
+      //     side: THREE.DoubleSide,
+      //   });
+
+      // const message = "sensor";
+
+      // const shapes = font.generateShapes(message, 20);
+
+      // const geometry = new THREE.ShapeGeometry(shapes);
+
+      // geometry.computeBoundingBox();
+
+      // const xMid =
+      //   -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+      // geometry.translate(xMid, 0, 0);
+
+      //   // make shape ( N.B. edge view not visible )
+
+      //   const text = new THREE.Mesh(geometry, matLite);
+      //   text.position.x = cube.position.x;
+      //   text.position.y = cube.position.y + 30;
+      //   text.position.z = cube.position.z;
+
+      //   scene.add(text);
+      // });
+
+      function textmaker(object) {
+        const fontLoader = new THREE.FontLoader();
+        fontLoader.load(
+          "fonts/helvetiker_regular.typeface.json",
+          function (font) {
+            let material = new THREE.MeshBasicMaterial({
+              color: 0x000000,
+              opacity: 0.8,
+              transparent: true,
+              side: THREE.DoubleSide,
+              wireframe: false,
+            });
+
+            const message = "sensor1";
+
+            const shapes = font.generateShapes(message, 20);
+
+            const geometry = new THREE.ShapeGeometry(shapes);
+
+            geometry.computeBoundingBox();
+
+            const xMid =
+              -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+            geometry.translate(xMid, 0, 0);
+
+            let text = new THREE.Mesh(geometry, material);
+            text.position.x = object.position.x;
+            text.position.y = object.position.y + 30;
+            text.position.z = object.position.z;
+            scene.add(text);
+          }
+        );
+      }
+      textmaker(cube);
+
+      function animate() {
+        controls.update();
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+
+        if (resizeRendererToDisplaySize(renderer)) {
+          const canvas = renderer.domElement;
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        }
+      }
+      document.addEventListener("click", click);
+      animate();
+
+      function resizeRendererToDisplaySize(renderer) {
+        const canvas = renderer.domElement;
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        var canvasPixelWidth = canvas.width / window.devicePixelRatio;
+        var canvasPixelHeight = canvas.height / window.devicePixelRatio;
+
+        const needResize =
+          canvasPixelWidth !== width || canvasPixelHeight !== height;
+        if (needResize) {
+          renderer.setSize(width, height, false);
+        }
+        return needResize;
+      }
+
+      let raycaster = new THREE.Raycaster();
+      let mouse = new THREE.Vector2();
+
+      function click(event) {
+        event.preventDefault();
+
+        mouse.set(
+          (event.clientX / window.innerWidth) * 2 - 1,
+          -(event.clientY / window.innerHeight) * 2 + 1
+        );
+
+        raycaster.setFromCamera(mouse, camera);
+        for (let i = 0; i < objects.length; i++) {
+          const intersects1 = raycaster.intersectObject(objects[i], true);
+          if (intersects1.length > 0) {
+            // console.log("애기: "+this.objects)
+            const intersect = intersects1[0];
+            window.location.href = intersect.object.url;
+          }
+        }
+
+        renderer.render(scene, camera);
+      }
     },
     zom: function () {
       if (this.controls.screenSpacePanning == true) {
@@ -213,98 +234,16 @@ export default {
         this.controls.screenSpacePanning = true;
       }
     },
-    click: function (event) {
-      event.preventDefault();
-
-      this.mouse.set(
-        (event.clientX / window.innerWidth) * 2 - 1,
-        -(event.clientY / window.innerHeight) * 2 + 1
-      );
-
-      this.raycaster.setFromCamera(this.mouse, this.camera);
-      for (let i = 0; i < this.objects2.length; i++) {
-        const intersects1 = this.raycaster.intersectObject(this.objects2[i],true);
-        if (intersects1.length > 0) {
-          // console.log("애기: "+this.objects)
-          const intersect = intersects1[0];
-          window.location.href = intersect.object.url;
-        }
-      }
-
-      this.renderer.render(this.scene, this.camera);
-    },
-    onDocumentKeyDown: function (event) {
-      switch (event.keyCode) {
-        case 16:
-          this.isShiftDown = true;
-          break;
-      }
-    },
-    onDocumentKeyUp: function (event) {
-      switch (event.keyCode) {
-        case 16:
-          this.isShiftDown = false;
-          break;
-      }
-    },
-    textmaker : function(object){
-      const fontLoader = new THREE.FontLoader();
-      // console.log(fontjson)
-      // const json = JSON.parse(JSON.stringify(fontjson) );
-      // console.log(json)
-      fontLoader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
-      let material = new THREE.MeshBasicMaterial({
-        color: 0x000000,
-        opacity: 0.8,
-        transparent: true,
-        side: THREE.DoubleSide,
-        wireframe: false
-      })
-
-
-      // let fontGeometry = new THREE.TextGeometry('sensor', {
-      // font: font,
-      // size: 0.8,
-      // height: 0.2,
-      // curveSegments: 12,
-      // bevelEnabled: true,
-      // bevelThickness: 0.01,
-      // bevelSize: 0.008,
-      // bevelOffset: 0,
-      // bevelSegments: 5
-      // })
-
-      let textGeo = new THREE.TextGeometry( 'sensor', {
-
-					font: font,
-
-					size: 0.8,
-					height: 0.2,
-					curveSegments: 12,
-
-					bevelThickness: 0.01,
-					bevelSize: 0.008,
-					bevelEnabled: true,
-				} );
-
-      let text = new THREE.Mesh( textGeo, material );
-      console.log(text);
-      text.position.x = object.position.x
-      text.position.y = object.position.y+30
-      text.position.z = object.position.z
-      this.text = text;
-      });
-    }
   },
 };
 </script>
 
 <style scoped>
-body {
-  margin: 0;
+#three {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
-
-canvas {
-  display: block;
-}
-</style>)
+</style>
