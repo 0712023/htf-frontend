@@ -7,18 +7,18 @@
             <tr><!--template 쓰는 이유 : v-for 이후에 th에서 v-if사용하기 위해서 -->
                 <template v-for="(val, key) in mchList[0]">
                     <th width="500" :key="key" v-if="key!='memId'" >{{key}}</th>
-                    <!-- <th width="500">new description</th> -->
                 </template>
-                <th width="500">수정</th>
+                <th width="500">update</th>
             </tr>
             </thead>
             <tbody>
                 <tr v-for="machine in mchList" :key="machine.mchId">
                     <template v-for="(val, key) in machine" >
-                        <td width="500" :key="key" v-if="key!='memId'">{{val}}</td>
+                        <td width="500" :key="key" v-if="key!='memId' && key!='vendorId'">{{val}}</td>
+                        <td width="500" :key="key" v-if="key=='vendorId'">{{val.vendorId}}</td>
                     </template>
                     <!-- <td width="500"><input type="text" v-model="description"></td> -->
-                    <td width="500"><button @click="updateMachineDesc(machine.description, machine.mchId)">수정하기</button></td>
+                    <td width="500"><button @click="updateMachineDesc(machine.description, machine.mchId)">update</button></td>
                 </tr>
             </tbody>
         </table> 

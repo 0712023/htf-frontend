@@ -47,7 +47,7 @@ const routes = [
   {
     path: '/kakaoLogin',
     name: 'KakaoLogin',
-    component: () => import('../views/KakaoLogin.vue')
+    component: () => import('../views/KakaoToken/MemberToken.vue')
   }
 ]
 
