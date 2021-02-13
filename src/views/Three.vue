@@ -11,7 +11,7 @@ import * as OrbitControls from "../assets/js/OrbitControls.module.js";
 // import fontjson from "../assets/fonts/helvetiker_regular.typeface.json"
 
 // import Stats from '../assets/js/stats.module.js';
-// import {GLTFLoader} from "../assets/js/GLTFLoader.js";
+import {GLTFLoader} from "../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
 
 export default {
@@ -173,6 +173,14 @@ export default {
         );
       }
       textmaker(cube);
+      let house = "../assets/img/tower_house_design/scene.gltf"
+      const gltfLoader = new GLTFLoader()
+      gltfLoader.load(house, (gltf) => {
+        let model = gltf.scene
+       model.scale.set(300,300,300)
+        scene.add(model)
+      })
+
 
       function animate() {
         controls.update();
