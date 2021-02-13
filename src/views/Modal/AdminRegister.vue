@@ -16,7 +16,9 @@ export default {
 		return {
             id: "",
             pw: "",
-			re_pw: ""
+			re_pw: "",
+            RESTAPIKEY:'2de887fb3941336bf23b2d3a76d82991',
+            REDIRECT_URI:'http://localhost:8080/adminKakaoToken', //front server
 		};
 	},
 	methods: {
@@ -29,9 +31,10 @@ export default {
 			} else {
 				axios.post(`http://studioj.ddns.net/insertAdmin`, {"adId":this.id,"adPw":this.pw})
 				.then((res)=>{
-					console.log(res.data);
+					this.$cookie.set("accesstoken", res.data);
 					alert("register success!");
 					EventBus.$emit("modal",false);
+					location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.RESTAPIKEY+'&redirect_uri='+this.REDIRECT_URI+'&response_type=code&scope=friends'
 				})
 				.catch((error)=>{
 					console.log(error);

@@ -6,12 +6,11 @@
 
 <script>
 import axios from 'axios'
-import EventBus from '../../store/Eventbus'
 export default {
     data(){
         return {
             RESTAPIKEY:'2de887fb3941336bf23b2d3a76d82991',
-            REDIRECT_URI:'http://localhost:8080/memberKakaoToken', //front server
+            REDIRECT_URI:'http://localhost:8080/adminKakaoToken', //front server
         }
     },
     mounted:function(){
@@ -25,10 +24,10 @@ export default {
         axios.post(`https://kauth.kakao.com/oauth/token`, params, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
         .then((res)=>{
             console.log({"access_token":res.data.access_token})
-            axios.post(`http://studioj.ddns.net/updateMemberToken`, {memId:this.$cookie.get("memId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+            axios.post(`http://studioj.ddns.net/updateAdminToken`, {adId:this.$cookie.get("adId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then(()=>{
-                EventBus.$emit("kakao", null)
-                this.$router.push('/');
+                this.$cookie.delete("accesstoken");
+                this.$router.push("/");
             })
         })
         .catch((err)=>{
