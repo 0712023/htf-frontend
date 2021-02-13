@@ -1,7 +1,7 @@
 <template>
   <div>
     <canvas id="three"></canvas>
-    <button>sse</button>
+    <button @click="zom()">sw</button>
   </div>
 </template>
 <script type="module">
@@ -22,7 +22,7 @@ export default {
       renderer: null,
       cube: null,
       cube2: null,
-      controls: null,
+      controls: 1,
       raycaster: null,
       mouse: null,
       ground: null,
@@ -53,7 +53,7 @@ export default {
         0.1,
         1000
       );
-      camera.position.z = 10;
+      camera.position.set(400, 200, 0);
 
       const hemLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
       hemLight.position.set(0, 48, 0);
@@ -144,7 +144,7 @@ export default {
           "fonts/helvetiker_regular.typeface.json",
           function (font) {
             let material = new THREE.MeshBasicMaterial({
-              color: 0x000000,
+              color: 0x006699,
               opacity: 0.8,
               transparent: true,
               side: THREE.DoubleSide,
@@ -226,24 +226,29 @@ export default {
 
         renderer.render(scene, camera);
       }
+      this.controls = controls;
     },
     zom: function () {
       if (this.controls.screenSpacePanning == true) {
-        this.controls.screenSpacePanning = false;
-      } else {
-        this.controls.screenSpacePanning = true;
-      }
-    },
+          this.controls.screenSpacePanning = false;
+        } else {
+          this.controls.screenSpacePanning = true;
+        }
+    }
   },
 };
 </script>
 
 <style scoped>
+body {
+  margin: 0;
+}
+
 #three {
   width: 100%;
   height: 100%;
   position: fixed;
   left: 0;
-  top: 0;
+  margin-top: 5%;
 }
-</style>
+</style>)
