@@ -14,7 +14,7 @@ export default {
     data(){
         return {
             RESTAPIKEY:'2de887fb3941336bf23b2d3a76d82991',
-            REDIRECT_URI:'http://localhost:8080/kakaoLogin', //front server}
+            REDIRECT_URI:'http://localhost:8080/kakaoLogin', //front server
         }   
     }
 }
