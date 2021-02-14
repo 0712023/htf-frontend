@@ -34,7 +34,6 @@ export default {
     UpdateMachine
   },
   mounted() {
-        // this.$modal.hide('register');
         this.mchList = this.mchList.concat(JSON.parse(this.$cookie.get("mchList")))
     },
   data() {

@@ -3,5 +3,4 @@ export default {
     TOGGLENAV : "toggleNav",
     ISNAVOPEN : "isNavOpen",
     INSERTROUTES : "insertroutes",
-    SWITCH : "switch"
 }

@@ -28,7 +28,6 @@ export default {
                     this.$cookie.set("accesstoken", res.data["htfToken"], 1);
                     this.$cookie.set("kakaoToken", res.data["kakaoToken"], 1);
                     EventBus.$emit("kakao", res.data["kakaoToken"]);
-                    console.log({"kakaoToken":res.data["kakaoToken"]});
                 }
 
                 //유저가 로그인을 시도하는 경우

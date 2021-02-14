@@ -21,13 +21,11 @@ export default {
     },
     computed:{
         mchList(){
-            return JSON.parse(
-                this.$cookie.get("mchList"));
+            return JSON.parse(this.$cookie.get("mchList"));
         },
     },
     data(){
-        return {sensorDataStore:{}
-        }
+        return {sensorDataStore:{}};
     },
     created:function(){
         this.dashboardInterval = setInterval(()=>{

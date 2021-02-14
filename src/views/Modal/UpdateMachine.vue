@@ -21,9 +21,8 @@ export default {
     methods:{
         UpdateMachine() {
             axios.post(`http://studioj.ddns.net/updateMachine`,{ mchId: this.mchIdProps , description: this.newDescription, memId:{memId:this.$cookie.get("memId")} },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
-            .then((response) => {
+            .then(() => {
             alert("description update success!");
-            console.log(response.data);
             EventBus.$emit("modal", false);
             })
             .catch(function (error) {

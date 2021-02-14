@@ -20,9 +20,6 @@ export default {
   },
   methods: {
     UpdateMember() {
-      console.log(this.id);
-      console.log(this.$cookie.get("accesstoken"));
-
       if (this.pw != this.re_pw) {
         alert("password does not match");
         this.pw = "";

@@ -29,10 +29,8 @@ export default {
       console.log(memberId);
       axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": memberId}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
       ).then(response =>{
-        console.log({admin_vue:response.data});
         this.$cookie.set("mchList", JSON.stringify(response.data), 1);
         this.$cookie.set("memId", memberId, 1);
-        console.log(this.$cookie.get("mchList"));
         EventBus.$emit('mchList', response.data);
         EventBus.$emit('member', true);
         this.$router.push('../member/'+memberId);

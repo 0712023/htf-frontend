@@ -50,7 +50,6 @@ export default {
                 axios.post(`http://studioj.ddns.net/getMemberListByAdId`, {"adId": this.id}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
                 .then(res =>{
                     //로그인 정보 및 센서 데이터 쿠키에 저장
-                    console.log(res.data);
                     this.$cookie.set("adminId", this.id, 1);
                     this.$cookie.set("login", "login", 1);
                     this.$cookie.set("members", JSON.stringify(res.data), 1);

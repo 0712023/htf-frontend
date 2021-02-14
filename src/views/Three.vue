@@ -60,9 +60,9 @@ export default {
       scene.add(hemLight);
 
       const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
-      //光源等位置
+    
       dirLight.position.set(-10, 8, -5);
-      //可以产生阴影
+      
       dirLight.castShadow = true;
       dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
       scene.add(dirLight);
@@ -173,11 +173,12 @@ export default {
         );
       }
       textmaker(cube);
-      let house = "../assets/img/tower_house_design/scene.gltf"
+      // let house = "~/assets/img/tower_house_design/scene.gltf"
       const gltfLoader = new GLTFLoader()
-      gltfLoader.load(house, (gltf) => {
+      gltfLoader.load('tower_house_design/scene.gltf', (gltf) => {
         let model = gltf.scene
        model.scale.set(300,300,300)
+       model.position.y = 20;
         scene.add(model)
       })
 
