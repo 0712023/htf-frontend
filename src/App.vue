@@ -21,6 +21,9 @@
         <li v-if="!adminId">
           <router-link to="/setting/">Setting</router-link>
         </li>
+        <li v-if="!adminId">
+          <router-link to="/subscribe/">Subscribe</router-link>
+        </li>
         <li v-if="adminId">
           <router-link :to="'/admin/'+adminId" v-on:click.native="backToAdmin">Back to Admin</router-link>
         </li>
