@@ -27,9 +27,8 @@ export default {
                     //쿠키에 access token를 넣어줌
                     this.$cookie.set("accesstoken", res.data["htfToken"], 1);
                     this.$cookie.set("kakaoToken", res.data["kakaoToken"], 1);
-                    this.$cookie.set("rank", res.data["memRank"], 1);
-                    console.log(res.data["rank"]);
-                    EventBus.$emit("kakao", res.data["kakaoToken"]);
+                    this.$cookie.set("memRank", res.data["memRank"], 1);
+                   EventBus.$emit("kakao", res.data["kakaoToken"]);
                 }
 
                 //유저가 로그인을 시도하는 경우

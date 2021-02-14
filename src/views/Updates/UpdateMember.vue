@@ -25,7 +25,7 @@ export default {
         this.pw = "";
         this.re_pw = "";
       } else {
-        axios.post(`http://localhost/updateMember`, {"memId":this.id, "memPw":this.pw
+        axios.post(`http://studioj.ddns.net/updateMember`, {"memId":this.id, "memPw":this.pw
           },{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
           .then((response) => {
             alert("register success!");
