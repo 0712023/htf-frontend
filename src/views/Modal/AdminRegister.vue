@@ -32,6 +32,7 @@ export default {
 				axios.post(`http://studioj.ddns.net/insertAdmin`, {"adId":this.id,"adPw":this.pw})
 				.then((res)=>{
 					this.$cookie.set("accesstoken", res.data);
+					console.log(res.data);
 					this.$cookie.set("adId", this.id);
 					alert("register success!");
 					EventBus.$emit("modal",false);
