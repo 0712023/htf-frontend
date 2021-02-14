@@ -34,7 +34,7 @@ export default {
 					this.$cookie.set("accesstoken", res.data);
 					alert("register success!");
 					EventBus.$emit("modal",false);
-					location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.RESTAPIKEY+'&redirect_uri='+this.REDIRECT_URI+'&response_type=code&scope=friends'
+					location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.RESTAPIKEY+'&redirect_uri='+this.REDIRECT_URI+'&response_type=code&scope=friends,talk_message'
 				})
 				.catch((error)=>{
 					console.log(error);

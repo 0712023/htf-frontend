@@ -28,7 +28,6 @@ export default {
                     this.$cookie.set("accesstoken", res.data["htfToken"], 1);
                     this.$cookie.set("kakaoToken", res.data["kakaoToken"], 1);
                     this.$cookie.set("rank", res.data["memRank"], 1);
-                    console.log(res.data["rank"]);
                     EventBus.$emit("kakao", res.data["kakaoToken"]);
                 }
 
