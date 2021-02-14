@@ -26,6 +26,7 @@ export default {
             axios.post(`http://studioj.ddns.net/updateAdminToken`, {adId:this.$cookie.get("adId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then(()=>{
                 this.$cookie.delete("accesstoken");
+                this.$cookie.delete("adId");
                 this.$router.push("/");
             })
         })
