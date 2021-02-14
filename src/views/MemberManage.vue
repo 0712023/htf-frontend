@@ -48,7 +48,6 @@ export default {
         getMemberList(){
             axios.post(`http://studioj.ddns.net/getMemberListByAdId`,{"adId":this.$cookie.get("adminId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then((res)=>{
-                console.log({manager:res.data});
                 this.memberList = res.data
             })
             .catch((err)=>{

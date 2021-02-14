@@ -15,7 +15,6 @@ export default {
         }
     },
     mounted:function(){
-        console.log({"Authorization code":this.$route.query.code})
         const params = new URLSearchParams();
         params.append('grant_type', 'authorization_code');
         params.append('client_id', this.RESTAPIKEY);
@@ -24,7 +23,6 @@ export default {
         params.append('client_secret', '1yEGMIcIASa5ceBAo5ZZzh1Zld4R2fmO');
         axios.post(`https://kauth.kakao.com/oauth/token`, params, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
         .then((res)=>{
-            console.log({"access_token":res.data.access_token})
             axios.post(`http://studioj.ddns.net/updateMemberToken`, {memId:this.$cookie.get("memId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then(()=>{
                 EventBus.$emit("kakao", null)

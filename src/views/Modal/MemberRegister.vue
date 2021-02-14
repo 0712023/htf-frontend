@@ -29,8 +29,7 @@ export default {
 			} else{
 				axios.post(`http://studioj.ddns.net/insertMember`, {"memId":this.id,"memPw":this.pw,"memRank":"silver","adId":{"adId": this.$cookie.get("adminId")}}
 				,{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
-				.then((res)=>{
-					console.log(res.data);
+				.then(()=>{
 					alert("member add success!");
 					EventBus.$emit("modal",false);
 				})
