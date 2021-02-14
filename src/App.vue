@@ -49,7 +49,7 @@ import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
 import Logout from './components/Logout.vue';
 import Eventbus from './store/Eventbus';
-import kakaoRegister from './components/KakaoRegister'
+import kakaoRegister from './components/KakaoRegisterButton'
 import axios from 'axios';
 
 export default {
