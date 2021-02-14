@@ -32,9 +32,11 @@ export default {
 				axios.post(`http://studioj.ddns.net/insertAdmin`, {"adId":this.id,"adPw":this.pw})
 				.then((res)=>{
 					this.$cookie.set("accesstoken", res.data);
+					console.log(res.data);
+					this.$cookie.set("adId", this.id);
 					alert("register success!");
 					EventBus.$emit("modal",false);
-					location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.RESTAPIKEY+'&redirect_uri='+this.REDIRECT_URI+'&response_type=code&scope=friends'
+					location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.RESTAPIKEY+'&redirect_uri='+this.REDIRECT_URI+'&response_type=code&scope=friends,talk_message'
 				})
 				.catch((error)=>{
 					console.log(error);
