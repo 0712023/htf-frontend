@@ -11,26 +11,15 @@ import * as OrbitControls from "../assets/js/OrbitControls.module.js";
 // import fontjson from "../assets/fonts/helvetiker_regular.typeface.json"
 
 // import {STLLoader} from '../assets/js/STLLoader.js';
-import {GLTFLoader} from "../assets/js/GLTFLoader.js";
+// import {GLTFLoader} from "../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
 
 export default {
   data: function () {
     return {
-      scene: null,
-      camera: null,
-      renderer: null,
-      cube: null,
-      cube2: null,
       controls: 1,
-      raycaster: null,
-      mouse: null,
-      ground: null,
-      sphere: null,
-      objects2: null,
-      text: null,
-      group: null,
-      ge1: null,
+      objects: [],
+      mchList : this.$cookie.get("mchList"),
     };
   },
   mounted() {
@@ -38,10 +27,11 @@ export default {
   },
   methods: {
     initThree() {
-      const objects = [];
+      const objects=[]
+      let test = JSON.parse(this.mchList)
+      console.log(test)
       const scene = new THREE.Scene();
       scene.background = new THREE.Color("#eee");
-      //   scene.fog = new THREE.Fog('#eee', 20, 100)
 
       const canvas = document.querySelector("#three");
       const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -86,60 +76,11 @@ export default {
       );
       controls.enableDamping = true;
       controls.dampingFactor = 0.05;
-
       controls.screenSpacePanning = true;
-
       controls.minDistance = 100;
       controls.maxDistance = 500;
-
       controls.maxPolarAngle = Math.PI / 2;
-
-      const geometry1 = new THREE.BoxGeometry(50, 50, 50);
-      const material1 = new THREE.MeshBasicMaterial({
-        color: 0x000000,
-        wireframe: false,
-      });
-      const cube = new THREE.Mesh(geometry1, material1);
-      // cube.position.y = 100;
-      cube.url = "http://127.0.0.1:8081/sensor/light1/mchid/4561a65s1f";
-
-      scene.add(cube);
-      objects.push(cube);
-      // const loader = new THREE.FontLoader();
-      // loader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
-      //   const color = 0x006699;
-
-      //   const matLite = new THREE.MeshBasicMaterial({
-      //     color: color,
-      //     transparent: true,
-      //     opacity: 0.4,
-      //     side: THREE.DoubleSide,
-      //   });
-
-      // const message = "sensor";
-
-      // const shapes = font.generateShapes(message, 20);
-
-      // const geometry = new THREE.ShapeGeometry(shapes);
-
-      // geometry.computeBoundingBox();
-
-      // const xMid =
-      //   -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
-
-      // geometry.translate(xMid, 0, 0);
-
-      //   // make shape ( N.B. edge view not visible )
-
-      //   const text = new THREE.Mesh(geometry, matLite);
-      //   text.position.x = cube.position.x;
-      //   text.position.y = cube.position.y + 30;
-      //   text.position.z = cube.position.z;
-
-      //   scene.add(text);
-      // });
-
-      function textmaker(object) {
+    function textmaker(object) {
         const fontLoader = new THREE.FontLoader();
         fontLoader.load(
           "fonts/helvetiker_regular.typeface.json",
@@ -152,7 +93,7 @@ export default {
               wireframe: false,
             });
 
-            const message = "sensor1";
+            const message = object.description;
 
             const shapes = font.generateShapes(message, 20);
 
@@ -173,15 +114,35 @@ export default {
           }
         );
       }
-      textmaker(cube);
 
-      const gltfLoader = new GLTFLoader()
-      gltfLoader.load('ancient_chinese_courtyard_park/scene.gltf', (gltf) => {
-        let model = gltf.scene
-       model.scale.set(10,10,10)
-       model.position.y = 20;
-        scene.add(model)
-      })
+      for(let i = 0; i< test.length;i++){
+        const geometry1 = new THREE.BoxGeometry(50, 50, 50);
+        const material1 = new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        wireframe: false,
+      });
+      const cube = new THREE.Mesh(geometry1, material1);
+      // cube.position.y = 100;
+      cube.url = "http://127.0.0.1:8081/sensor/"+test[i].description+"/mchid/"+test[i].mchid;
+      cube.position.z = -i*100;
+      cube.description = test[i].description;
+      scene.add(cube);
+      objects.push(cube);
+      textmaker(cube);
+      }
+     
+
+
+      
+      
+
+      // const gltfLoader = new GLTFLoader()
+      // gltfLoader.load('ancient_chinese_courtyard_park/scene.gltf', (gltf) => {
+      //   let model = gltf.scene
+      //  model.scale.set(10,10,10)
+      //  model.position.y = 20;
+      //   scene.add(model)
+      // })
 
       // const loader = new STLLoader();
 			// 	loader.load( 'assem.stl', function ( geometry ) {
@@ -240,7 +201,7 @@ export default {
           (event.clientX / window.innerWidth) * 2 - 1,
           -(event.clientY / window.innerHeight) * 2 + 1
         );
-        console.log("12")
+        console.log(objects)
         raycaster.setFromCamera(mouse, camera);
         for (let i = 0; i < objects.length; i++) {
           const intersects1 = raycaster.intersectObject(objects[i], true);
