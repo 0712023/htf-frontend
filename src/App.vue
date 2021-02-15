@@ -3,7 +3,7 @@
     <nav class="main-nav" v-show="login">
       <Burger/><logout/>
     </nav>
-    <div class="top-long-box" v-if="memId && (kakaoToken=='null')">
+    <div class="top-long-box" v-if="memId && (kakaoToken=='null') && !adminId">
       <kakaoRegister/>
     </div>
     <div class="body"><router-view></router-view></div>
