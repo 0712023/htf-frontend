@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    현재 외부 온도 : <span id="outdoor"></span> °C
+    현재 외부 온도 : <span id="outdoorTemp"></span> °C
     <Bar-chart :chart-data="datacollection"></Bar-chart>
     {{$route.params.mchId}}
   </div>
@@ -73,8 +73,8 @@
         }
       },
       getWeather () {
-        axios.get(`http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=a4e87aed6466e3d8b4c848fd3b150d74`).then(response =>{
-          document.getElementById("outdoor").innerHTML = parseInt((response.data.main.temp - 273.15)*10)/10;
+        axios.post(`http://studioj.ddns.net/naverTempCrawler`,{},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}).then(response =>{
+          document.getElementById("outdoorTemp").innerHTML = ((response.data));
         })
       },
       getRandomInt () {

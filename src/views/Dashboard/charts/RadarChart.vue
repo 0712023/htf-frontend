@@ -65,8 +65,8 @@
         }
       },
       getWeather () {
-        axios.get(`http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=a4e87aed6466e3d8b4c848fd3b150d74`).then(response =>{
-          document.getElementById("outdoorHumidity").innerHTML = response.data.main.humidity;
+        axios.post(`http://studioj.ddns.net/naverHumidtyCrawler`,{},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}).then(response =>{
+          document.getElementById("outdoorHumidity").innerHTML = response.data;
         })
       },
       getRandomInt () {

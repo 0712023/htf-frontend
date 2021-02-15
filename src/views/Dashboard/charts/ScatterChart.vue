@@ -92,9 +92,7 @@
         }
       },
       getWeather () {
-        axios.get(`http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=a4e87aed6466e3d8b4c848fd3b150d74`).then(response =>{
-          document.getElementById("outdoor").innerHTML = parseInt((response.data.main.temp - 273.15)*10)/10;
-        })
+
       },
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
