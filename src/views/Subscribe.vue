@@ -74,24 +74,15 @@ export default {
     };
   },
   methods: {
-    UpdateMember(v) {
-      axios
-        .post(
-          `${this.$store.state.BACK_SERVER}/updateMember`,
-          { memId: this.id, memRank: v },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,
-            },
-          }
-        )
-        .then((response) => {
-          alert("subscribe success!");
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    UpdateMember(newRank) {
+      axios.post(`${this.$store.state.BACK_SERVER}/updateMember`,{ memId: this.id, memRank: newRank },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,},})
+      .then((response) => {
+        alert("subscribe success!");
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     },
     Kakao(rank, price) {
       console.log(this.$store.state.BACK_SERVER)
