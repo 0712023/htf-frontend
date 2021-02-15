@@ -1,6 +1,5 @@
 <template>
     <div>
-        <button @click="test(rank[2], price[2])">테스트</button>
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap" >
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
@@ -20,16 +19,6 @@
 <script>
 import axios from 'axios'
 export default {
-    methods:{
-        test(rank, price){
-            axios.post(`http://192.168.168.156/initSub`, {"memId":this.$cookie.get("memId"), "rank":rank, "price":price}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
-            .then((res)=>{
-                console.log(res.data);
-                this.$cookie.set("tid", res.data["tid"], 1);
-                window.open(res.data["url"]);
-            })
-        },
-    },
     computed:{
         mchList(){
             return JSON.parse(this.$cookie.get("mchList"));
@@ -37,8 +26,7 @@ export default {
     },
     data(){
         return {sensorDataStore:{},
-            rank : ["basic", "pro", "enterprise"],
-            price : ["0", "5000", "10000"]
+          
         };
     },
     created:function(){

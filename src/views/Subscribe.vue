@@ -16,7 +16,10 @@
           <li>Edit Your Listing</li>
           <li>Approve Reviews</li>
         </ul>
-        <div class="pricingTable-firstTable_table__getstart" @click="UpdateMember('silver')" >
+        <div
+          class="pricingTable-firstTable_table__getstart"
+         @click="Kakao(rank[2], price[2])"
+        >
           Get Started Now
         </div>
       </li>
@@ -32,7 +35,10 @@
           <li>Take Booking Online</li>
           <li>24/7 Support Service</li>
         </ul>
-        <div class="pricingTable-firstTable_table__getstart" @click="UpdateMember('gold')">
+        <div
+          class="pricingTable-firstTable_table__getstart"
+          @click="UpdateMember('gold')"
+        >
           Get Started Now
         </div>
       </li>
@@ -46,7 +52,10 @@
           <li>Edit Your Listing</li>
           <li>Approve Reviews</li>
         </ul>
-        <div class="pricingTable-firstTable_table__getstart" @click="UpdateMember('platinum')">
+        <div
+          class="pricingTable-firstTable_table__getstart"
+          @click="UpdateMember('platinum')"
+        >
           Get Started Now
         </div>
       </li>
@@ -60,21 +69,45 @@ export default {
   data() {
     return {
       id: this.$cookie.get("memId"),
-      rank: "",
+      rank : ["basic", "pro", "enterprise"],
+      price : ["0", "5000", "10000"]
     };
   },
   methods: {
-     UpdateMember(v) {
+    UpdateMember(v) {
       axios
         .post(
-          `http://studioj.ddns.net/updateMember`, {"memId":this.id, "memRank": v},
-          {headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,},
-          })
-        .then((response) => {alert("subscribe success!");
+          `http://studioj.ddns.net/updateMember`,
+          { memId: this.id, memRank: v },
+          {
+            headers: {
+              Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,
+            },
+          }
+        )
+        .then((response) => {
+          alert("subscribe success!");
           console.log(response.data);
-          })
+        })
         .catch(function (error) {
           console.log(error);
+        });
+    },
+    Kakao(rank, price) {
+      axios
+        .post(
+          `http://localhost/initSub`,
+          { memId: this.$cookie.get("memId"), rank: rank, price: price },
+          {
+            headers: {
+              Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+          this.$cookie.set("tid", res.data["tid"], 1);
+          window.open(res.data["url"]);
         });
     },
   },
