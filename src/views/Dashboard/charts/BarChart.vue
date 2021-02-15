@@ -1,7 +1,7 @@
 <template>
   <div class="small">
     현재 외부 온도 : <span id="outdoor"></span> °C
-    <Bar-chart :chart-data="datacollection"></Bar-chart><br>
+    <Bar-chart :chart-data="datacollection"></Bar-chart>
     {{$route.params.mchId}}
   </div>
 </template>
