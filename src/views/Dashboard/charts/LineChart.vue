@@ -1,5 +1,6 @@
 <template>
   <div class="small">
+    외부 미세먼지 : <span id="outdoorDust"></span>
     <line-chart :chart-data="datacollection"></line-chart>
     {{$route.params.mchId}}
   </div>
@@ -22,6 +23,7 @@
       this.resetData();
     },
     created () {
+      this.getDust();
       //처음에 10개 가져오는 것
       axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId}, 
         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
@@ -75,6 +77,11 @@
       },
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+      },
+      getDust () {
+        axios.post(`http://studioj.ddns.net/naverDust`, {}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}).then(response =>{
+          document.getElementById("outdoorDust").innerHTML = parseInt(response.data);
+        })
       },
     }
   }
