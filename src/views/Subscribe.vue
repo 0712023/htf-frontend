@@ -77,7 +77,7 @@ export default {
     UpdateMember(v) {
       axios
         .post(
-          `http://studioj.ddns.net/updateMember`,
+          `${this.$store.state.BACK_SERVER}/updateMember`,
           { memId: this.id, memRank: v },
           {
             headers: {
@@ -94,21 +94,12 @@ export default {
         });
     },
     Kakao(rank, price) {
-      axios
-        .post(
-          `http://localhost/initSub`,
-          { memId: this.$cookie.get("memId"), rank: rank, price: price },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res.data);
-          this.$cookie.set("tid", res.data["tid"], 1);
-          window.open(res.data["url"]);
-        });
+      console.log(this.$store.state.BACK_SERVER)
+      axios.post(`http://192.168.168.156:80/initSub`,{ memId: this.$cookie.get("memId"), rank: rank, price: price },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,}})
+      .then((res) => {
+        this.$cookie.set("tid", res.data["tid"], 1);
+        window.open(res.data["url"]);
+      });
     },
   },
 };

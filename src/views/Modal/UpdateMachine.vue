@@ -20,7 +20,7 @@ export default {
     props:{desc : String, mchIdProps : String},
     methods:{
         UpdateMachine() {
-            axios.post(`http://studioj.ddns.net/updateMachine`,{ mchId: this.mchIdProps , description: this.newDescription, memId:{memId:this.$cookie.get("memId")} },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+            axios.post(`${this.$store.state.BACK_SERVER}/updateMachine`,{ mchId: this.mchIdProps , description: this.newDescription, memId:{memId:this.$cookie.get("memId")} },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then(() => {
             alert("description update success!");
             EventBus.$emit("modal", false);

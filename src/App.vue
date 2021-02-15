@@ -120,7 +120,7 @@ export default {
       this.memId = false;
     },
     getMachineListByMemId(){
-      axios.post(`http://studioj.ddns.net/getMachineListByMemId`,{"memId":this.$cookie.get("memId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookie.get("memId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
       .then((res)=>{
           console.log({machinList:res.data});
           this.$cookie.set("mchList", JSON.stringify(res.data))
@@ -131,7 +131,7 @@ export default {
       })
     },
     getMachineListByVendorId(){
-      axios.post(`http://studioj.ddns.net/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
       .then((res)=>{
           console.log({machinList:res.data});
           this.$cookie.set("mchList", JSON.stringify(res.data))

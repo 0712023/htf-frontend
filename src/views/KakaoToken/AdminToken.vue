@@ -17,7 +17,7 @@ export default {
         axios.post(`https://kauth.kakao.com/oauth/token`, params, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
         .then((res)=>{
             console.log(res.data.access_token);
-            axios.post(`http://studioj.ddns.net/updateAdminToken`, {adId:this.$cookie.get("adId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+            axios.post(`${this.$store.state.BACK_SERVER}/updateAdminToken`, {adId:this.$cookie.get("adId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then(()=>{
                 this.$cookie.delete("accesstoken");
                 this.$cookie.delete("adId");

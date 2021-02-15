@@ -47,7 +47,7 @@ export default {
             this.$modal.show('MachineRegister')
         },
         getMachineList(){
-            axios.post(`http://studioj.ddns.net/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+            axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then((res)=>{
                 this.mchList = res.data;
             })

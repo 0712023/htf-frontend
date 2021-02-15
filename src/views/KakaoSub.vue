@@ -9,7 +9,7 @@ import axios from 'axios';
 export default {
     mounted:function(){
         let tid = this.$cookie.get("tid");
-        axios.post(`http://localhost:8081/kakaoSub`, {"tid":tid,"pg_token":this.$route.query.pg_token, "memId":this.$cookie.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+        axios.post(`${this.$store.state.BACK_SERVER}/kakaoSub`, {"tid":tid,"pg_token":this.$route.query.pg_token, "memId":this.$cookie.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
         .then((res)=>{
             console.log(res.data);
             this.$cookie.set("sid", res.data, 1);

@@ -37,7 +37,7 @@ export default {
             this.$modal.show('AdminRegister')
         },
         adminLogin() {
-            axios.post(`http://studioj.ddns.net/loginAdmin`, {"adId": this.id, "adPw":this.pw})
+            axios.post(`${this.$store.state.BACK_SERVER}/loginAdmin`, {"adId": this.id, "adPw":this.pw})
             .then(res => {
                 if (res.data == '') {
                     alert("login failed")
@@ -47,7 +47,7 @@ export default {
                     this.$cookie.set("accesstoken", res.data, 1);
                 }
                 //admin id로 모든 멤버 아이디 불러오기
-                axios.post(`http://studioj.ddns.net/getMemberListByAdId`, {"adId": this.id}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+                axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.id}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
                 .then(res =>{
                     //로그인 정보 및 센서 데이터 쿠키에 저장
                     this.$cookie.set("adminId", this.id, 1);

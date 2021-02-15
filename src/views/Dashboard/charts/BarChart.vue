@@ -28,7 +28,7 @@
         this.getWeather();
       },600000);
       //처음에 10개 가져오는 것
-      axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId}, 
+      axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId}, 
         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
         ).then(response =>{
         for (let incomingData of response.data) {
@@ -40,7 +40,7 @@
       })
 
       this.chartInterval = setInterval(()=>{
-      axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, 
+      axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, 
         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
         ).then(response =>{
           this.datacollection.labels.push("");
@@ -73,7 +73,7 @@
         }
       },
       getWeather () {
-        axios.post(`http://studioj.ddns.net/naverTempCrawler`,{},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}).then(response =>{
+        axios.post(`${this.$store.state.BACK_SERVER}/naverTempCrawler`,{},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}).then(response =>{
           document.getElementById("outdoorTemp").innerHTML = ((response.data));
         })
       },
