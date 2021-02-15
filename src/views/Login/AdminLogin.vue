@@ -4,6 +4,7 @@
         <input type="text" placeholder="admin id" v-model='id' class="login-input-wrap input-id">
         <input type="password" placeholder="pw" v-model='pw' class="login-input-wrap input-id"><br><br>
         <button @click="adminLogin">login</button><br><br><br>
+        <button @click="test">테스트</button>
         <div class="login-top-wrap">
             <span>Don't have an account?</span>
             <button @click="modalshow" class="create-account-btn shadow-light">Register</button>
@@ -33,6 +34,14 @@ export default {
         EventBus.$on('modal',()=>this.$modal.hide('AdminRegister'));
     },
     methods:{
+        test(){
+            axios.post(`http://192.168.168.156/initSub`)
+            .then((res)=>{
+                console.log(res.data);
+                // location.href=res.data;
+                window.open(res.data);
+            })
+        },
         modalshow(){
             this.$modal.show('AdminRegister')
         },
