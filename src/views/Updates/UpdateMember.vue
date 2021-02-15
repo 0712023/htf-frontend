@@ -3,7 +3,7 @@
     Update Member Account <br><br>
     <input type="password" placeholder="pw" v-model="pw">
     <input type="password" placeholder="rewrite pw" v-model="re_pw">
-    <button @click="UpdateMember">회원정보수정</button>
+    <button @click="UpdateMember">Update Password</button>
   </div>
 </template>
 

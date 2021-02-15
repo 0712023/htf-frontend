@@ -1,7 +1,6 @@
 <template>
   <div id="standard2">
-    Update Machine Description <br>
-    <modal name="UpdateMachine"><UpdateMachine :desc.sync="description" :mchIdProps.sync="mchId"/></modal>
+    <modal name="UpdateMachine"><UpdateMachine :desc.sync="description" :mchIdProps.sync="mchId"/></modal><br><br><br>
     <table border="1" width="1000">
             <thead> 
             <tr><!--template 쓰는 이유 : v-for 이후에 th에서 v-if사용하기 위해서 -->
@@ -21,7 +20,8 @@
                     <td width="500"><button @click="updateMachineDesc(machine.description, machine.mchId)">update</button></td>
                 </tr>
             </tbody>
-        </table> 
+        </table> <br>
+        Update Machine Description
   </div>
 </template>
 

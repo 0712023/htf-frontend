@@ -2,7 +2,7 @@
   <div id="standard">
     <modal name="UpdateMember"><UpdateMember /></modal> <br>
     <div>
-      <button @click="modalshow">회원정보수정</button> <br>
+      <button @click="modalshow">Update Password</button> <br>
     </div>
     <div>
       <UpdateMachine />

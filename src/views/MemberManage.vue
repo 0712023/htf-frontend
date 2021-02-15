@@ -12,7 +12,7 @@
             </thead>
             <tbody>
                 <tr v-for="(member, index) in memberList" :key="member.memId">
-                    {{index + 1 + " "}}
+                    {{index + 1}}
                     <template v-for="(val, key) in member">
                         <td width="500" :key="key" v-if="key=='memId' || key=='memRank'">{{val}}</td>
                     </template>

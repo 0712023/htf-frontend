@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="top-long-box">
+            제품에 관해 연락할 사항이 있다면 abc@def.com 으로 연락주시면 감사하겠습니다.
+        </div>
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap" >
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
