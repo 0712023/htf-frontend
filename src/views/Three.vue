@@ -10,7 +10,7 @@ import * as OrbitControls from "../assets/js/OrbitControls.module.js";
 // import grass from "@/assets/img/grasslight-big.jpg";
 // import fontjson from "../assets/fonts/helvetiker_regular.typeface.json"
 
-// import Stats from '../assets/js/stats.module.js';
+// import {STLLoader} from '../assets/js/STLLoader.js';
 import {GLTFLoader} from "../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
 
@@ -67,17 +67,18 @@ export default {
       dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
       scene.add(dirLight);
 
-      let floorGeometry = new THREE.PlaneGeometry(8000, 8000);
-      let floorMaterial = new THREE.MeshPhongMaterial({
-        color: 0x857ebb,
-        shininess: 0,
-      });
+      const gt = new THREE.TextureLoader().load("grasslight-big.jpg");
+    const gg = new THREE.PlaneGeometry(16000, 16000);
+    const gm = new THREE.MeshPhongMaterial({ color: 0xffffff, map: gt });
 
-      let floor = new THREE.Mesh(floorGeometry, floorMaterial);
-      floor.rotation.x = -0.5 * Math.PI;
-      floor.receiveShadow = true;
-      floor.position.y = -0.001;
-      scene.add(floor);
+    const ground = new THREE.Mesh(gg, gm);
+    ground.rotation.x = -Math.PI / 2;
+    ground.material.map.repeat.set(64, 64);
+    ground.material.map.wrapS = THREE.RepeatWrapping;
+    ground.material.map.wrapT = THREE.RepeatWrapping;
+    ground.material.map.encoding = THREE.sRGBEncoding;
+    ground.receiveShadow = true;
+    scene.add(ground);
 
       const controls = new OrbitControls.OrbitControls(
         camera,
@@ -173,14 +174,31 @@ export default {
         );
       }
       textmaker(cube);
-      // let house = "~/assets/img/tower_house_design/scene.gltf"
+
       const gltfLoader = new GLTFLoader()
-      gltfLoader.load('tower_house_design/scene.gltf', (gltf) => {
+      gltfLoader.load('ancient_chinese_courtyard_park/scene.gltf', (gltf) => {
         let model = gltf.scene
-       model.scale.set(300,300,300)
+       model.scale.set(10,10,10)
        model.position.y = 20;
         scene.add(model)
       })
+
+      // const loader = new STLLoader();
+			// 	loader.load( 'assem.stl', function ( geometry ) {
+
+			// 		const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
+			// 		const mesh = new THREE.Mesh( geometry, material );
+
+			// 		mesh.position.set( 0, - 0.25, 0.6 );
+			// 		mesh.rotation.set( 0, - Math.PI / 2, 0 );
+			// 		mesh.scale.set( 2, 2, 2 );
+
+			// 		mesh.castShadow = true;
+			// 		mesh.receiveShadow = true;
+
+			// 		scene.add( mesh );
+
+			// 	} );
 
 
       function animate() {
@@ -222,12 +240,12 @@ export default {
           (event.clientX / window.innerWidth) * 2 - 1,
           -(event.clientY / window.innerHeight) * 2 + 1
         );
-
+        console.log("12")
         raycaster.setFromCamera(mouse, camera);
         for (let i = 0; i < objects.length; i++) {
           const intersects1 = raycaster.intersectObject(objects[i], true);
           if (intersects1.length > 0) {
-            // console.log("애기: "+this.objects)
+            console.log("애기: "+objects)
             const intersect = intersects1[0];
             window.location.href = intersect.object.url;
           }
