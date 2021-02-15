@@ -18,7 +18,7 @@
         </ul>
         <div
           class="pricingTable-firstTable_table__getstart"
-         @click="Kakao(rank[2], price[2])"
+         @click="Kakao(rank[0], price[0])"
         >
           Get Started Now
         </div>
@@ -37,7 +37,7 @@
         </ul>
         <div
           class="pricingTable-firstTable_table__getstart"
-          @click="UpdateMember('gold')"
+         @click="Kakao(rank[1], price[1])"
         >
           Get Started Now
         </div>
@@ -54,7 +54,7 @@
         </ul>
         <div
           class="pricingTable-firstTable_table__getstart"
-          @click="UpdateMember('platinum')"
+          @click="Kakao(rank[2], price[2])"
         >
           Get Started Now
         </div>
