@@ -7,17 +7,11 @@
 <script>
 import axios from 'axios'
 export default {
-    data(){
-        return {
-            RESTAPIKEY:'2de887fb3941336bf23b2d3a76d82991',
-            REDIRECT_URI:'http://localhost:8080/adminKakaoToken', //front server
-        }
-    },
     mounted:function(){
         const params = new URLSearchParams();
         params.append('grant_type', 'authorization_code');
-        params.append('client_id', this.RESTAPIKEY);
-        params.append('redirect_uri', this.REDIRECT_URI);
+        params.append('client_id', this.$store.state.RESTAPIKEY);
+        params.append('redirect_uri', this.$store.state.ADMIN_REDIRECT_URI);
         params.append('code', this.$route.query.code);
         params.append('client_secret', '1yEGMIcIASa5ceBAo5ZZzh1Zld4R2fmO');
         axios.post(`https://kauth.kakao.com/oauth/token`, params, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
