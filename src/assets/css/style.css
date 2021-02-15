@@ -9,7 +9,7 @@ div#standard {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #fff;
+    color: rgba(255, 255, 255, 0);
     text-decoration: none;
     font-size: 1.5rem;
 }
@@ -55,8 +55,8 @@ body {
   background: rgb(101, 31, 87);
   background: linear-gradient(
     45deg,
-    rgba(150,150,150) 0%,
-    rgba(200,200,200) 48%,
+    rgb(232, 239, 255) 0%,
+    rgb(248, 250, 255) 48%,
     rgba(255,255,255) 100%
   );
 }
@@ -76,6 +76,20 @@ body {
   color: #fff;
   font-weight: bold;
   font-family: "Lato";
+}
+
+table {
+  text-align: center;
+  color: #000;
+  border: 0;
+  border-collapse: collapse;
+}
+
+td, th{
+  border-top: 1;
+  border-color: #000;
+  border-bottom: 1px solid #444444;
+  padding: 10px;
 }
 
 .main-nav {
@@ -107,29 +121,34 @@ button:hover {
   opacity: 60%;
 }
 
-
-
-
 .top-long-box {
 background-color: rgb(144, 27, 247);
-height: 200px;
-width: 80vw;
-max-height: 400px;
+height: 15vh;
+max-height: 200px;
+margin-left: 3vw;
+width: 94vw;
 display: flex;
 justify-content: center;
 align-items: center;
 border-bottom: 1px solid #ebebeb;
+margin-top: 25px;
 margin-bottom: 25px;
-background: rgb(255, 255, 255);
 box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
 backdrop-filter: blur( 6.5px );
 -webkit-backdrop-filter: blur( 6.5px );
 border-radius: 10px;
 border: 1px solid rgba( 255, 255, 255, 0.18 );
 opacity: 100%;
+background: linear-gradient(
+  45deg,
+  rgb(255, 255, 255) 0%,
+  rgb(250, 252, 255) 48%,
+  rgba(255,255,255) 100%
+);
 }
 /* User Page */
 .box1 {
+margin-left: 2.5vw;
 background-color: rgb(144, 27, 247);
 height: 30vh;
 width: 28vw;
@@ -137,8 +156,6 @@ display: flex;
 justify-content: center;
 align-items: center;
 border-bottom: 1px solid #ebebeb;
-margin-bottom: 25px;
-
 background: rgb(255, 255, 255);
 box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
 backdrop-filter: blur( 6.5px );
@@ -156,14 +173,14 @@ opacity: 80%;
 
 .wrap {
   position: relative;
-  top: 5vw;
+  top: 1vw;
   height: 100%;
   margin: 0 auto;
   display: grid;
   align-items: center; /* 수직 가운데 정렬 */
   justify-content: center; /* 수평 가운데 정렬 */
   grid-template-columns: repeat(auto-fill, minmax(33%, auto));
-  grid-template-rows: 25vh 50vh 50vh;
+  grid-auto-rows: 34vh;
 grid-auto-flow: dense;
 }
 

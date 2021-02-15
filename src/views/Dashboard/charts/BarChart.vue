@@ -16,7 +16,7 @@
     },
     data () {
       return {
-        datacollection: {}
+        datacollection: {backgroundColor: '#f87979',}
       }
     },
     mounted () {

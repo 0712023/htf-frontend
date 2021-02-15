@@ -1,16 +1,18 @@
 <template>
     <div id="standard">
-        Member List
+        <h2 style="color:black;">Member List</h2>
         <table border="1" width="1000">
             <thead> 
             <tr>
+                <th>#</th>
                 <template v-for="(val, key) in memberList[0]">
                     <th width="500" :key="key" v-if="key=='memId' || key=='memRank'">{{key}}</th>
                 </template>
             </tr>
             </thead>
             <tbody>
-                <tr v-for="member in memberList" :key="member.memId">
+                <tr v-for="(member, index) in memberList" :key="member.memId">
+                    {{index + 1 + " "}}
                     <template v-for="(val, key) in member">
                         <td width="500" :key="key" v-if="key=='memId' || key=='memRank'">{{val}}</td>
                     </template>

@@ -1,18 +1,22 @@
 <template>
     <div>
         <div style="overflow:scroll; width:100%; height:100vh;">
-            <div class="wrap">
-              <!-- <div class="top-long-box" style="grid-column: 1 / span 3;"></div> -->
-              <div v-for="(value, index) in members" :key="index">
-                <div class="box1" @click="toUser(value.memId)">
-                  <div>
-                      등급 : {{value.memRank}} <br><br><br><br>
-                      <h2>유저 : <a :key="index">{{value.memId}}</a></h2>
-                      <br><br>
-                      등급 만료일 : {{value.expireDate}}
-                  </div>
+          <div class="top-long-box">
+            
+            <h3>Number of Members : {{members.length}}</h3>
+          </div>
+          <div class="wrap">
+            <!-- <div class="top-long-box" style="grid-column: 1 / span 3;"></div> -->
+            <div v-for="(value, index) in members" :key="index">
+              <div class="box1" @click="toUser(value.memId)">
+                <div>
+                    Grade : {{value.memRank}} <br><br><br><br>
+                    <h2>User : <a :key="index">{{value.memId}}</a></h2>
+                    <br><br>
+                    Expiring Date : {{value.expireDate}}
                 </div>
               </div>
+            </div>
           </div>
       </div>
   </div>

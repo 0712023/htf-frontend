@@ -1,6 +1,9 @@
 <template>
     <div>
-        <button @click="getKakaoToken">카카오 토큰 가입하기!</button>
+        <div style="width: 40vw; float:left; left:0">
+            카카오를 이용해 알림을 전달드리고 있습니다. 가입하지 않으신 분에 한해 이 버튼이 나타나니 꼭 가임해주시면 감사하겠습니다
+        </div>
+        <button @click="getKakaoToken" style="float: right;">카카오 토큰 가입하기!</button>
     </div>
 </template>
 

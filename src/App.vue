@@ -1,9 +1,11 @@
 <template>
-  <div id="app">
+  <div id="app" style="">
     <nav class="main-nav" v-show="login">
       <Burger/><logout/>
     </nav>
-    <kakaoRegister v-if="memId && (kakaoToken=='null')"/>
+    <div class="top-long-box" v-if="memId && (kakaoToken=='null')">
+      <kakaoRegister/>
+    </div>
     <div class="body"><router-view></router-view></div>
     
     <Sidebar>
