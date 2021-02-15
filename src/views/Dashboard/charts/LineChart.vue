@@ -67,10 +67,6 @@
               label: '내부 미세먼지',
               backgroundColor: '#999999',
               data: []
-            }, {
-              label: '외부 미세먼지',
-              backgroundColor: '#ffffff',
-              data: []
             }
           ]
         }
