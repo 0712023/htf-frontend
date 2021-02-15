@@ -3,11 +3,13 @@
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap" >
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
-                    <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId">{{ sensor.description }}</router-link>
-                    <br><br>name : {{ sensor.description }} 
-                    <br><br>mchId : {{ sensor.mchId }}
-                    <br><br>value : {{ sensorDataStore[sensor.mchId] }}
-                    <br><br>vendorId : {{ sensor.vendorId.vendorId }}
+                    <div>
+                        <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId">{{ sensor.description }}</router-link>
+                        <br><br>name : {{ sensor.description }} 
+                        <br><br>mchId : {{ sensor.mchId }}
+                        <br><br>value : {{ sensorDataStore[sensor.mchId] }}
+                        <br><br>vendorId : {{ sensor.vendorId.vendorId }}
+                    </div>
                 </div>
             </div>
         </div>
