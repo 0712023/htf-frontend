@@ -3,7 +3,6 @@
         <input type="text" placeholder="member id" v-model='id' class="login-input-wrap input-id">
         <input type="password" placeholder="pw" v-model='pw' class="login-input-wrap input-id"><br><br>
         <button @click="memberLogin">login</button> 
-        <button @click="test">테스트</button>
     </div>
 </template>
 
@@ -18,22 +17,6 @@ export default {
         }
     },
     methods:{
-        test(){
-            let body = {
-                "cid":"TC0ONETIME",
-                "partner_order_id":"0000",
-                "partner_user_id":"sh",
-                "tid":"T2863458360269535682",
-                "pg_token":"ccf070c1d068a90557da"
-            }
-            axios.post(`https://kapi.kakao.com/v1/payment/approve`, body, {headers: { Authorization: `KakaoAK 8fe7fc4a9f57b22dc5a4a209121cb7f5`}})
-            .then((res)=>{
-                console.log(res.data);
-            })
-            .catch((err)=>{
-                console.log(err);
-            })
-        },
         memberLogin() {
             axios.post(`http://studioj.ddns.net/loginMember`, {"memId":this.id,"memPw":this.pw})
             .then(res => {

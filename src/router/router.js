@@ -74,6 +74,12 @@ const routes = [{
         name: 'AdminKakaoToken',
         component: () =>
             import ('../views/KakaoToken/AdminToken.vue')
+    },
+    {
+        path: '/kakaoSub',
+        name: 'KakaoSub',
+        component: () =>
+            import ('../views/KakaoSub.vue')
     }
 ]
 
@@ -87,7 +93,7 @@ router.beforeEach(function(to, from, next) {
     let memId = VueCookie.get("memId");
     let adminId = VueCookie.get("adminId");
     let vendorId = VueCookie.get("vendorId");
-    if (to.path == "/adminKakaoToken") {
+    if (to.path == "/adminKakaoToken" || to.path == "/kakaoSub") {
         next();
     } else if ((memId == null && adminId == null && vendorId == null) && to.fullPath != "/") {
         alert("please log in");
