@@ -40,6 +40,11 @@ export default {
     props:{
         sensorName: String
     },
+    watch: {
+        $route() {
+            document.location.reload();
+        }
+    },
     components:{
         LineChart,BarChart,RadarChart,BubbleChart,ScatterChart
     },
