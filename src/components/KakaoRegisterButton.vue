@@ -8,8 +8,14 @@
 export default {
     methods:{
         getKakaoToken(){
-            location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.$store.state.RESTAPIKEY+'&redirect_uri='+this.$store.state.MEMBER_REDIRECT_URI+'&response_type=code&scope=friends'
+            location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.RESTAPIKEY+'&redirect_uri='+this.REDIRECT_URI+'&response_type=code&scope=friends'
         },
     },
+    data(){
+        return {
+            RESTAPIKEY:'2de887fb3941336bf23b2d3a76d82991',
+            REDIRECT_URI:'http://localhost:8080/memberKakaoToken', //front server
+        }   
+    }
 }
 </script>

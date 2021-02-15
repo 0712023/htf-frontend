@@ -35,7 +35,7 @@ export default {
     },
     components:{
         AdminLogin, MemberLogin, VendorLogin
-    },
+    }
 }
 </script>
 
