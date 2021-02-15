@@ -14,12 +14,7 @@ div#standard {
     font-size: 1.5rem;
 }
 div#standard2 { 
-  position: absolute;
-  top: 50%;
-  left: 50%;
   width: 450px; height: 250px;
-  margin-left: -220px;
-  margin-top : -170px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,6 +22,15 @@ div#standard2 {
   color: #000;
   text-decoration: none;
   font-size: 1.5rem;
+}
+
+
+.canvas {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 html {
@@ -41,6 +45,8 @@ main {
 }
 
 body {
+  align-items: center; /* 수직 가운데 정렬 */
+  justify-content: center; /* 수평 가운데 정렬 */
   border: 0;
   margin: 0;
   padding: 0;
@@ -101,18 +107,39 @@ button:hover {
   opacity: 60%;
 }
 
+
+
+
+.top-long-box {
+background-color: rgb(144, 27, 247);
+height: 200px;
+width: 80vw;
+max-height: 400px;
+display: flex;
+justify-content: center;
+align-items: center;
+border-bottom: 1px solid #ebebeb;
+margin-bottom: 25px;
+background: rgb(255, 255, 255);
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 6.5px );
+-webkit-backdrop-filter: blur( 6.5px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+opacity: 100%;
+}
 /* User Page */
 .box1 {
-text-align:center;
 background-color: rgb(144, 27, 247);
-height: 25vw;
-width: 25vw;
-margin-top: 5vw;
-margin-left: 4.167vw;
+height: 30vh;
+width: 28vw;
+display: flex;
+justify-content: center;
+align-items: center;
 border-bottom: 1px solid #ebebeb;
 margin-bottom: 25px;
 
-background: rgba( 255, 255, 255, 0.75 );
+background: rgb(255, 255, 255);
 box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
 backdrop-filter: blur( 6.5px );
 -webkit-backdrop-filter: blur( 6.5px );
@@ -121,16 +148,23 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 opacity: 100%;
 }
 
+
+
 .box1:hover{
 opacity: 80%;
 }
 
 .wrap {
-column-width: 100%;
-height: 100%;
-margin: 0 auto;
-display: grid;
-grid-template-columns: 33% 33% 33%;
+  position: relative;
+  top: 5vw;
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  align-items: center; /* 수직 가운데 정렬 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  grid-template-columns: repeat(auto-fill, minmax(33%, auto));
+  grid-template-rows: 25vh 50vh 50vh;
+grid-auto-flow: dense;
 }
 
 .item {
@@ -147,23 +181,23 @@ border-radius: 10px;
 border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
-.table {
-
-}
-
 input {
   border: 0px;
   border-color: #616161;
 }
 
 /*chart*/
-.chart{
-  position: absolute;
-  height: 22vw;
-  width: 22vw;
-  top: 5vw;
-  left: 12.5vw;
-  transform: translate(-50%, -50%);
+.canvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.small.chart{
+  height: 20vw;
+  width: 20vw;
+  max-height: 20vh;
+  max-width: 20vh;
 }
 
 /*sidebar*/

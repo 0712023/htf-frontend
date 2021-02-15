@@ -4,7 +4,6 @@
     <div>
       <button @click="modalshow">회원정보수정</button> <br>
     </div>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <div>
       <UpdateMachine />
     </div>
