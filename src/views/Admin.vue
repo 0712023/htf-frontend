@@ -3,8 +3,11 @@
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div class="wrap">
             <div v-for="(value, index) in members" :key="index">
-                <div class="box1" >
-                    유저 : <a @click="toUser(value.memId)">{{value.memId}}</a>
+                <div class="box1" @click="toUser(value.memId)">
+                  등급 : {{value.memRank}} <br><br><br><br>
+                  <h2>유저 : <a :key="index">{{value.memId}}</a></h2>
+                  <br><br>
+                  등급 만료일 : {{value.expireDate}}
                 </div>
             </div>
             </div>

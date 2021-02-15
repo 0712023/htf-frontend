@@ -103,6 +103,7 @@ button:hover {
 
 /* User Page */
 .box1 {
+text-align:center;
 background-color: rgb(144, 27, 247);
 height: 25vw;
 width: 25vw;
