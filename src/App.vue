@@ -15,7 +15,7 @@
           <router-link :to="'/member/'+memId">Member</router-link>
         </li>
         <li>
-          <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
+          <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId"> - {{ sensor.description }}</router-link>
         </li>
         <li v-if="!adminId">
           <router-link to="/three">Three</router-link>
@@ -36,6 +36,9 @@
           <router-link :to="'/admin/'+this.adminId">Member List</router-link>
         </li>
         <li>
+          <router-link v-for="member in members" :key="member.memId" :to="'/member/'+member.memId"> - {{ member.memId }}</router-link>
+        </li>
+        <li>
           <router-link :to="'/memberManage'">Member Manager</router-link>
         </li>
       </ul>
@@ -45,7 +48,7 @@
           <router-link :to="'/vendor/'+vendorId">Vendor</router-link>
         </li>
         <li>
-        <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.mchId }}</router-link>
+          <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId"> - {{ sensor.mchId }}</router-link>
         </li>
         <li v-if="vendorId">
           <router-link to="/machineManage/">Machine Manage</router-link>
