@@ -166,6 +166,7 @@ background: linear-gradient(
 margin-left: 2.5vw;
 background-color: rgb(144, 27, 247);
 height: 30vh;
+min-height: 220px;
 width: 28vw;
 display: flex;
 justify-content: center;
@@ -196,7 +197,8 @@ opacity: 80%;
   justify-content: center; /* 수평 가운데 정렬 */
   grid-template-columns: repeat(auto-fill, minmax(33%, auto));
   grid-auto-rows: 34vh;
-grid-auto-flow: dense;
+  grid-auto-rows: 34vh;
+  grid-auto-flow: dense;
 }
 
 .item {
