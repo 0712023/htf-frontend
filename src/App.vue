@@ -37,10 +37,13 @@
           <router-link :to="'/memberManage'">Member Manager</router-link>
         </li>
       </ul>
-      <!-- vendor 의 기본 메뉴-->
+      <!-- vendor 의 기본 관리 메뉴-->
       <ul class="sidebar-panel-nav" v-if="vendorId">
+          <li>
+          <router-link :to="'/vendor/'+vendorId">Vendor</router-link>
+        </li>
         <li>
-        <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
+        <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.mchId }}</router-link>
         </li>
         <li v-if="vendorId">
           <router-link to="/machineManage/">Machine Manage</router-link>
