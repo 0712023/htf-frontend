@@ -10,7 +10,7 @@ import * as OrbitControls from "../assets/js/OrbitControls.module.js";
 // import grass from "@/assets/img/grasslight-big.jpg";
 // import fontjson from "../assets/fonts/helvetiker_regular.typeface.json"
 
-import {STLLoader} from '../assets/js/STLLoader.js';
+// import {STLLoader} from '../assets/js/STLLoader.js';
 import {GLTFLoader} from "../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
 
@@ -137,29 +137,29 @@ export default {
       
 
       const gltfLoader = new GLTFLoader()
-      gltfLoader.load('ancient_chinese_courtyard_park/scene.gltf', (gltf) => {
+      gltfLoader.load('apartment/scene.gltf', (gltf) => {
         let model = gltf.scene
-       model.scale.set(10,10,10)
+       model.scale.set(0.5,0.5,0.5)
        model.position.y = 20;
         scene.add(model)
       })
 
-      const loader = new STLLoader();
-				loader.load( 'assem.stl', function ( geometry ) {
+      // const loader = new STLLoader();
+			// 	loader.load( 'assem.stl', function ( geometry ) {
 
-					const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-					const mesh = new THREE.Mesh( geometry, material );
+			// 		const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
+			// 		const mesh = new THREE.Mesh( geometry, material );
 
-					mesh.position.set( 0, - 0.25, 0.6 );
-					mesh.rotation.set( 0, - Math.PI / 2, 0 );
-					mesh.scale.set( 2, 2, 2 );
+			// 		mesh.position.set( 0, - 0.25, 0.6 );
+			// 		mesh.rotation.set( 0, - Math.PI / 2, 0 );
+			// 		mesh.scale.set( 2, 2, 2 );
 
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
+			// 		mesh.castShadow = true;
+			// 		mesh.receiveShadow = true;
 
-					scene.add( mesh );
+			// 		scene.add( mesh );
 
-				} );
+			// 	} );
 
 
       function animate() {
