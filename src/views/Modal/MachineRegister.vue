@@ -1,0 +1,37 @@
+<template>
+	<div id="standard2"><br><br>
+		Register New Machine
+		<input type="text" placeholder="mchId" v-model='mchId'>
+        <input type="text" v-model='vendorId' readonly><br>
+		<button @click="register">register</button>
+	</div>
+</template>
+
+<script>
+import axios from 'axios'
+import EventBus from '../../store/Eventbus'
+export default {
+	data() {
+		return {
+            id: "",
+            pw: "",
+			re_pw: "",
+			vendorId: this.$cookie.get('vendorId')
+		};
+	},
+	methods: {
+        register() {
+			axios.post(`http://studioj.ddns.net/insertMachine`, {"mchId":this.mchId,"vendorId":{"vendorId": this.$cookie.get("vendorId")}}
+			,{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+			.then(()=>{
+				alert("machine add success!");
+				EventBus.$emit("modal",false);
+			})
+			.catch((error)=>{
+				alert('machine add failed please check your mchId');
+				console.log(error);
+			})
+        },
+	},
+};
+</script>

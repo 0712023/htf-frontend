@@ -42,6 +42,9 @@
         <li>
         <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
         </li>
+        <li v-if="vendorId">
+          <router-link to="/machineManage/">Machine Manage</router-link>
+        </li>
       </ul>
     </Sidebar>
   </div>
@@ -81,7 +84,8 @@ export default {
     Eventbus.$on('admin', this.updateAdminId);
     Eventbus.$on('mchList', this.updatemchList);
     Eventbus.$on('members', this.updateMembers);
-    Eventbus.$on('modal', this.getMachineList);
+    Eventbus.$on('modal', this.getMachineListByMemId);
+    Eventbus.$on('modal', this.getMachineListByVendorId);
     Eventbus.$on('kakao', this.setKakaoToken);
   },
   methods:{
@@ -110,8 +114,19 @@ export default {
       this.$cookie.delete("memId");
       this.memId = false;
     },
-    getMachineList(){
+    getMachineListByMemId(){
       axios.post(`http://studioj.ddns.net/getMachineListByMemId`,{"memId":this.$cookie.get("memId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      .then((res)=>{
+          console.log({machinList:res.data});
+          this.$cookie.set("mchList", JSON.stringify(res.data))
+          this.mchList = res.data
+      })
+      .catch((err)=>{
+          console.log(err);
+      })
+    },
+    getMachineListByVendorId(){
+      axios.post(`http://studioj.ddns.net/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
       .then((res)=>{
           console.log({machinList:res.data});
           this.$cookie.set("mchList", JSON.stringify(res.data))

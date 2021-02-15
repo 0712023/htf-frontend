@@ -12,6 +12,8 @@ export default {
             this.$cookie.delete("kakaoToken");
             this.$cookie.delete("login");
             this.$cookie.delete("memId");
+            this.$cookie.delete("memRank");
+            this.$cookie.delete("adId");
             this.$cookie.delete("vendorId");
             this.$cookie.delete("adminId");
             this.$cookie.delete("mchList");

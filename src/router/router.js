@@ -58,6 +58,12 @@ const routes = [{
             import ('../views/MemberManage.vue')
     },
     {
+        path: '/machineManage',
+        name: 'MachineManage',
+        component: () =>
+            import ('../views/MachineManage.vue')
+    },
+    {
         path: '/memberKakaoToken',
         name: 'MemberKakaoToken',
         component: () =>
