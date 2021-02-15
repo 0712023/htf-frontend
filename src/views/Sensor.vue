@@ -1,8 +1,12 @@
 <template>
     <div>
         <div style="text-align: center;">
-            this sensor is : <router-link :to="'/member/'+memId">{{$route.params.desc}}</router-link> <br>
-            뒤로 : <button v-on:click="goBack()">돌아가기</button>
+            <div v-if="memId!=null">
+                this sensor is : <router-link :to="'/member/'+memId">{{$route.params.desc}}</router-link> <br>
+            </div>
+            <div v-if="vendorId!=null">
+                this sensor is : <router-link :to="'/vendor/'+vendorId">{{$route.params.desc}}</router-link> <br>
+            </div>
         </div>
         <div style="overflow:scroll; width:100%; height:100vh;">
             <div  class="wrap">
@@ -42,6 +46,9 @@ export default {
     computed:{
         memId:function(){
             return this.$cookie.get("memId");
+        },
+        vendorId:function(){
+            return this.$cookie.get("vendorId");
         }
     },
     methods: {
