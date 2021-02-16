@@ -11,7 +11,7 @@ import * as OrbitControls from "../assets/js/OrbitControls.module.js";
 // import fontjson from "../assets/fonts/helvetiker_regular.typeface.json"
 
 // import {STLLoader} from '../assets/js/STLLoader.js';
-import {GLTFLoader} from "../assets/js/GLTFLoader.js";
+import { GLTFLoader } from "../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
 
 export default {
@@ -19,7 +19,7 @@ export default {
     return {
       controls: 1,
       objects: [],
-      mchList : this.$cookie.get("mchList"),
+      mchList: this.$cookie.get("mchList"),
     };
   },
   mounted() {
@@ -27,9 +27,11 @@ export default {
   },
   methods: {
     initThree() {
-      const objects=[]
-      let test = JSON.parse(this.mchList)
-      console.log(test)
+      let raycaster = new THREE.Raycaster();
+      let mouse = new THREE.Vector2();
+      const objects = [];
+      let test = JSON.parse(this.mchList);
+      console.log(test);
       const scene = new THREE.Scene();
       scene.background = new THREE.Color("#eee");
 
@@ -50,25 +52,27 @@ export default {
       scene.add(hemLight);
 
       const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    
+
       dirLight.position.set(-10, 8, -5);
-      
+
       dirLight.castShadow = true;
       dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
       scene.add(dirLight);
 
-      const gt = new THREE.TextureLoader().load("grasslight-big.jpg");
-    const gg = new THREE.PlaneGeometry(16000, 16000);
-    const gm = new THREE.MeshPhongMaterial({ color: 0xffffff, map: gt });
+      //   const gt = new THREE.TextureLoader().load("grasslight-big.jpg");
+      // const gg = new THREE.PlaneGeometry(16000, 16000);
+      // const gm = new THREE.MeshPhongMaterial({ color: 0xffffff, map: gt });
 
-    const ground = new THREE.Mesh(gg, gm);
-    ground.rotation.x = -Math.PI / 2;
-    ground.material.map.repeat.set(64, 64);
-    ground.material.map.wrapS = THREE.RepeatWrapping;
-    ground.material.map.wrapT = THREE.RepeatWrapping;
-    ground.material.map.encoding = THREE.sRGBEncoding;
-    ground.receiveShadow = true;
-    scene.add(ground);
+      // const ground = new THREE.Mesh(gg, gm);
+      // ground.rotation.x = -Math.PI / 2;
+      // ground.material.map.repeat.set(64, 64);
+      // ground.material.map.wrapS = THREE.RepeatWrapping;
+      // ground.material.map.wrapT = THREE.RepeatWrapping;
+      // ground.material.map.encoding = THREE.sRGBEncoding;
+      // ground.receiveShadow = true;
+      // scene.add(ground);
+      // ground.url = null;
+      // objects.push(ground);
 
       const controls = new OrbitControls.OrbitControls(
         camera,
@@ -78,9 +82,10 @@ export default {
       controls.dampingFactor = 0.05;
       controls.screenSpacePanning = true;
       controls.minDistance = 100;
-      controls.maxDistance = 500;
+      controls.maxDistance = 1000;
       controls.maxPolarAngle = Math.PI / 2;
-    function textmaker(object) {
+
+      function textmaker(i, description) {
         const fontLoader = new THREE.FontLoader();
         fontLoader.load(
           "fonts/helvetiker_regular.typeface.json",
@@ -93,7 +98,7 @@ export default {
               wireframe: false,
             });
 
-            const message = object.description;
+            const message = description;
 
             const shapes = font.generateShapes(message, 20);
 
@@ -107,60 +112,94 @@ export default {
             geometry.translate(xMid, 0, 0);
 
             let text = new THREE.Mesh(geometry, material);
-            text.position.x = object.position.x;
-            text.position.y = object.position.y + 30;
-            text.position.z = object.position.z;
+            text.position.x = 0
+            text.position.y = 140;
+            text.position.z = -i*100;
             scene.add(text);
+            text.url =
+          "http://127.0.0.1:8081/sensor/" +
+          test[i].description +
+          "/mchid/" +
+          test[i].mchId;
+            objects.push(text);
           }
         );
       }
 
-      for(let i = 0; i< test.length;i++){
-        const geometry1 = new THREE.BoxGeometry(50, 50, 50);
-        const material1 = new THREE.MeshBasicMaterial({
-        color: 0x000000,
-        wireframe: false,
-      });
-      const cube = new THREE.Mesh(geometry1, material1);
-      // cube.position.y = 100;
-      cube.url = "http://127.0.0.1:8081/sensor/"+test[i].description+"/mchid/"+test[i].mchid;
-      cube.position.z = -i*100;
-      cube.description = test[i].description;
-      scene.add(cube);
-      objects.push(cube);
-      textmaker(cube);
+      for (let i = 0; i < test.length; i++) {
+        // const geometry1 = new THREE.BoxGeometry(25, 25, 25);
+        // const material1 = new THREE.MeshBasicMaterial({
+        //   color: 0x000000,
+        //   wireframe: false,
+        // });
+        // const cube = new THREE.Mesh(geometry1, material1);
+        // // cube.position.y = 100;
+        // cube.url =
+        //   "http://127.0.0.1:8081/sensor/" +
+        //   test[i].description +
+        //   "/mchid/" +
+        //   test[i].mchId;
+        // cube.position.z = -i * 100;
+        // cube.position.y = 110;
+        // cube.description = test[i].description;
+        // scene.add(cube);
+        // objects.push(cube);
+        // textmaker(cube);
+        const gltfLoader = new GLTFLoader();
+          gltfLoader.load("ceiling_light/scene.gltf", (gltf) => {
+          let model = gltf.scene;
+          model.scale.set(10, 10, 10);
+           model.url =
+          "http://127.0.0.1:8081/sensor/" +
+          test[i].description +
+          "/mchid/" +
+          test[i].mchId;
+        model.position.z = -i * 100;
+        model.position.y = 110;
+        model.description = test[i].description;
+          scene.add(model);
+          // objects.push(model);
+          textmaker(i, test[i].description);
+        });
+        
+      
       }
-     
+      // const gltfLoader = new GLTFLoader();
+      //     gltfLoader.load("light_bulb/scene.gltf", (gltf) => {
+      //     let model = gltf.scene;
+      //     model.scale.set(1000, 1000, 1000);
+      //     model.position.z = -600;
+      //     model.position.y = 110;
+      //     scene.add(model);
+      //   });
+      const size = 10000;
+      const divisions = 100;
+      const gridHelper = new THREE.GridHelper(size, divisions);
+      scene.add(gridHelper);
 
-
-      
-      
-
-      const gltfLoader = new GLTFLoader()
-      gltfLoader.load('apartment/scene.gltf', (gltf) => {
-        let model = gltf.scene
-       model.scale.set(0.5,0.5,0.5)
-       model.position.y = 20;
-        scene.add(model)
-      })
+      const gltfLoader1 = new GLTFLoader();
+      gltfLoader1.load("apartment/scene.gltf", (gltf) => {
+        let model = gltf.scene;
+        model.scale.set(0.5, 0.5, 0.5);
+        scene.add(model);
+      });
 
       // const loader = new STLLoader();
-			// 	loader.load( 'assem.stl', function ( geometry ) {
+      // 	loader.load( 'assem.stl', function ( geometry ) {
 
-			// 		const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-			// 		const mesh = new THREE.Mesh( geometry, material );
+      // 		const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
+      // 		const mesh = new THREE.Mesh( geometry, material );
 
-			// 		mesh.position.set( 0, - 0.25, 0.6 );
-			// 		mesh.rotation.set( 0, - Math.PI / 2, 0 );
-			// 		mesh.scale.set( 2, 2, 2 );
+      // 		mesh.position.set( 0, - 0.25, 0.6 );
+      // 		mesh.rotation.set( 0, - Math.PI / 2, 0 );
+      // 		mesh.scale.set( 2, 2, 2 );
 
-			// 		mesh.castShadow = true;
-			// 		mesh.receiveShadow = true;
+      // 		mesh.castShadow = true;
+      // 		mesh.receiveShadow = true;
 
-			// 		scene.add( mesh );
+      // 		scene.add( mesh );
 
-			// 	} );
-
+      // 	} );
 
       function animate() {
         controls.update();
@@ -173,7 +212,9 @@ export default {
           camera.updateProjectionMatrix();
         }
       }
-      document.addEventListener("click", click);
+      document.addEventListener("mousemove", onDocumentMouseMove);
+      document.addEventListener("click", onDocumentMouseDown);
+      document.addEventListener("keydown", onDocumentKeyDown);
       animate();
 
       function resizeRendererToDisplaySize(renderer) {
@@ -191,38 +232,50 @@ export default {
         return needResize;
       }
 
-      let raycaster = new THREE.Raycaster();
-      let mouse = new THREE.Vector2();
-
-      function click(event) {
+      function onDocumentMouseDown(event) {
         event.preventDefault();
-
-        mouse.set(
-          (event.clientX / window.innerWidth) * 2 - 1,
-          -(event.clientY / window.innerHeight) * 2 + 1
-        );
-        console.log(objects)
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
+        console.log(objects)
         for (let i = 0; i < objects.length; i++) {
-          const intersects1 = raycaster.intersectObject(objects[i], true);
-          if (intersects1.length > 0) {
-            console.log("애기: "+objects)
-            const intersect = intersects1[0];
-            window.location.href = intersect.object.url;
+          const intersects = raycaster.intersectObject(objects[i]);
+
+          if (intersects.length > 0) {
+            if (intersects[0].object.url != null) {
+              console.log(intersects.length);
+              window.location.href = intersects[0].object.url;
+            }
           }
         }
 
         renderer.render(scene, camera);
       }
+
+      function onDocumentMouseMove(event) {
+        event.preventDefault();
+
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      }
       this.controls = controls;
+      function onDocumentKeyDown(event) {
+        if (event.keyCode == 9) {
+          if (controls.screenSpacePanning == true) {
+            controls.screenSpacePanning = false;
+          } else {
+            controls.screenSpacePanning = true;
+          }
+        }
+      }
     },
     zom: function () {
       if (this.controls.screenSpacePanning == true) {
-          this.controls.screenSpacePanning = false;
-        } else {
-          this.controls.screenSpacePanning = true;
-        }
-    }
+        this.controls.screenSpacePanning = false;
+      } else {
+        this.controls.screenSpacePanning = true;
+      }
+    },
   },
 };
 </script>
@@ -237,6 +290,6 @@ body {
   height: 100%;
   position: fixed;
   left: 0;
-  margin-top: 5%;
+  margin-top: 0%;
 }
 </style>)
