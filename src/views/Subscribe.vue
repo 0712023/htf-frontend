@@ -86,7 +86,7 @@ export default {
     },
     Kakao(rank, price) {
       console.log(this.$store.state.BACK_SERVER)
-      axios.post(`http://192.168.168.156:80/initSub`,{ memId: this.$cookie.get("memId"), rank: rank, price: price },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,}})
+      axios.post(`http://192.168.168.156:80/initSub`,{ memId: this.$cookie.get("memId"), rank: rank, price: price, FRONT_SERVER:this.$store.state.FRONT_SERVER },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,}})
       .then((res) => {
         this.$cookie.set("tid", res.data["tid"], 1);
         window.open(res.data["url"]);
