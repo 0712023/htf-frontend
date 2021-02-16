@@ -68,7 +68,7 @@ export default {
     ground.material.map.wrapT = THREE.RepeatWrapping;
     ground.material.map.encoding = THREE.sRGBEncoding;
     ground.receiveShadow = true;
-    scene.add(ground);
+    // scene.add(ground);
 
       const controls = new OrbitControls.OrbitControls(
         camera,
