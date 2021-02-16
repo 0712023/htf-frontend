@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="overflow:scroll; width:100%; height:100vh;">
+        <div style="width:100%;">
             <div  class="wrap" >
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
                     <div>

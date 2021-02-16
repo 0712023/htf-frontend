@@ -8,7 +8,7 @@
                 this sensor is : <router-link :to="'/vendor/'+vendorId">{{$route.params.desc}}</router-link> <br>
             </div>
         </div>
-        <div style="overflow:scroll; width:100%; height:100vh;">
+        <div style="width:100%;">
             <div  class="wrap">
                 <div class="box1" style="color:gray">
                     <LineChart class="chart"/>

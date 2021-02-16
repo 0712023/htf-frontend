@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="overflow:scroll; width:100%; height:100vh;">
+        <div style="width:100%;">
           <div class="top-long-box">
             
             <h3>Number of Members : {{members.length}}</h3>

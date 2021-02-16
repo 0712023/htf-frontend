@@ -13,6 +13,7 @@ div#standard {
     text-decoration: none;
     font-size: 1.5rem;
 }
+
 div#standard2 { 
   width: 450px; height: 250px;
   display: flex;
@@ -35,8 +36,8 @@ div#standard2 {
 
 html {
   height: 100%;
-  overflow: hidden;
   font-size: small;
+
 }
 
 main {
@@ -156,7 +157,7 @@ background: linear-gradient(
 
 .footer {
   z-index: -5;
-  position: absolute;
+  position: relative;
   bottom: -150px;
   background-color: rgb(144, 27, 247);
   height: 200px;
@@ -206,16 +207,16 @@ opacity: 80%;
 }
 
 .wrap {
-  padding-bottom: 150px;
   position: relative;
   top: 1vw;
   height: 100%;
   margin: 0 auto;
+  overflow: hidden;
   display: grid;
   align-items: center; /* 수직 가운데 정렬 */
   justify-content: center; /* 수평 가운데 정렬 */
   grid-template-columns: repeat(auto-fill, minmax(33%, auto));
-  grid-auto-rows: minmax(280px, 34vh);
+  grid-auto-rows: minmax(320px, 40vh);
   grid-auto-flow: dense;
 }
 
