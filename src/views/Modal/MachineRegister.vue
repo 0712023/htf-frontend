@@ -1,5 +1,5 @@
 <template>
-	<div id="standard2"><br><br>
+	<div id="standard2"><br>
 		Register New Machine
 		<input type="text" placeholder="mchId" v-model='mchId'>
         <input type="text" v-model='vendorId' readonly><br>

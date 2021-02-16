@@ -1,9 +1,8 @@
 <template>
     <div id="standard2">
         Machine Id : {{mchIdProps}}
-        <br><br>
-        New Description <br>
-        <input type="text" v-model="newDescription">
+        <br>
+        New Description <input type="text" v-model="newDescription">
         <button @click="UpdateMachine">수정 완료</button>
     </div>
 </template>

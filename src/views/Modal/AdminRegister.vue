@@ -1,5 +1,5 @@
 <template>
-	<div id="standard2"><br><br><br>
+	<div id="standard2">
 		Register New Admin Account
 		<input type="text" placeholder="id" v-model='id'>
         <input type="password" placeholder="pw" v-model='pw'>
