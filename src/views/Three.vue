@@ -112,9 +112,9 @@ export default {
             geometry.translate(xMid, 0, 0);
 
             let text = new THREE.Mesh(geometry, material);
-            text.position.x = 0
-            text.position.y = 140;
-            text.position.z = -i*100;
+            text.position.x = xmaker(i)
+            text.position.y = 160;
+            text.position.z = zmaker(i);
             scene.add(text);
             text.url =
           "http://127.0.0.1:8081/sensor/" +
@@ -148,30 +148,24 @@ export default {
         const gltfLoader = new GLTFLoader();
           gltfLoader.load("ceiling_light/scene.gltf", (gltf) => {
           let model = gltf.scene;
-          model.scale.set(25, 25, 25);
+          model.scale.set(20, 20, 20);
            model.url =
           "http://127.0.0.1:8081/sensor/" +
           test[i].description +
           "/mchid/" +
           test[i].mchId;
-        model.position.z = -i * 100;
-        model.position.y = 110;
+          model.position.y = 130;
+            model.position.z = zmaker(i);
+            model.position.x = xmaker(i);  
         model.description = test[i].description;
           scene.add(model);
           // objects.push(model);
-          textmaker(i, test[i].description);
+          textmaker(i, model.description);
         });
         
       
       }
-      // const gltfLoader = new GLTFLoader();
-      //     gltfLoader.load("light_bulb/scene.gltf", (gltf) => {
-      //     let model = gltf.scene;
-      //     model.scale.set(1000, 1000, 1000);
-      //     model.position.z = -600;
-      //     model.position.y = 110;
-      //     scene.add(model);
-      //   });
+      
       const size = 10000;
       const divisions = 100;
       const gridHelper = new THREE.GridHelper(size, divisions);
@@ -181,6 +175,9 @@ export default {
       gltfLoader1.load("apartment/scene.gltf", (gltf) => {
         let model = gltf.scene;
         model.scale.set(0.5, 0.5, 0.5);
+        // model.position.x = -500;
+        // model.position.y = -350;
+        // model.position.z = 300;
         scene.add(model);
       });
 
@@ -266,6 +263,33 @@ export default {
           } else {
             controls.screenSpacePanning = true;
           }
+        }
+      }
+      function xmaker(i){
+        if(i == 0){
+          return -100
+        }else if(i == 1){
+          return -100
+        }else if(i == 2){
+          return 100
+        }else if(i == 3){
+          return 0
+        }else if(i == 4){
+          return 150
+        }
+      }
+
+      function zmaker(i){
+        if(i == 0){
+          return 50
+        }else if(i == 1){
+          return 180
+        }else if(i == 2){
+          return 70
+        }else if(i == 3){
+          return -100
+        }else if(i == 4){
+          return 30
         }
       }
     },
