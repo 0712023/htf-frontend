@@ -148,7 +148,7 @@ export default {
         const gltfLoader = new GLTFLoader();
           gltfLoader.load("ceiling_light/scene.gltf", (gltf) => {
           let model = gltf.scene;
-          model.scale.set(10, 10, 10);
+          model.scale.set(25, 25, 25);
            model.url =
           "http://127.0.0.1:8081/sensor/" +
           test[i].description +
@@ -235,7 +235,7 @@ export default {
       function onDocumentMouseDown(event) {
         event.preventDefault();
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1.1;
         raycaster.setFromCamera(mouse, camera);
         console.log(objects)
         for (let i = 0; i < objects.length; i++) {
