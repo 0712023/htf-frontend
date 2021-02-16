@@ -18,7 +18,7 @@ export default {
     },
     methods:{
         memberLogin() {
-            axios.post(`http://studioj.ddns.net/loginMember`, {"memId":this.id,"memPw":this.pw})
+            axios.post(`${this.$store.state.BACK_SERVER}/loginMember`, {"memId":this.id,"memPw":this.pw})
             .then(res => {
                 if (res.data == '') {
                     alert("login failed")
@@ -33,7 +33,7 @@ export default {
 
                 //유저가 로그인을 시도하는 경우
                 axios.defaults.headers.common["x-access-token"] = res.data;
-                axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": this.id},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+                axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.id},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
                 .then(res =>{
                     //로그인 정보 및 센서 데이터 쿠키에 저장
                     this.$cookie.set("memId", this.id, 1);

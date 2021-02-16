@@ -3,7 +3,7 @@
     <nav class="main-nav" v-show="login">
       <Burger/><logout/>
     </nav>
-    <div class="top-long-box" v-if="memId && (kakaoToken=='null')">
+    <div class="top-long-box" v-if="memId && (kakaoToken=='null') && !adminId">
       <kakaoRegister/>
     </div>
     <div class="body"><router-view></router-view></div>
@@ -15,7 +15,7 @@
           <router-link :to="'/member/'+memId">Member</router-link>
         </li>
         <li>
-          <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.description }}</router-link>
+          <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId"> - {{ sensor.description }}</router-link>
         </li>
         <li v-if="!adminId">
           <router-link to="/three">Three</router-link>
@@ -36,6 +36,9 @@
           <router-link :to="'/admin/'+this.adminId">Member List</router-link>
         </li>
         <li>
+          <router-link v-for="member in members" :key="member.memId" :to="'/member/'+member.memId"> - {{ member.memId }}</router-link>
+        </li>
+        <li>
           <router-link :to="'/memberManage'">Member Manager</router-link>
         </li>
       </ul>
@@ -45,7 +48,7 @@
           <router-link :to="'/vendor/'+vendorId">Vendor</router-link>
         </li>
         <li>
-        <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId">{{ sensor.mchId }}</router-link>
+          <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId"> - {{ sensor.mchId }}</router-link>
         </li>
         <li v-if="vendorId">
           <router-link to="/machineManage/">Machine Manage</router-link>
@@ -120,7 +123,7 @@ export default {
       this.memId = false;
     },
     getMachineListByMemId(){
-      axios.post(`http://studioj.ddns.net/getMachineListByMemId`,{"memId":this.$cookie.get("memId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookie.get("memId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
       .then((res)=>{
           console.log({machinList:res.data});
           this.$cookie.set("mchList", JSON.stringify(res.data))
@@ -131,7 +134,7 @@ export default {
       })
     },
     getMachineListByVendorId(){
-      axios.post(`http://studioj.ddns.net/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
       .then((res)=>{
           console.log({machinList:res.data});
           this.$cookie.set("mchList", JSON.stringify(res.data))

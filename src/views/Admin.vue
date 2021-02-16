@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="overflow:scroll; width:100%; height:100vh;">
+        <div style="width:100%;">
           <div class="top-long-box">
             
             <h3>Number of Members : {{members.length}}</h3>
@@ -37,7 +37,7 @@ export default {
   methods: {
     toUser (memberId) {
       console.log(memberId);
-      axios.post(`http://studioj.ddns.net/getMachineListByMemId`, {"memId": memberId}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
       ).then(response =>{
         this.$cookie.set("mchList", JSON.stringify(response.data), 1);
         this.$cookie.set("memId", memberId, 1);
@@ -47,7 +47,7 @@ export default {
       })
     },
     getMember(){
-      axios.post(`http://studioj.ddns.net/getMemberListByAdId`, {"adId": this.$cookie.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookie.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
       .then(response =>{
         this.$cookie.set("members", JSON.stringify(response.data))
       })

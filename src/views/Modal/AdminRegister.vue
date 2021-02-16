@@ -1,5 +1,5 @@
 <template>
-	<div id="standard2"><br><br><br>
+	<div id="standard2">
 		Register New Admin Account
 		<input type="text" placeholder="id" v-model='id'>
         <input type="password" placeholder="pw" v-model='pw'>
@@ -27,7 +27,7 @@ export default {
 				this.re_pw = "";
 				this.id = "";
 			} else {
-				axios.post(`http://studioj.ddns.net/insertAdmin`, {"adId":this.id,"adPw":this.pw})
+				axios.post(`${this.$store.state.BACK_SERVER}/insertAdmin`, {"adId":this.id,"adPw":this.pw})
 				.then((res)=>{
 					this.$cookie.set("accesstoken", res.data);
 					console.log(res.data);

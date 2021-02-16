@@ -18,7 +18,7 @@ export default {
     },
     methods:{
         vendorLogin() {
-            axios.post(`http://studioj.ddns.net/loginVendor`, {"vendorId":this.id,"vendorPw":this.pw})
+            axios.post(`${this.$store.state.BACK_SERVER}/loginVendor`, {"vendorId":this.id,"vendorPw":this.pw})
             .then(res => {
                 if (res.data == '') {
                     alert("login failed")
@@ -29,7 +29,7 @@ export default {
                 }
                 axios.defaults.headers.common["x-access-token"] = res.data;
                 
-                axios.post(`http://studioj.ddns.net/getMachineListByVendorId`, {"vendorId": this.id},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+                axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`, {"vendorId": this.id},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
                 .then(res =>{
                     //로그인 정보 및 센서 데이터 쿠키에 저장
                     this.$cookie.set("vendorId", this.id, 1);

@@ -18,7 +18,7 @@
         </ul>
         <div
           class="pricingTable-firstTable_table__getstart"
-         @click="Kakao(rank[2], price[2])"
+         @click="Kakao(rank[0], price[0])"
         >
           Get Started Now
         </div>
@@ -37,7 +37,7 @@
         </ul>
         <div
           class="pricingTable-firstTable_table__getstart"
-          @click="UpdateMember('gold')"
+         @click="Kakao(rank[1], price[1])"
         >
           Get Started Now
         </div>
@@ -54,7 +54,7 @@
         </ul>
         <div
           class="pricingTable-firstTable_table__getstart"
-          @click="UpdateMember('platinum')"
+          @click="Kakao(rank[2], price[2])"
         >
           Get Started Now
         </div>
@@ -74,41 +74,23 @@ export default {
     };
   },
   methods: {
-    UpdateMember(v) {
-      axios
-        .post(
-          `http://studioj.ddns.net/updateMember`,
-          { memId: this.id, memRank: v },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,
-            },
-          }
-        )
-        .then((response) => {
-          alert("subscribe success!");
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    UpdateMember(newRank) {
+      axios.post(`${this.$store.state.BACK_SERVER}/updateMember`,{ memId: this.id, memRank: newRank },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,},})
+      .then((response) => {
+        alert("subscribe success!");
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     },
     Kakao(rank, price) {
-      axios
-        .post(
-          `http://localhost/initSub`,
-          { memId: this.$cookie.get("memId"), rank: rank, price: price },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res.data);
-          this.$cookie.set("tid", res.data["tid"], 1);
-          window.open(res.data["url"]);
-        });
+      console.log(this.$store.state.BACK_SERVER)
+      axios.post(`http://192.168.168.156:80/initSub`,{ memId: this.$cookie.get("memId"), rank: rank, price: price },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,}})
+      .then((res) => {
+        this.$cookie.set("tid", res.data["tid"], 1);
+        window.open(res.data["url"]);
+      });
     },
   },
 };

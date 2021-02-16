@@ -1,5 +1,5 @@
 <template>
-	<div id="standard2"><br><br>
+	<div id="standard2"><br>
 		Register New Machine
 		<input type="text" placeholder="mchId" v-model='mchId'>
         <input type="text" v-model='vendorId' readonly><br>
@@ -21,7 +21,7 @@ export default {
 	},
 	methods: {
         register() {
-			axios.post(`http://studioj.ddns.net/insertMachine`, {"mchId":this.mchId,"vendorId":{"vendorId": this.$cookie.get("vendorId")}}
+			axios.post(`${this.$store.state.BACK_SERVER}/insertMachine`, {"mchId":this.mchId,"vendorId":{"vendorId": this.$cookie.get("vendorId")}}
 			,{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
 			.then(()=>{
 				alert("machine add success!");

@@ -2,15 +2,20 @@
     <div>
         <div class="top-long-box">
             제품에 관해 연락할 사항이 있다면 abc@def.com 으로 연락주시면 감사하겠습니다.
+            <select v-model="selectedType">
+                <option value="all" selected>all</option>
+                <option :value="typeSelector" v-for="typeSelector in new Set(mchList.map(v => v.type))" :key='typeSelector'>{{typeSelector}}</option>
+            </select>
         </div>
-        <div style="overflow:scroll; width:100%; height:100vh;">
+        <div style="width:100%;">
             <div  class="wrap" >
-                <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
+                <div class="box1" v-for="sensor in mchList" :key="sensor.mchId" v-show="sensor.type==selectedType || selectedType=='all'">
                     <div>
                         <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId">{{ sensor.mchId }}</router-link>
                         <br><br>name : {{ sensor.description }} 
                         <br><br>mchId : {{ sensor.mchId }}
                         <br><br>value : {{ sensorDataStore[sensor.mchId] }}
+                        <br><br>type : {{ sensor.type }}
                         <br><br>vendorId : {{ sensor.vendorId.vendorId }}
                     </div>
                 </div>
@@ -28,12 +33,12 @@ export default {
         },
     },
     data(){
-        return {sensorDataStore:{}}
+        return {sensorDataStore:{}, selectedType:'all', notSelected:true}
     },
     created:function(){
         this.dashboardInterval = setInterval(()=>{
                 for(let index in this.mchList){
-                    axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId}, 
+                    axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId}, 
                         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
                     .then(response =>{
                         this.$set(this.sensorDataStore, this.mchList[index].mchId, response.data.value)

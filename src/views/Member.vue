@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="overflow:scroll; width:100%; height:100vh;">
+        <div style="width:100%;">
             <div  class="wrap" >
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
                     <div>
@@ -32,7 +32,7 @@ export default {
     created:function(){
         this.dashboardInterval = setInterval(()=>{
                 for(let index in this.mchList){
-                    axios.post(`http://studioj.ddns.net/getMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId}, 
+                    axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId}, 
                         {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
                     .then(response =>{
                         this.$set(this.sensorDataStore, this.mchList[index].mchId, response.data.value)

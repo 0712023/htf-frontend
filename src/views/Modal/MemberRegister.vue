@@ -1,5 +1,5 @@
 <template>
-	<div id="standard2"><br><br>
+	<div id="standard2">
 		Register New Member Account 
 		<input type="text" placeholder="id" v-model='id'>
         <input type="password" placeholder="pw" v-model='pw'>
@@ -27,7 +27,7 @@ export default {
 				this.re_pw = "";
 				this.id = "";
 			} else{
-				axios.post(`http://studioj.ddns.net/insertMember`, {"memId":this.id,"memPw":this.pw,"memRank":"silver","adId":{"adId": this.$cookie.get("adminId")}}
+				axios.post(`${this.$store.state.BACK_SERVER}/insertMember`, {"memId":this.id,"memPw":this.pw,"memRank":"silver","adId":{"adId": this.$cookie.get("adminId")}}
 				,{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
 				.then(()=>{
 					alert("member add success!");
