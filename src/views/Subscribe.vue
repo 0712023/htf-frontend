@@ -7,14 +7,13 @@
 
     <ul class="pricingTable-firstTable">
       <li class="pricingTable-firstTable_table">
-        <h1 class="pricingTable-firstTable_table__header">Silver Package</h1>
+        <h1 class="pricingTable-firstTable_table__header">Basic Package</h1>
         <p class="pricingTable-firstTable_table__pricing">
-          <span>$</span><span>Free</span><span></span>
+          <span>₩</span><span>Free</span><span></span>
         </p>
         <ul class="pricingTable-firstTable_table__options">
-          <li>Unlimited Listing</li>
-          <li>Edit Your Listing</li>
-          <li>Approve Reviews</li>
+          <li>Kakao Alaram Service </li>
+          <li>Add Machine Just Three</li>
         </ul>
         <div
           class="pricingTable-firstTable_table__getstart"
@@ -24,16 +23,14 @@
         </div>
       </li>
       <li class="pricingTable-firstTable_table">
-        <h1 class="pricingTable-firstTable_table__header">Gold Package</h1>
+        <h1 class="pricingTable-firstTable_table__header">Pro Package</h1>
         <p class="pricingTable-firstTable_table__pricing">
-          <span>$</span><span>19</span><span>Month</span>
+          <span>₩</span><span>5,000</span><span>Month</span>
         </p>
         <ul class="pricingTable-firstTable_table__options">
-          <li>Unlimited Listing</li>
-          <li>Edit Your Listing</li>
-          <li>Approve Reviews</li>
-          <li>Take Booking Online</li>
-          <li>24/7 Support Service</li>
+          <li>Kakao Alaram Service </li>
+          <li>Add Machine Unlimited</li>
+          <li>Machine Update Available</li>
         </ul>
         <div
           class="pricingTable-firstTable_table__getstart"
@@ -43,14 +40,15 @@
         </div>
       </li>
       <li class="pricingTable-firstTable_table">
-        <h1 class="pricingTable-firstTable_table__header">Platinum Package</h1>
+        <h1 class="pricingTable-firstTable_table__header">Enterprise Package</h1>
         <p class="pricingTable-firstTable_table__pricing">
-          <span>$</span><span>49</span><span>Month</span>
+          <span>₩</span><span>10,000</span><span>Month</span>
         </p>
         <ul class="pricingTable-firstTable_table__options">
-          <li>Unlimited Listing</li>
-          <li>Edit Your Listing</li>
-          <li>Approve Reviews</li>
+          <li>Kakao Alaram Service </li>
+          <li>Add Machine Unlimited</li>
+          <li>Machine Update Available</li>
+          <li>Use 3D Modeling</li>
         </ul>
         <div
           class="pricingTable-firstTable_table__getstart"
