@@ -23,7 +23,7 @@
 
 <script type="module">
 import axios from 'axios';
-import EventBus from '../store/Eventbus';
+import EventBus from '../../store/Eventbus';
 export default {
   created:function(){
     //MemberRegister modal이 가려지면(즉, 새로운 member를 등록했을 경우) 새로운 member List를 받아옴

@@ -29,9 +29,9 @@
 
 <script>
 import axios from 'axios'
-import MachineRegister from './Modal/MachineRegister'
-import UpdateMachineType from './Modal/UpdateMachineType'
-import EventBus from '../store/Eventbus'
+import MachineRegister from '../Modal/MachineRegister'
+import UpdateMachineType from '../Modal/UpdateMachineType'
+import EventBus from '../../store/Eventbus'
 export default {
     data(){
         return {

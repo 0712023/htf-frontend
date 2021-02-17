@@ -88,5 +88,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/css/subscribe.scss";
+@import "../../assets/css/subscribe.scss";
 </style>

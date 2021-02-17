@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import UpdateMember from "./Modal/UpdateMember";
-import UpdateMachine from "./Updates/UpdateMachine";
-import EventBus from "../store/Eventbus";
+import UpdateMember from "../Modal/UpdateMember";
+import UpdateMachine from "../Updates/UpdateMachine";
+import EventBus from "../../store/Eventbus";
 export default {
   name: "setting",
   mounted() {

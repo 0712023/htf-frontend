@@ -5,13 +5,13 @@
   </div>
 </template>
 <script type="module">
-import * as THREE from "../assets/js/three.module.js";
-import * as OrbitControls from "../assets/js/OrbitControls.module.js";
+import * as THREE from "../../assets/js/three.module.js";
+import * as OrbitControls from "../../assets/js/OrbitControls.module.js";
 // import grass from "@/assets/img/grasslight-big.jpg";
 // import fontjson from "../assets/fonts/helvetiker_regular.typeface.json"
 
 // import {STLLoader} from '../assets/js/STLLoader.js';
-import { GLTFLoader } from "../assets/js/GLTFLoader.js";
+import { GLTFLoader } from "../../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
 
 export default {

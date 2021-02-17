@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import LineChart from './Dashboard/charts/LineChart'
-import BarChart from './Dashboard/charts/BarChart'
-import RadarChart from './Dashboard/charts/RadarChart'
-import BubbleChart from './Dashboard/charts/BubbleChart'
-import ScatterChart from './Dashboard/charts/ScatterChart'
+import LineChart from '../Dashboard/charts/LineChart'
+import BarChart from '../Dashboard/charts/BarChart'
+import RadarChart from '../Dashboard/charts/RadarChart'
+import BubbleChart from '../Dashboard/charts/BubbleChart'
+import ScatterChart from '../Dashboard/charts/ScatterChart'
 export default {
     props:{
         sensorName: String
@@ -64,5 +64,5 @@ export default {
 }
 </script>
 <style>
- @import '../assets/css/style.css';
+ @import '../../assets/css/style.css';
 </style>

@@ -11,47 +11,47 @@ const routes = [{
     {
         path: '/member/:memId',
         name: 'Member',
-        component: () => import ('../views/Member.vue')
+        component: () => import ('../views/Member/Member.vue')
     },
     {
         path: '/vendor/:vendorId',
         name: 'Vendor',
-        component: () => import ('../views/Vendor.vue')
+        component: () => import ('../views/Vendor/Vendor.vue')
     },
     {
         path: '/sensor/:desc/mchid/:mchId',
         name: 'Sensor',
-        component: () => import ('../views/Sensor.vue'),
+        component: () => import ('../views/Member/Sensor.vue'),
     },
     {
         path: '/three',
         name: 'Three',
-        component: () => import ('../views/Three.vue')
+        component: () => import ('../views/Member/Three.vue')
     },
     {
         path: '/admin/:aid',
         name: 'Admin',
-        component: () => import ('../views/Admin.vue')
+        component: () => import ('../views/Admin/Admin.vue')
     },
     {
         path: '/setting',
         name: 'Setting',
-        component: () => import ('../views/Setting.vue')
+        component: () => import ('../views/Member/Setting.vue')
     },
     {
         path: '/subscribe',
         name: 'Subscribe',
-        component: () => import ('../views/Subscribe.vue')
+        component: () => import ('../views/Member/Subscribe.vue')
     },
     {
         path: '/memberManage',
         name: 'MemberManage',
-        component: () => import ('../views/MemberManage.vue')
+        component: () => import ('../views/Admin/MemberManage.vue')
     },
     {
         path: '/machineManage',
         name: 'MachineManage',
-        component: () => import ('../views/MachineManage.vue')
+        component: () => import ('../views/Vendor/MachineManage.vue')
     },
     {
         path: '/chatModule',

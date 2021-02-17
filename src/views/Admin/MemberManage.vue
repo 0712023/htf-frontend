@@ -27,8 +27,8 @@
 
 <script>
 import axios from 'axios'
-import MemberRegister from './Modal/MemberRegister'
-import EventBus from '../store/Eventbus'
+import MemberRegister from '../Modal/MemberRegister'
+import EventBus from '../../store/Eventbus'
 export default {
     data(){
         return {
