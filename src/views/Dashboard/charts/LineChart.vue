@@ -25,10 +25,9 @@
     created () {
       this.getDust();
       //처음에 10개 가져오는 것
-      axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId}, 
-        {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}}
-        ).then(response =>{
-        for (let incomingData of response.data) {
+      axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId}, )
+      .then(res =>{
+        for (let incomingData of res.data) {
           this.datacollection.labels.push("");
           for (let dataset of this.datacollection.datasets) {
             dataset.data.push((incomingData.value));
@@ -37,9 +36,8 @@
       })
 
       this.chartInterval = setInterval(()=>{
-        axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, 
-          {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}}
-          ).then(response =>{
+        axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, )
+        .then(response =>{
           this.datacollection.labels.push("");
           for (let dataset of this.datacollection.datasets) {
             dataset.data.push((response.data.value));
@@ -71,12 +69,10 @@
           ]
         }
       },
-      getRandomInt () {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-      },
       getDust () {
-        axios.post(`${this.$store.state.BACK_SERVER}/naverDust`, {}).then(response =>{
-          document.getElementById("outdoorDust").innerHTML = parseInt(response.data);
+        axios.post(`${this.$store.state.BACK_SERVER}/naverDust`)
+        .then(res =>{
+          document.getElementById("outdoorDust").innerHTML = parseInt(res.data);
         })
       },
     }
