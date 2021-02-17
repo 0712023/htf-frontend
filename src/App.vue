@@ -29,6 +29,9 @@
         <li v-if="adminId">
           <router-link :to="'/admin/'+adminId" v-on:click.native="backToAdmin">Back to Admin</router-link>
         </li>
+        <li>
+          <router-link to="/chatModule/">Chat Module</router-link>
+        </li>
       </ul>
         <!-- admin의 기본 관리 메뉴 -->
       <ul class="sidebar-panel-nav" v-if="!memId && adminId" >
@@ -41,6 +44,9 @@
         <li>
           <router-link :to="'/memberManage'">Member Manager</router-link>
         </li>
+        <li>
+          <router-link to="/chatModule/">Chat Module</router-link>
+        </li>
       </ul>
       <!-- vendor 의 기본 관리 메뉴-->
       <ul class="sidebar-panel-nav" v-if="vendorId">
@@ -52,6 +58,9 @@
         </li>
         <li v-if="vendorId">
           <router-link to="/machineManage/">Machine Manage</router-link>
+        </li>
+        <li>
+          <router-link to="/chatModule/">Chat Module</router-link>
         </li>
       </ul>
     </Sidebar>
