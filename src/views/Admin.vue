@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     toUser (memberId) {
-    axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+    axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId})
       .then(res =>{
         this.$cookie.set("mchList", JSON.stringify(res.data), 1);
         this.$cookie.set("memId", memberId, 1);
@@ -45,7 +45,7 @@ export default {
       })
     },
     getMember(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookie.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookie.get("adminId")})
       .then(res =>{
         this.$cookie.set("members", JSON.stringify(res.data))
       })

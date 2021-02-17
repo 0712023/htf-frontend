@@ -25,7 +25,7 @@ export default {
         this.pw = "";
         this.re_pw = "";
       } else {
-        axios.post(`${this.$store.state.BACK_SERVER}/updateMemberPw`, {"memId":this.id, "memPw":this.pw},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+        axios.post(`${this.$store.state.BACK_SERVER}/updateMemberPw`, {"memId":this.id, "memPw":this.pw})
         .then(() => {
           alert("register success!");
           EventBus.$emit("modal", false);

@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     UpdateMember() {
-      axios.post(`${this.$store.state.BACK_SERVER}/updateMemberRank`,{ memId: this.id, memRank: 'basic' },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,},})
+      axios.post(`${this.$store.state.BACK_SERVER}/updateMemberRank`,{ memId: this.id, memRank: 'basic' })
       .then(() => {
         this.$cookie.set("memRank", "basic", 1);
         alert("subscribe success!");

@@ -73,7 +73,7 @@
         }
       },
       getWeather () {
-        axios.post(`${this.$store.state.BACK_SERVER}/naverTempCrawler`,{},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}).then(response =>{
+        axios.post(`${this.$store.state.BACK_SERVER}/naverTempCrawler`,{}).then(response =>{
           document.getElementById("outdoorTemp").innerHTML = ((response.data));
         })
       },

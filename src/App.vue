@@ -132,14 +132,14 @@ export default {
       this.memId = false;
     },
     getMachineListByMemId(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookie.get("memId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookie.get("memId")})
       .then((res)=>{
           this.$cookie.set("mchList", JSON.stringify(res.data))
           this.mchList = res.data
       })
     },
     getMachineListByVendorId(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")})
       .then((res)=>{
           this.$cookie.set("mchList", JSON.stringify(res.data))
           this.mchList = res.data

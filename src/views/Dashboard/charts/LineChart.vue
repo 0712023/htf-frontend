@@ -75,7 +75,7 @@
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
       },
       getDust () {
-        axios.post(`${this.$store.state.BACK_SERVER}/naverDust`, {}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}).then(response =>{
+        axios.post(`${this.$store.state.BACK_SERVER}/naverDust`, {}).then(response =>{
           document.getElementById("outdoorDust").innerHTML = parseInt(response.data);
         })
       },

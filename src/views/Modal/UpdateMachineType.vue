@@ -19,7 +19,7 @@ export default {
     props:{type : String, mchIdProps : String},
     methods:{
         updateMachineType() {
-            axios.post(`${this.$store.state.BACK_SERVER}/updateMachineType`,{ mchId: this.mchIdProps , type: this.newType},{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+            axios.post(`${this.$store.state.BACK_SERVER}/updateMachineType`,{mchId: this.mchIdProps, type: this.newType})
             .then(() => {
                 alert("type update success!");
                 EventBus.$emit("modal", false);

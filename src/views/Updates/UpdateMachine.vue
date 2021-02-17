@@ -50,7 +50,7 @@ export default {
       this.$modal.show("UpdateMachine", {"desc":desc});
     },
     getMachineList(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookie.get("memId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookie.get("memId")})
       .then((res)=>{
           this.$cookie.set("mchList", JSON.stringify(res.data))
           this.mchList = res.data

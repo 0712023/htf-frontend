@@ -50,7 +50,7 @@ export default {
             this.$modal.show('MemberRegister');
         },
         getMemberList(){
-            axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`,{"adId":this.$cookie.get("adminId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+            axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`,{"adId":this.$cookie.get("adminId")})
             .then((res)=>{
                 this.memberList = res.data;
             })

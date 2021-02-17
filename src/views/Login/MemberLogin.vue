@@ -32,7 +32,7 @@ export default {
                 }
                 //유저가 로그인을 시도하는 경우
                 axios.defaults.headers.common["x-access-token"] = res.data;
-                axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.id},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+                axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.id}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
                 .then(res =>{
                     //로그인 정보 및 센서 데이터 쿠키에 저장
                     this.$cookie.set("memId", this.id, 1);

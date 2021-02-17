@@ -21,7 +21,7 @@ export default {
 	},
 	methods: {
         register() {
-			axios.post(`${this.$store.state.BACK_SERVER}/insertMachine`, {"mchId":this.mchId,"vendorId":{"vendorId": this.$cookie.get("vendorId")}},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+			axios.post(`${this.$store.state.BACK_SERVER}/insertMachine`, {"mchId":this.mchId,"vendorId":{"vendorId": this.$cookie.get("vendorId")}})
 			.then(()=>{
 				alert("machine add success!");
 				EventBus.$emit("modal",false);
