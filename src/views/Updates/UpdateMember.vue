@@ -13,7 +13,7 @@ import EventBus from "../../store/Eventbus";
 export default {
   data() {
     return {
-      id: this.$cookie.get("memId"),
+      id: this.$cookies.get("memId"),
       pw: "",
       re_pw: "",
     };

@@ -29,7 +29,7 @@ import axios from 'axios'
 export default {
     computed:{
         mchList(){
-            return JSON.parse(this.$cookie.get("mchList"));
+            return JSON.parse(this.$cookies.get("mchList"));
         },
     },
     data(){

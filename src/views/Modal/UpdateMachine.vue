@@ -19,7 +19,7 @@ export default {
     props:{desc : String, mchIdProps : String},
     methods:{
         UpdateMachine() {
-            axios.post(`${this.$store.state.BACK_SERVER}/updateMachine`,{mchId: this.mchIdProps, description: this.newDescription, memId:{memId:this.$cookie.get("memId")}})
+            axios.post(`${this.$store.state.BACK_SERVER}/updateMachine`,{mchId: this.mchIdProps, description: this.newDescription, memId:{memId:this.$cookies.get("memId")}})
             .then(() => {
                 alert("description update success!");
                 EventBus.$emit("modal", false);

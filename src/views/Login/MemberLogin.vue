@@ -25,25 +25,25 @@ export default {
                     throw new Error("login failed")
                 } else {
                     //쿠키에 access token를 넣어줌
-                    this.$cookie.set("accesstoken", res.data["htfToken"], 1);
-                    this.$cookie.set("kakaoToken", res.data["kakaoToken"], 1);
-                    this.$cookie.set("memRank", res.data["memRank"], 1);
+                    this.$cookies.set("accesstoken", res.data["htfToken"]);
+                    this.$cookies.set("kakaoToken", res.data["kakaoToken"]);
+                    this.$cookies.set("memRank", res.data["memRank"]);
                     EventBus.$emit("kakao", res.data["kakaoToken"]);
                 }
                 //유저가 로그인을 시도하는 경우
                 axios.defaults.headers.common["x-access-token"] = res.data;
-                axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.id}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+                axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.id}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
                 .then(res =>{
                     //로그인 정보 및 센서 데이터 쿠키에 저장
-                    this.$cookie.set("memId", this.id, 1);
-                    this.$cookie.set("login", "login", 1);
-                    this.$cookie.set("mchList", JSON.stringify(res.data), 1);
+                    this.$cookies.set("memId", this.id);
+                    this.$cookies.set("login", "login");
+                    this.$cookies.set("mchList", JSON.stringify(res.data));
                     
                     //사이드바 및 로그아웃 버튼 활성화
                     EventBus.$emit('login', true);
                     EventBus.$emit('member', true);
                     EventBus.$emit('mchList', res.data);
-                    if(this.$cookie.get("memRank") === "null"){
+                    if(this.$cookies.get("memRank") === "null"){
                         this.$router.push("/subscribe/");
                     } else {
                         this.$router.push('member/'+this.id);

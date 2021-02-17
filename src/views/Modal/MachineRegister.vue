@@ -16,12 +16,12 @@ export default {
             id: "",
             pw: "",
 			re_pw: "",
-			vendorId: this.$cookie.get('vendorId')
+			vendorId: this.$cookies.get('vendorId')
 		};
 	},
 	methods: {
         register() {
-			axios.post(`${this.$store.state.BACK_SERVER}/insertMachine`, {"mchId":this.mchId,"vendorId":{"vendorId": this.$cookie.get("vendorId")}})
+			axios.post(`${this.$store.state.BACK_SERVER}/insertMachine`, {"mchId":this.mchId,"vendorId":{"vendorId": this.$cookies.get("vendorId")}})
 			.then(()=>{
 				alert("machine add success!");
 				EventBus.$emit("modal",false);

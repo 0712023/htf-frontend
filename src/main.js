@@ -2,16 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
-import VueCookie from 'vue-cookie'
+import VueCookies from 'vue-cookies'
 import VModal from 'vue-js-modal'
 import axios from 'axios';
 
 Vue.config.productionTip = false
 
-axios.defaults.headers.common['Authorization'] = 'Bearer '+VueCookie.get("accesstoken");
+axios.defaults.headers.common['Authorization'] = 'Bearer '+VueCookies.get("accesstoken");
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
-Vue.use(VueCookie)
+VueCookies.config('1d');
+Vue.use(VueCookies)
 Vue.use(VModal)
 
 new Vue({

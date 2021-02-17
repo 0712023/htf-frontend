@@ -30,24 +30,24 @@ export default {
   },
   data: function () {
     return {
-      members:JSON.parse(this.$cookie.get("members"))
+      members:JSON.parse(this.$cookies.get("members"))
     };
   },
   methods: {
     toUser (memberId) {
     axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId})
       .then(res =>{
-        this.$cookie.set("mchList", JSON.stringify(res.data), 1);
-        this.$cookie.set("memId", memberId, 1);
+        this.$cookies.set("mchList", JSON.stringify(res.data));
+        this.$cookies.set("memId", memberId);
         EventBus.$emit('mchList', res.data);
         EventBus.$emit('member', true);
         this.$router.push('../member/'+memberId);
       })
     },
     getMember(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookie.get("adminId")})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookies.get("adminId")})
       .then(res =>{
-        this.$cookie.set("members", JSON.stringify(res.data))
+        this.$cookies.set("members", JSON.stringify(res.data))
       })
     }
   },

@@ -19,7 +19,7 @@ export default {
     return {
       controls: 1,
       objects: [],
-      mchList: this.$cookie.get("mchList"),
+      mchList: this.$cookies.get("mchList"),
     };
   },
   mounted() {

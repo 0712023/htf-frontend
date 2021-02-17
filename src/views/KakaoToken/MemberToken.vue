@@ -17,9 +17,9 @@ export default {
         params.append('client_secret', this.$store.state.CLIENT_SECRET);
         axios.post(`https://kauth.kakao.com/oauth/token`, params, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
         .then((res)=>{
-            axios.post(`${this.$store.state.BACK_SERVER}/updateMemberToken`, {memId:this.$cookie.get("memId"), kakaoToken:res.data.access_token})
+            axios.post(`${this.$store.state.BACK_SERVER}/updateMemberToken`, {memId:this.$cookies.get("memId"), kakaoToken:res.data.access_token})
             .then((res)=>{
-                this.$cookie.set("kakaoToken", res.data, 1);
+                this.$cookies.set("kakaoToken", res.data);
                 EventBus.$emit("kakao", null)
                 this.$router.push('/');
             })

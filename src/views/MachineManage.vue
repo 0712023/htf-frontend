@@ -55,7 +55,7 @@ export default {
             this.$modal.show('MachineRegister')
         },
         getMachineList(){
-            axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")})
+            axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookies.get("vendorId")})
             .then((res)=>{
                 this.mchList = res.data;
             })

@@ -11,7 +11,8 @@
 export default {
     methods:{
         getKakaoToken(){
-            location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.$store.state.RESTAPIKEY+'&redirect_uri='+this.$store.state.MEMBER_REDIRECT_URI+'&response_type=code&scope=friends'
+            //카카오톡 Message 수신 동의 페이지로 redirect
+            location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${this.$store.state.RESTAPIKEY}&redirect_uri=${this.$store.state.MEMBER_REDIRECT_URI}&response_type=code&scope=friends`;
         },
     },
 }

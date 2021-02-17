@@ -8,9 +8,9 @@
 import axios from 'axios';
 export default {
     mounted:function(){
-        axios.post(`${this.$store.state.BACK_SERVER}/kakaoSub`, {"tid":this.$cookie.get("tid"),"pg_token":this.$route.query.pg_token, "memId":this.$cookie.get("memId")})
+        axios.post(`${this.$store.state.BACK_SERVER}/kakaoSub`, {"tid":this.$cookies.get("tid"),"pg_token":this.$route.query.pg_token, "memId":this.$cookies.get("memId")})
         .then(()=>{
-            this.$cookie.delete("tid");
+            this.$cookies.delete("tid");
             window.close();
         })
     }

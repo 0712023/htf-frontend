@@ -50,10 +50,10 @@ export default {
     },
     computed:{
         memId:function(){
-            return this.$cookie.get("memId");
+            return this.$cookies.get("memId");
         },
         vendorId:function(){
-            return this.$cookie.get("vendorId");
+            return this.$cookies.get("vendorId");
         }
     },
     methods: {

@@ -8,16 +8,7 @@ export default {
     methods:{
         logout:function() {
             //모든 쿠키를 지움
-            this.$cookie.delete("accesstoken");
-            this.$cookie.delete("kakaoToken");
-            this.$cookie.delete("login");
-            this.$cookie.delete("memId");
-            this.$cookie.delete("memRank");
-            this.$cookie.delete("adId");
-            this.$cookie.delete("vendorId");
-            this.$cookie.delete("adminId");
-            this.$cookie.delete("mchList");
-            this.$cookie.delete("members");
+            this.$cookies.keys().forEach(cookie => this.$cookies.remove(cookie))
             Eventbus.$emit('login', false);
             Eventbus.$emit('member', false);
             Eventbus.$emit('admin', false);

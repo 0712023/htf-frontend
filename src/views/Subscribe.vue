@@ -57,7 +57,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      id: this.$cookie.get("memId"),
+      id: this.$cookies.get("memId"),
       rank : ["pro", "enterprise"],
       price : ["5000", "10000"]
     };
@@ -66,15 +66,15 @@ export default {
     UpdateMember() {
       axios.post(`${this.$store.state.BACK_SERVER}/updateMemberRank`,{ memId: this.id, memRank: 'basic' })
       .then(() => {
-        this.$cookie.set("memRank", "basic", 1);
+        this.$cookies.set("memRank", "basic");
         alert("subscribe success!");
       })
     },
     Kakao(rank, price) {
-      axios.post(`${this.$store.state.BACK_SERVER}/initSub`,{ memId: this.$cookie.get("memId"), rank: rank, price: price, FRONT_SERVER:this.$store.state.FRONT_SERVER },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,}})
+      axios.post(`${this.$store.state.BACK_SERVER}/initSub`,{ memId: this.$cookies.get("memId"), rank: rank, price: price, FRONT_SERVER:this.$store.state.FRONT_SERVER },{headers: {Authorization: `Bearer ${this.$cookies.get("accesstoken")}`,}})
       .then((res) => {
-        this.$cookie.set("memRank", rank, 1);
-        this.$cookie.set("tid", res.data["tid"], 1);
+        this.$cookies.set("memRank", rank);
+        this.$cookies.set("tid", res.data["tid"]);
         window.open(res.data["url"]);
       });
     },

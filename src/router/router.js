@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VueCookie from 'vue-cookie'
+import VueCookies from 'vue-cookies'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -82,10 +82,10 @@ const router = new VueRouter({
     routes
 })
 router.beforeEach(function(to, from, next) {
-    let memId = VueCookie.get("memId");
-    let adminId = VueCookie.get("adminId");
-    let vendorId = VueCookie.get("vendorId");
-    let memRank = VueCookie.get("memRank");
+    let memId = VueCookies.get("memId");
+    let adminId = VueCookies.get("adminId");
+    let vendorId = VueCookies.get("vendorId");
+    let memRank = VueCookies.get("memRank");
     if (to.path == "/adminKakaoToken" || to.path == "/kakaoSub") {
         next();
     } else if ((memId == null && adminId == null && vendorId == null) && to.fullPath != "/") {

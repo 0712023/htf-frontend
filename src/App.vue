@@ -85,13 +85,13 @@ export default {
   },
   data(){
     return {
-      login:this.$cookie.get("login"),
-      memId:this.$cookie.get("memId"),
-      adminId:this.$cookie.get("adminId"),
-      vendorId:this.$cookie.get("vendorId"),
-      mchList:JSON.parse(this.$cookie.get("mchList")),
-      members:JSON.parse(this.$cookie.get("members")),
-      kakaoToken:this.$cookie.get("kakaoToken"),
+      login:this.$cookies.get("login"),
+      memId:this.$cookies.get("memId"),
+      adminId:this.$cookies.get("adminId"),
+      vendorId:this.$cookies.get("vendorId"),
+      mchList:JSON.parse(this.$cookies.get("mchList")),
+      members:JSON.parse(this.$cookies.get("members")),
+      kakaoToken:this.$cookies.get("kakaoToken"),
     }
   },
   created:function(){
@@ -119,29 +119,29 @@ export default {
       this.kakaoToken = s;
     },
     updateMemId:function(){
-      this.memId = this.$cookie.get("memId");
+      this.memId = this.$cookies.get("memId");
     },
     updateAdminId:function(){
-      this.adminId = this.$cookie.get("adminId");
+      this.adminId = this.$cookies.get("adminId");
     },
     updateVendorId:function(){
-      this.vendorId = this.$cookie.get("vendorId");
+      this.vendorId = this.$cookies.get("vendorId");
     },
     backToAdmin:function(){
-      this.$cookie.delete("memId");
+      this.$cookies.delete("memId");
       this.memId = false;
     },
     getMachineListByMemId(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookie.get("memId")})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookies.get("memId")})
       .then((res)=>{
-          this.$cookie.set("mchList", JSON.stringify(res.data))
+          this.$cookies.set("mchList", JSON.stringify(res.data))
           this.mchList = res.data
       })
     },
     getMachineListByVendorId(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookie.get("vendorId")})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookies.get("vendorId")})
       .then((res)=>{
-          this.$cookie.set("mchList", JSON.stringify(res.data))
+          this.$cookies.set("mchList", JSON.stringify(res.data))
           this.mchList = res.data
       })
     }
