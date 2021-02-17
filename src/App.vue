@@ -98,12 +98,10 @@ export default {
   created:function(){
     EventBus.$on('login', this.updateLogin);
     EventBus.$on('vendor', this.updateVendorId);
-    EventBus.$on('member', this.updateMemId);
+    EventBus.$on('member', ()=>{this.updateMemId();this.updateMembers()});
     EventBus.$on('admin', this.updateAdminId);
     EventBus.$on('mchList', this.updatemchList);
-    EventBus.$on('members', this.updateMembers);
-    EventBus.$on('modal', this.getMachineListByMemId);
-    EventBus.$on('modal', this.getMachineListByVendorId);
+    EventBus.$on('modal', ()=>{this.getMachineListByMemId();this.getMachineListByVendorId();});
     EventBus.$on('kakao', this.setKakaoToken);
   },
   methods:{

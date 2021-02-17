@@ -39,25 +39,29 @@ export default {
   data() {
     return {
       mchList: [],
-      description: "asd",
-      mchId:"sh",
+      mchId:"",
+      description: "",
     };
   },
   methods: {
     updateMachineDesc(desc,mchIdInPut) {
+      //수정된 description을 props에 담아 UpdateMachine modal을 띄움
       this.mchId = mchIdInPut;
       this.description = desc;
       this.$modal.show("UpdateMachine", {"desc":desc});
     },
     getMachineList(){
+      //UpdateMachine modal 가려질 때(즉, machine description이 종료되었을 경우) 새로운 machineList를 받아옴
       axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookies.get("memId")})
       .then((res)=>{
-          this.$cookies.set("mchList", JSON.stringify(res.data))
-          this.mchList = res.data
+        //machine description이 수정된 후의 machine List 데이터를 다시 쿠키에 넣어줌
+        this.$cookies.set("mchList", JSON.stringify(res.data))
+        this.mchList = res.data
       })
     }
   },
   created: function () {
+    //UpdateMachine modal이 종료되었을 경우 새로운 machineList를 받아옴
     EventBus.$on("modal", () => {this.$modal.hide("UpdateMachine");this.getMachineList();});
   },
 };

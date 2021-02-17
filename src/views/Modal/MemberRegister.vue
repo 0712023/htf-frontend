@@ -22,14 +22,17 @@ export default {
 	methods: {
         register() {
 			if(this.pw != this.re_pw){
+				//pw입력과 re_pw입력값이 일치하지 않을 경우 알림 및 id, pw, re_pw값을 초기화
 				alert("password does not match");
 				this.pw = "";
 				this.re_pw = "";
 				this.id = "";
 			} else{
+				//backend server로 회원가입 요청
 				axios.post(`${this.$store.state.BACK_SERVER}/insertMember`, {"memId":this.id,"memPw":this.pw,"adId":{"adId": this.$cookies.get("adminId")}})
 				.then(()=>{
 					alert("member add success!");
+					//MemberResgister modal을 가림
 					EventBus.$emit("modal",false);
 				})
 			}

@@ -48,19 +48,24 @@ export default {
         this.getMachineList();
     },
     created:function(){
+        //MachineRegister modal이 종료되었을 경우 새로운 machineList를 받아옴
         EventBus.$on('modal',()=>{this.$modal.hide('MachineRegister');this.getMachineList();});
     },
     methods:{
         modalshow(){
+            //MachineRegister modal을 띄움
             this.$modal.show('MachineRegister')
         },
         getMachineList(){
+            //backend server에 vendorId를 가진 모든 machine List를 요청
             axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookies.get("vendorId")})
             .then((res)=>{
+                //반환받은 machine List를 저장
                 this.mchList = res.data;
             })
         },
         updateMachineType(type,mchIdInPut) {
+            //수정된 type을 props에 담아 UpdateMachineType modal을 띄움
             this.mchId = mchIdInPut;
             this.type = type;
             this.$modal.show("UpdateMachineType", {"type":type});

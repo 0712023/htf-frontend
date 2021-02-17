@@ -21,9 +21,11 @@ export default {
 	},
 	methods: {
         register() {
+			//backend server로 새로운 machine 추가 요청
 			axios.post(`${this.$store.state.BACK_SERVER}/insertMachine`, {"mchId":this.mchId,"vendorId":{"vendorId": this.$cookies.get("vendorId")}})
 			.then(()=>{
 				alert("machine add success!");
+				//MachineRegister modal을 가림
 				EventBus.$emit("modal",false);
 			})
 			.catch(()=>{

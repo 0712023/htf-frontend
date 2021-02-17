@@ -61,17 +61,17 @@ const routes = [{
     {
         path: '/memberKakaoToken',
         name: 'MemberKakaoToken',
-        component: () => import ('../views/KakaoToken/MemberToken.vue')
+        component: () => import ('../views/Kakao/MemberToken.vue')
     },
     {
         path: '/adminKakaoToken',
         name: 'AdminKakaoToken',
-        component: () => import ('../views/KakaoToken/AdminToken.vue')
+        component: () => import ('../views/Kakao/AdminToken.vue')
     },
     {
         path: '/kakaoSub',
         name: 'KakaoSub',
-        component: () => import ('../views/KakaoSub.vue')
+        component: () => import ('../views/Kakao/KakaoSub.vue')
     }
 ]
 
@@ -81,25 +81,33 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
+//모든 route 이동 전 실행되는 함수
 router.beforeEach(function(to, from, next) {
     let memId = VueCookies.get("memId");
     let adminId = VueCookies.get("adminId");
     let vendorId = VueCookies.get("vendorId");
     let memRank = VueCookies.get("memRank");
     if (to.path == "/adminKakaoToken" || to.path == "/kakaoSub") {
+        //admin register 시 kakaotoken 획득 및 member가 정기 구독 요청 위해 생성한 페이지 이동
         next();
     } else if ((memId == null && adminId == null && vendorId == null) && to.fullPath != "/") {
+        //member, admin, vender 로그인 없이 'login'페이지 외 접근시 차단
         alert("please log in");
         router.push("/");
-    } else if (memId != null && to.fullPath == "/") {
-        router.push("/member/" + memId);
     } else if (memRank == "null" && from.path == "/subscribe/") {
+        //member 로그인 시 구독 정보(memRank) 없을 시 항상 강제로 subscribe 페이지로 이동
         router.push("/subscribe");
+    } else if (memId != null && to.fullPath == "/") {
+        //member 로그인 상태에서 'login'페이지 접근시 차단
+        router.push("/member/" + memId);
     } else if (adminId != null && to.fullPath == "/") {
+        //admin 로그인 상태에서 'login'페이지 접근시 차단
         router.push("/admin/" + adminId);
     } else if (vendorId != null && to.fullPath == "/") {
+        //vendor 로그인 상태에서 'login'페이지 접근시 차단
         router.push("/vendor/" + vendorId);
     } else {
+        //그 외에는 전부 원하는 페이지로 이동
         next();
     }
 });

@@ -43,6 +43,7 @@ export default {
         this.getMemberList();
     },
     created:function(){
+        //MemberRegister modal이 종료되었을 경우 새로운 member List를 받아옴
         EventBus.$on('modal',()=>{this.$modal.hide('MemberRegister');this.getMemberList();});
     },
     methods:{
@@ -50,8 +51,10 @@ export default {
             this.$modal.show('MemberRegister');
         },
         getMemberList(){
+            //backend server에 member List를 요청
             axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`,{"adId":this.$cookies.get("adminId")})
             .then((res)=>{
+                //반환받은 member List를 데이터에 저장
                 this.memberList = res.data;
             })
         }
