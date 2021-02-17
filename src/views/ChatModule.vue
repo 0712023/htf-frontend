@@ -56,6 +56,7 @@ export default {
   },
   destroyed() {
     socket.off("connect_error");
+    document.location.reload();
   },
 };
 </script>
