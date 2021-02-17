@@ -40,7 +40,7 @@
         </li>
         <li>
           <!-- <router-link v-for="member in members" :key="member.memId" :to="'/member/'+member.memId"> - {{ member.memId }}</router-link> -->
-          <a v-for="member in members" :key="member.memId" @click="toUser(member.memId)" style="color: #FFF;"> - {{ member.memId }}</a>
+          <a v-for="member in members" href="#" :key="member.memId" @click="toUser(member.memId)" style="color: #FFF;"> - {{ member.memId }}</a>
         </li>
         <li>
           <router-link :to="'/memberManage'">Member Manager</router-link>
@@ -111,8 +111,8 @@ export default {
     updatemchList:function(s){
       this.mchList = s;
     },
-    updateMembers:function(s){
-      this.members = s;
+    updateMembers:function(){
+      this.members = JSON.parse(this.$cookies.get("members"));
     },
     setKakaoToken:function(s){
       this.kakaoToken = s;
@@ -128,6 +128,7 @@ export default {
     },
     backToAdmin:function(){
       this.$cookies.remove("memId");
+      EventBus.$emit('member');
       this.memId = false;
     },
     getMachineListByMemId(){
