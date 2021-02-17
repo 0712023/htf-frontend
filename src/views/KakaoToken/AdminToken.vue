@@ -18,8 +18,8 @@ export default {
         .then((res)=>{
             axios.post(`${this.$store.state.BACK_SERVER}/updateAdminToken`, {adId:this.$cookies.get("adId"), kakaoToken:res.data.access_token})
             .then(()=>{
-                this.$cookies.delete("accesstoken");
-                this.$cookies.delete("adId");
+                this.$cookies.remove("accesstoken");
+                this.$cookies.remove("adId");
                 this.$router.push("/");
             })
         })

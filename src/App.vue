@@ -39,7 +39,8 @@
           <router-link :to="'/admin/'+this.adminId">Member List</router-link>
         </li>
         <li>
-          <router-link v-for="member in members" :key="member.memId" :to="'/member/'+member.memId"> - {{ member.memId }}</router-link>
+          <!-- <router-link v-for="member in members" :key="member.memId" :to="'/member/'+member.memId"> - {{ member.memId }}</router-link> -->
+          <a v-for="member in members" :key="member.memId" @click="toUser(member.memId)" style="color: #FFF;"> - {{ member.memId }}</a>
         </li>
         <li>
           <router-link :to="'/memberManage'">Member Manager</router-link>
@@ -71,7 +72,7 @@
 import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
 import Logout from './components/Logout.vue';
-import Eventbus from './store/Eventbus';
+import EventBus from './store/Eventbus';
 import kakaoRegister from './components/KakaoRegisterButton'
 import axios from 'axios';
 
@@ -95,15 +96,15 @@ export default {
     }
   },
   created:function(){
-    Eventbus.$on('login', this.updateLogin);
-    Eventbus.$on('vendor', this.updateVendorId);
-    Eventbus.$on('member', this.updateMemId);
-    Eventbus.$on('admin', this.updateAdminId);
-    Eventbus.$on('mchList', this.updatemchList);
-    Eventbus.$on('members', this.updateMembers);
-    Eventbus.$on('modal', this.getMachineListByMemId);
-    Eventbus.$on('modal', this.getMachineListByVendorId);
-    Eventbus.$on('kakao', this.setKakaoToken);
+    EventBus.$on('login', this.updateLogin);
+    EventBus.$on('vendor', this.updateVendorId);
+    EventBus.$on('member', this.updateMemId);
+    EventBus.$on('admin', this.updateAdminId);
+    EventBus.$on('mchList', this.updatemchList);
+    EventBus.$on('members', this.updateMembers);
+    EventBus.$on('modal', this.getMachineListByMemId);
+    EventBus.$on('modal', this.getMachineListByVendorId);
+    EventBus.$on('kakao', this.setKakaoToken);
   },
   methods:{
     updateLogin:function(s){
@@ -128,7 +129,7 @@ export default {
       this.vendorId = this.$cookies.get("vendorId");
     },
     backToAdmin:function(){
-      this.$cookies.delete("memId");
+      this.$cookies.remove("memId");
       this.memId = false;
     },
     getMachineListByMemId(){
@@ -144,7 +145,18 @@ export default {
           this.$cookies.set("mchList", JSON.stringify(res.data))
           this.mchList = res.data
       })
-    }
+    },
+    toUser (memberId) {
+      console.log(memberId);
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId})
+      .then(res =>{
+        this.$cookies.set("mchList", JSON.stringify(res.data));
+        this.$cookies.set("memId", memberId);
+        EventBus.$emit('mchList', res.data);
+        EventBus.$emit('member', true);
+        this.$router.push('../member/'+memberId);
+      })
+    },
   }
 };
 </script>

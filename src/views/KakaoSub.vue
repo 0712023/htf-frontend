@@ -10,7 +10,7 @@ export default {
     mounted:function(){
         axios.post(`${this.$store.state.BACK_SERVER}/kakaoSub`, {"tid":this.$cookies.get("tid"),"pg_token":this.$route.query.pg_token, "memId":this.$cookies.get("memId")})
         .then(()=>{
-            this.$cookies.delete("tid");
+            this.$cookies.remove("tid");
             window.close();
         })
     }

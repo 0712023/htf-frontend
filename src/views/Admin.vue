@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     toUser (memberId) {
-    axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId})
       .then(res =>{
         this.$cookies.set("mchList", JSON.stringify(res.data));
         this.$cookies.set("memId", memberId);
