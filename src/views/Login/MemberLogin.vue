@@ -44,7 +44,11 @@ export default {
                     EventBus.$emit('login', true);
                     EventBus.$emit('member', true);
                     EventBus.$emit('mchList', res.data);
-                    this.$router.push('member/'+this.id);
+                    if(this.$cookie.get("memRank") === "null"){
+                        this.$router.push("/subscribe/");
+                    } else {
+                        this.$router.push('member/'+this.id);
+                    }
                 })
             }).catch(function(error){
                 console.log(error)

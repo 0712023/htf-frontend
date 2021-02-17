@@ -13,7 +13,7 @@ export default new Vuex.Store({
     MEMBER_REDIRECT_URI:'http://localhost:8080/memberKakaoToken',
     CLIENT_SECRET:'1yEGMIcIASa5ceBAo5ZZzh1Zld4R2fmO',
     BACK_SERVER:'http://studioj.ddns.net',
-    FRONT_SERVER:'http://192.168.168.162:8080'
+    FRONT_SERVER:'http://localhost:8080'
   },
   mutations: {
     [Constant.SETISNAVOPEN]: (oldState, payload) =>{
