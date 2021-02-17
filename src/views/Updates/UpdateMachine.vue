@@ -1,11 +1,12 @@
 <template>
+
   <div id="standard2">
     <modal name="UpdateMachine"><UpdateMachine :desc.sync="description" :mchIdProps.sync="mchId"/></modal><br><br><br>
     <table border="1" width="1000">
             <thead> 
             <tr><!--template 쓰는 이유 : v-for 이후에 th에서 v-if사용하기 위해서 -->
-                <template v-for="(val, key) in mchList[0]">
-                    <th width="500" :key="key" v-if="key!='memId'" >{{key}}</th>
+                <template v-for="(val, key) in mchList[0]" >
+                    <th width="500" :key="key" v-if="key!='memId'" class="row.header">{{key}}</th>
                 </template>
                 <th width="500">update</th>
             </tr>
@@ -66,3 +67,7 @@ export default {
   },
 };
 </script>
+
+<style >
+@import "../../assets/css/table.css";
+</style>

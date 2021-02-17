@@ -55,7 +55,7 @@
           datasets: [
             {
               label: '내부 습도',
-              backgroundColor: '#999999',
+              backgroundColor: '#257cdf86',
               data: []
             }
           ]
