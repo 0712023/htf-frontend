@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     initThree() {
+      let FRONT_SEVER = this.$store.state.FRONT_SERVER;
       let raycaster = new THREE.Raycaster();
       let mouse = new THREE.Vector2();
       const objects = [];
@@ -117,7 +118,8 @@ export default {
             text.position.z = zmaker(i);
             scene.add(text);
             text.url =
-          "http://127.0.0.1:8081/sensor/" +
+            FRONT_SEVER + 
+          "/sensor/" +
           test[i].description +
           "/mchid/" +
           test[i].mchId;
@@ -151,7 +153,8 @@ export default {
           // model.scale.set(20, 20, 20);
           model.scale.set(5, 5, 5);
            model.url =
-          "http://127.0.0.1:8081/sensor/" +
+            FRONT_SEVER + 
+          "/sensor/" +
           test[i].description +
           "/mchid/" +
           test[i].mchId;
