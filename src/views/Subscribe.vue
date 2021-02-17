@@ -66,6 +66,7 @@ export default {
     UpdateMember() {
       axios.post(`${this.$store.state.BACK_SERVER}/updateMemberRank`,{ memId: this.id, memRank: 'basic' },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,},})
       .then(() => {
+        this.$cookie.set("memRank", "basic", 1);
         alert("subscribe success!");
       })
       .catch(function (error) {
@@ -75,6 +76,7 @@ export default {
     Kakao(rank, price) {
       axios.post(`${this.$store.state.BACK_SERVER}/initSub`,{ memId: this.$cookie.get("memId"), rank: rank, price: price, FRONT_SERVER:this.$store.state.FRONT_SERVER },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,}})
       .then((res) => {
+        this.$cookie.set("memRank", rank, 1);
         this.$cookie.set("tid", res.data["tid"], 1);
         window.open(res.data["url"]);
       });
