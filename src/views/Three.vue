@@ -146,9 +146,10 @@ export default {
         // objects.push(cube);
         // textmaker(cube);
         const gltfLoader = new GLTFLoader();
-          gltfLoader.load("ceiling_light/scene.gltf", (gltf) => {
+          gltfLoader.load("raspberry_pi_3/scene.gltf", (gltf) => {
           let model = gltf.scene;
-          model.scale.set(20, 20, 20);
+          // model.scale.set(20, 20, 20);
+          model.scale.set(5, 5, 5);
            model.url =
           "http://127.0.0.1:8081/sensor/" +
           test[i].description +
@@ -267,9 +268,9 @@ export default {
       }
       function xmaker(i){
         if(i == 0){
-          return -100
+          return -90
         }else if(i == 1){
-          return -100
+          return -90
         }else if(i == 2){
           return 100
         }else if(i == 3){
@@ -283,7 +284,7 @@ export default {
         if(i == 0){
           return 50
         }else if(i == 1){
-          return 180
+          return 185
         }else if(i == 2){
           return 70
         }else if(i == 3){
