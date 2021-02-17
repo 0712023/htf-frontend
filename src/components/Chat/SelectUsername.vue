@@ -1,8 +1,8 @@
 <template>
   <div class="select-username">
     <form @submit.prevent="onSubmit">
-      <input v-model="username" placeholder="Your username..." />
-      <button :disabled="!isValid">Send</button>
+      <input v-model="username" placeholder="Your username..." readonly/>
+      <button :disabled="!isValid">Go</button>
     </form>
   </div>
 </template>
@@ -12,17 +12,25 @@ export default {
   name: "SelectUsername",
   data() {
     return {
-      username: "",
+      username: this.userName(),
     };
   },
   computed: {
     isValid() {
-      return this.username.length > 2;
+      return this.username.length > 0;
     },
   },
   methods: {
     onSubmit() {
       this.$emit("input", this.username);
+    },
+    userName() {
+      if(this.$cookies.get('adminId')) {
+        return this.$cookies.get('adminId');
+      } else if (this.$cookies.get('memId')) {
+        return this.$cookies.get('memId');
+      }
+      return this.$cookies.get('vendorId');
     },
   },
 };
