@@ -34,7 +34,7 @@
       })
 
       this.chartInterval = setInterval(()=>{
-        axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, )
+        axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId})
         .then(res =>{
           res
         })
