@@ -26,11 +26,11 @@ export default {
     },
     userName() {
       if(this.$cookies.get('adminId')) {
-        return this.$cookies.get('adminId');
+        return "Admin - " + this.$cookies.get('adminId');
       } else if (this.$cookies.get('memId')) {
-        return this.$cookies.get('memId');
+        return "Member - " + this.$cookies.get('memId');
       }
-      return this.$cookies.get('vendorId');
+      return "Vendor - " + this.$cookies.get('vendorId');
     },
   },
 };
