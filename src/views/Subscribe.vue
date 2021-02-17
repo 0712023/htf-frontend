@@ -15,10 +15,7 @@
           <li>Kakao Alaram Service </li>
           <li>Add Machine Just Three</li>
         </ul>
-        <div
-          class="pricingTable-firstTable_table__getstart"
-         @click="Kakao(rank[0], price[0])"
-        >
+        <div class="pricingTable-firstTable_table__getstart" @click="UpdateMember">
           Get Started Now
         </div>
       </li>
@@ -32,10 +29,7 @@
           <li>Add Machine Unlimited</li>
           <li>Machine Update Available</li>
         </ul>
-        <div
-          class="pricingTable-firstTable_table__getstart"
-         @click="Kakao(rank[1], price[1])"
-        >
+        <div class="pricingTable-firstTable_table__getstart" @click="Kakao(rank[0], price[0])">
           Get Started Now
         </div>
       </li>
@@ -50,10 +44,7 @@
           <li>Machine Update Available</li>
           <li>Use 3D Modeling</li>
         </ul>
-        <div
-          class="pricingTable-firstTable_table__getstart"
-          @click="Kakao(rank[2], price[2])"
-        >
+        <div class="pricingTable-firstTable_table__getstart" @click="Kakao(rank[1], price[1])">
           Get Started Now
         </div>
       </li>
@@ -67,24 +58,22 @@ export default {
   data() {
     return {
       id: this.$cookie.get("memId"),
-      rank : ["basic", "pro", "enterprise"],
-      price : ["0", "5000", "10000"]
+      rank : ["pro", "enterprise"],
+      price : ["5000", "10000"]
     };
   },
   methods: {
-    UpdateMember(newRank) {
-      axios.post(`${this.$store.state.BACK_SERVER}/updateMember`,{ memId: this.id, memRank: newRank },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,},})
-      .then((response) => {
+    UpdateMember() {
+      axios.post(`${this.$store.state.BACK_SERVER}/updateMemberRank`,{ memId: this.id, memRank: 'basic' },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,},})
+      .then(() => {
         alert("subscribe success!");
-        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
     },
     Kakao(rank, price) {
-      console.log(this.$store.state.BACK_SERVER)
-      axios.post(`http://192.168.168.156:80/initSub`,{ memId: this.$cookie.get("memId"), rank: rank, price: price, FRONT_SERVER:this.$store.state.FRONT_SERVER },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,}})
+      axios.post(`${this.$store.state.BACK_SERVER}/initSub`,{ memId: this.$cookie.get("memId"), rank: rank, price: price, FRONT_SERVER:this.$store.state.FRONT_SERVER },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,}})
       .then((res) => {
         this.$cookie.set("tid", res.data["tid"], 1);
         window.open(res.data["url"]);
