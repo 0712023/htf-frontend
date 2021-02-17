@@ -59,8 +59,6 @@ export default {
                     EventBus.$emit('members', res.data);
                     this.$router.push('admin/'+this.id);
                 })
-            }).catch(function(error){
-                console.log(error)
             })
         }
     }

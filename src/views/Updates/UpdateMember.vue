@@ -25,16 +25,11 @@ export default {
         this.pw = "";
         this.re_pw = "";
       } else {
-        axios.post(`${this.$store.state.BACK_SERVER}/updateMemberPw`, {"memId":this.id, "memPw":this.pw
-          },{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
-          .then((response) => {
-            alert("register success!");
-            console.log(response.data + "???");
-            EventBus.$emit("modal", false);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        axios.post(`${this.$store.state.BACK_SERVER}/updateMemberPw`, {"memId":this.id, "memPw":this.pw},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+        .then(() => {
+          alert("register success!");
+          EventBus.$emit("modal", false);
+        })
       }
     },
   },

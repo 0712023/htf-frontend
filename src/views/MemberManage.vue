@@ -31,7 +31,9 @@ import MemberRegister from './Modal/MemberRegister'
 import EventBus from '../store/Eventbus'
 export default {
     data(){
-        return {memberList:[]}
+        return {
+            memberList:[],
+        }
     },
     components:{
         MemberRegister
@@ -45,15 +47,12 @@ export default {
     },
     methods:{
         modalshow(){
-            this.$modal.show('MemberRegister')
+            this.$modal.show('MemberRegister');
         },
         getMemberList(){
             axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`,{"adId":this.$cookie.get("adminId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then((res)=>{
-                this.memberList = res.data
-            })
-            .catch((err)=>{
-                console.log(err);
+                this.memberList = res.data;
             })
         }
     }

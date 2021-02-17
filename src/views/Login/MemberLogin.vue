@@ -28,9 +28,8 @@ export default {
                     this.$cookie.set("accesstoken", res.data["htfToken"], 1);
                     this.$cookie.set("kakaoToken", res.data["kakaoToken"], 1);
                     this.$cookie.set("memRank", res.data["memRank"], 1);
-                   EventBus.$emit("kakao", res.data["kakaoToken"]);
+                    EventBus.$emit("kakao", res.data["kakaoToken"]);
                 }
-
                 //유저가 로그인을 시도하는 경우
                 axios.defaults.headers.common["x-access-token"] = res.data;
                 axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.id},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
@@ -50,8 +49,6 @@ export default {
                         this.$router.push('member/'+this.id);
                     }
                 })
-            }).catch(function(error){
-                console.log(error)
             })
         },
     }

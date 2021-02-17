@@ -33,15 +33,18 @@ export default {
         },
     },
     data(){
-        return {sensorDataStore:{}, selectedType:'all', notSelected:true}
+        return {
+            sensorDataStore:{}, 
+            selectedType:'all', 
+            notSelected:true,
+        }
     },
     created:function(){
         this.dashboardInterval = setInterval(()=>{
                 for(let index in this.mchList){
-                    axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId}, 
-                        {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
-                    .then(response =>{
-                        this.$set(this.sensorDataStore, this.mchList[index].mchId, response.data.value)
+                    axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+                    .then(res =>{
+                        this.$set(this.sensorDataStore, this.mchList[index].mchId, res.data.value)
                     })
                 }
                 console.log(this.sensorDataStore)

@@ -69,9 +69,6 @@ export default {
         this.$cookie.set("memRank", "basic", 1);
         alert("subscribe success!");
       })
-      .catch(function (error) {
-        console.log(error);
-      });
     },
     Kakao(rank, price) {
       axios.post(`${this.$store.state.BACK_SERVER}/initSub`,{ memId: this.$cookie.get("memId"), rank: rank, price: price, FRONT_SERVER:this.$store.state.FRONT_SERVER },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`,}})

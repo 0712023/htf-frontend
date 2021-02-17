@@ -30,14 +30,10 @@ export default {
 				axios.post(`${this.$store.state.BACK_SERVER}/insertAdmin`, {"adId":this.id,"adPw":this.pw})
 				.then((res)=>{
 					this.$cookie.set("accesstoken", res.data);
-					console.log(res.data);
 					this.$cookie.set("adId", this.id);
 					alert("register success!");
 					EventBus.$emit("modal",false);
 					location.href='https://kauth.kakao.com/oauth/authorize?client_id='+this.$store.state.RESTAPIKEY+'&redirect_uri='+this.$store.state.ADMIN_REDIRECT_URI+'&response_type=code&scope=friends,talk_message'
-				})
-				.catch((error)=>{
-					console.log(error);
 				})
 			}
         },

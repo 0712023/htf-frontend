@@ -34,8 +34,8 @@ export default {
     UpdateMachine
   },
   mounted() {
-        this.mchList = this.mchList.concat(JSON.parse(this.$cookie.get("mchList")))
-    },
+    this.mchList = this.mchList.concat(JSON.parse(this.$cookie.get("mchList")))
+  },
   data() {
     return {
       mchList: [],
@@ -52,12 +52,8 @@ export default {
     getMachineList(){
       axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookie.get("memId")},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
       .then((res)=>{
-          console.log({machinList:res.data});
           this.$cookie.set("mchList", JSON.stringify(res.data))
           this.mchList = res.data
-      })
-      .catch((err)=>{
-          console.log(err);
       })
     }
   },

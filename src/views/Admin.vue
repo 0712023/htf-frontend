@@ -2,7 +2,6 @@
     <div>
         <div style="width:100%;">
           <div class="top-long-box">
-            
             <h3>Number of Members : {{members.length}}</h3>
           </div>
           <div class="wrap">
@@ -36,20 +35,19 @@ export default {
   },
   methods: {
     toUser (memberId) {
-      console.log(memberId);
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}}
-      ).then(response =>{
-        this.$cookie.set("mchList", JSON.stringify(response.data), 1);
+    axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
+      .then(res =>{
+        this.$cookie.set("mchList", JSON.stringify(res.data), 1);
         this.$cookie.set("memId", memberId, 1);
-        EventBus.$emit('mchList', response.data);
+        EventBus.$emit('mchList', res.data);
         EventBus.$emit('member', true);
         this.$router.push('../member/'+memberId);
       })
     },
     getMember(){
       axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookie.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
-      .then(response =>{
-        this.$cookie.set("members", JSON.stringify(response.data))
+      .then(res =>{
+        this.$cookie.set("members", JSON.stringify(res.data))
       })
     }
   },

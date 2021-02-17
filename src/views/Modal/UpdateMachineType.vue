@@ -21,12 +21,9 @@ export default {
         updateMachineType() {
             axios.post(`${this.$store.state.BACK_SERVER}/updateMachineType`,{ mchId: this.mchIdProps , type: this.newType},{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then(() => {
-            alert("type update success!");
-            EventBus.$emit("modal", false);
+                alert("type update success!");
+                EventBus.$emit("modal", false);
             })
-            .catch(function (error) {
-            console.log(error);
-            });
         },
     }
 }

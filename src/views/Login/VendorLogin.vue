@@ -28,7 +28,6 @@ export default {
                     this.$cookie.set("accesstoken", res.data, 1);
                 }
                 axios.defaults.headers.common["x-access-token"] = res.data;
-                
                 axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`, {"vendorId": this.id},{headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
                 .then(res =>{
                     //로그인 정보 및 센서 데이터 쿠키에 저장
@@ -38,12 +37,9 @@ export default {
                     //사이드바 및 로그아웃 버튼 활성화
                     EventBus.$emit('login', true);
                     EventBus.$emit('mchList', res.data);
-
                     EventBus.$emit('vendor', true);
                     this.$router.push('vendor/'+this.id);
                 })
-            }).catch(function(error){
-                console.log(error)
             })
         },
     }

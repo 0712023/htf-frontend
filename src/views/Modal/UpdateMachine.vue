@@ -21,12 +21,9 @@ export default {
         UpdateMachine() {
             axios.post(`${this.$store.state.BACK_SERVER}/updateMachine`,{ mchId: this.mchIdProps , description: this.newDescription, memId:{memId:this.$cookie.get("memId")} },{headers: {Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
             .then(() => {
-            alert("description update success!");
-            EventBus.$emit("modal", false);
+                alert("description update success!");
+                EventBus.$emit("modal", false);
             })
-            .catch(function (error) {
-            console.log(error);
-            });
         },
     }
 }
