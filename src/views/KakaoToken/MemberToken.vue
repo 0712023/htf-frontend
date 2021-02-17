@@ -18,7 +18,8 @@ export default {
         axios.post(`https://kauth.kakao.com/oauth/token`, params, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
         .then((res)=>{
             axios.post(`${this.$store.state.BACK_SERVER}/updateMemberToken`, {memId:this.$cookie.get("memId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookie.get("accesstoken")}`}})
-            .then(()=>{
+            .then((res)=>{
+                this.$cookie.set("kakaoToken", res.data, 1);
                 EventBus.$emit("kakao", null)
                 this.$router.push('/');
             })
