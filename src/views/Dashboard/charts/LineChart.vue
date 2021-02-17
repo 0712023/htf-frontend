@@ -63,7 +63,7 @@
           datasets: [
             {
               label: '내부 미세먼지',
-              backgroundColor: '#999999',
+              backgroundColor: '#257cdf86',
               data: []
             }
           ]
