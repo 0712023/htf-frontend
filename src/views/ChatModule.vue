@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-bottom: 100px;">
     <select-username
       v-if="!usernameAlreadySelected"
       @input="onUsernameSelection"
@@ -26,12 +26,28 @@ export default {
   },
   methods: {
     onUsernameSelection(username) {
-      this.usernameAlreadySelected = true;
+      this.usernameAlreadySelected = false;
       socket.auth = { username };
       socket.connect();
     },
   },
   created() {
+    const sessionID = localStorage.getItem("sessionID");
+    if (sessionID) {
+      this.usernameAlreadySelected = true;
+      socket.auth = { sessionID };
+      socket.connect();
+    }
+    
+    socket.on("session", ({ sessionID, userID }) => {
+      // attach the session ID to the next reconnection attempts
+      socket.auth = { sessionID };
+      // store it in the localStorage
+      localStorage.setItem("sessionID", sessionID);
+      // save the ID of the user
+      socket.userID = userID;
+    });
+
     socket.on("connect_error", (err) => {
       if (err.message === "invalid username") {
         this.usernameAlreadySelected = false;

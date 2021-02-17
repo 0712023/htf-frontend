@@ -1,5 +1,5 @@
 <template>
-  <div style="z-index: -6;">
+  <div>
     <div class="left-panel">
       <user
         v-for="user in users"
@@ -68,18 +68,25 @@ export default {
     });
 
     const initReactiveProperties = (user) => {
-      user.connected = true;
       user.messages = [];
       user.hasNewMessages = false;
     };
 
     socket.on("users", (users) => {
       users.forEach((user) => {
-        user.self = user.userID === socket.id;
+        for (let i = 0; i < this.users.length; i++) {
+          const existingUser = this.users[i];
+          if (existingUser.userID === user.userID) {
+            existingUser.connected = user.connected;
+            return;
+          }
+        }
+        user.self = user.userID === socket.userID;
         initReactiveProperties(user);
+        this.users.push(user);
       });
       // put the current user first, and sort by username
-      this.users = users.sort((a, b) => {
+      this.users.sort((a, b) => {
         if (a.self) return -1;
         if (b.self) return 1;
         if (a.username < b.username) return -1;
@@ -88,6 +95,13 @@ export default {
     });
 
     socket.on("user connected", (user) => {
+      for (let i = 0; i < this.users.length; i++) {
+        const existingUser = this.users[i];
+        if (existingUser.userID === user.userID) {
+          existingUser.connected = true;
+          return;
+        }
+      }
       initReactiveProperties(user);
       this.users.push(user);
     });
@@ -102,13 +116,14 @@ export default {
       }
     });
 
-    socket.on("private message", ({ content, from }) => {
+    socket.on("private message", ({ content, from, to }) => {
       for (let i = 0; i < this.users.length; i++) {
         const user = this.users[i];
-        if (user.userID === from) {
+        const fromSelf = socket.userID === from;
+        if (user.userID === (fromSelf ? to : from)) {
           user.messages.push({
             content,
-            fromSelf: false,
+            fromSelf,
           });
           if (user !== this.selectedUser) {
             user.hasNewMessages = true;
@@ -131,14 +146,14 @@ export default {
 
 <style scoped>
 .left-panel {
-  padding-top: 75px;
+  padding-top: 100px;
+  padding-bottom: 100px;
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
   width: 260px;
   overflow-x: hidden;
-  border: 1px;
 }
 
 .right-panel {
