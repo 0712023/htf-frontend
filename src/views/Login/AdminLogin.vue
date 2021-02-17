@@ -17,9 +17,6 @@ import AdminRegister from '../Modal/AdminRegister';
 import axios from 'axios';
 import EventBus from '../../store/Eventbus';
 export default {
-    mounted () {
-        this.$modal.hide('AdminRegister')
-    },
     data () {
         return {
             id: '',
@@ -30,26 +27,30 @@ export default {
         AdminRegister
     },
     created:function(){
+        //처음엔 AdminRegister modal을 숨김
         EventBus.$on('modal',()=>this.$modal.hide('AdminRegister'));
     },
     methods:{
         modalshow(){
+            //AdminRegister modal을 띄움
             this.$modal.show('AdminRegister')
         },
         adminLogin() {
+            //backend server로 로그인 요청
             axios.post(`${this.$store.state.BACK_SERVER}/loginAdmin`, {"adId": this.id, "adPw":this.pw})
             .then(res => {
+                //반환 데이터가 없을 경우 로그인 실패
                 if (res.data == '') {
                     alert("login failed")
                     throw new Error("login failed")
                 } else {
-                    //쿠키에 access token를 넣어줌
+                    //로그인 성공시 쿠키에 access token를 넣어줌
                     this.$cookies.set("accesstoken", res.data);
                 }
                 //admin id로 모든 멤버 아이디 불러오기
                 axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.id}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
                 .then(res =>{
-                    //로그인 정보 및 센서 데이터 쿠키에 저장
+                    //로그인 정보 및 memberList 데이터 쿠키에 저장
                     this.$cookies.set("adminId", this.id);
                     this.$cookies.set("login", "login");
                     this.$cookies.set("members", JSON.stringify(res.data));
@@ -57,6 +58,7 @@ export default {
                     EventBus.$emit('login', true);
                     EventBus.$emit('admin', true);
                     EventBus.$emit('members', res.data);
+                    //admin페이지로 이동
                     this.$router.push('admin/'+this.id);
                 })
             })

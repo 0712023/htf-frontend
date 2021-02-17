@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import UpdateMember from "./Updates/UpdateMember";
+import UpdateMember from "./Modal/UpdateMember";
 import UpdateMachine from "./Updates/UpdateMachine";
 import EventBus from "../store/Eventbus";
 export default {

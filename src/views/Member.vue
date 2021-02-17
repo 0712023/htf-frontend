@@ -30,18 +30,22 @@ export default {
         };
     },
     created:function(){
+        //2초에 한번씩 실행
         this.dashboardInterval = setInterval(()=>{
-                for(let index in this.mchList){
-                    axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId})
-                    .then(res =>{
-                        this.$set(this.sensorDataStore, this.mchList[index].mchId, res.data.value)
-                    })
-                }
-                console.log(this.sensorDataStore)
+            //모든 machine들의 최신 데이터를 backend server에 요청
+            for(let index in this.mchList){
+                axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId})
+                .then(res =>{
+                    //반환받은 데이터의 value값을 sensorDataStore에 저장 (key:mchId, value:data.value)
+                    this.$set(this.sensorDataStore, this.mchList[index].mchId, res.data.value)
+                })
+            }
+            console.log(this.sensorDataStore)
             }, 2000);
     },
     destroyed() {
-      clearInterval(this.dashboardInterval);
+        //페이지 이동시 interval 종료
+        clearInterval(this.dashboardInterval);
     },
 }
 </script>

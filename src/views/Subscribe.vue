@@ -64,17 +64,22 @@ export default {
   },
   methods: {
     UpdateMember() {
+      //backend server로 멤버의 rank를 basic으로 update 요청
       axios.post(`${this.$store.state.BACK_SERVER}/updateMemberRank`,{ memId: this.id, memRank: 'basic' })
       .then(() => {
+        //쿠키에 memRank를 basic으로 설정
         this.$cookies.set("memRank", "basic");
         alert("subscribe success!");
       })
     },
     Kakao(rank, price) {
+      //backend server에 선택한 rank에 맞는 가격으로 카카오페이 정기결제 요청
       axios.post(`${this.$store.state.BACK_SERVER}/initSub`,{ memId: this.$cookies.get("memId"), rank: rank, price: price, FRONT_SERVER:this.$store.state.FRONT_SERVER },{headers: {Authorization: `Bearer ${this.$cookies.get("accesstoken")}`,}})
       .then((res) => {
+        //쿠키에 memRank를 요청한 rank로 설정, tid는 카카오페이 approve 요청에 필요하므로 approve 요청 종료시 삭제(KakaoSub.vue)
         this.$cookies.set("memRank", rank);
         this.$cookies.set("tid", res.data["tid"]);
+        //반환받은 데이터 중 카카오페이 결제 창 open
         window.open(res.data["url"]);
       });
     },
