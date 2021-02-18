@@ -33,17 +33,6 @@
     margin: 0;
 }
 
-@media screen and (max-width: 768px) {
-    .table {
-        display: block;
-    }
-}
-
-.row {
-    display: table-row;
-    background: #fff;
-}
-
 .row.header {
     color: #ffffff;
     background: #6c7ae0;
@@ -55,7 +44,7 @@
     }
     .row.header {
         padding: 0;
-        height: 0px;
+        height: 30px;
     }
     .row.header .cell {
         display: none;
