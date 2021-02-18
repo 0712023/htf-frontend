@@ -34,7 +34,7 @@ export default {
         this.dashboardInterval = setInterval(()=>{
             //모든 machine들의 최신 데이터를 backend server에 요청
             for(let index in this.mchList){
-                axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId})
+                axios.post(`${this.$store.state.BACK_SERVER}/getTempMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId})
                 .then(res =>{
                     //반환받은 데이터의 value값을 sensorDataStore에 저장 (key:mchId, value:data.value)
                     this.$set(this.sensorDataStore, this.mchList[index].mchId, res.data.value)
