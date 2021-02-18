@@ -1,13 +1,13 @@
 <template>
-    <div id="standard">
-        Machine List
+    <div id="standard">     
+       <h2>Machine List</h2> <br>
         <table border="1" width="1000">
             <thead> 
             <tr><!--template 쓰는 이유 : v-for 이후에 th에서 v-if사용하기 위해서 -->
                 <template v-for="(val, key) in mchList[0]">
-                    <th width="500" :key="key" v-if="key!='memId'" >{{key}}</th>
+                    <th width="300" :key="key" v-if="key!='memId'" >{{key}}</th>
                 </template>
-                <th>update type</th>
+                <th width="300">update type</th>
             </tr>
             </thead>
             <tbody>

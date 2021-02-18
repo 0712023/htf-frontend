@@ -22,7 +22,6 @@
                 </tr>
             </tbody>
         </table> <br>
-        Update Machine Description
   </div>
 </template>
 
