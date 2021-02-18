@@ -11,7 +11,7 @@
             <div  class="wrap" >
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId" v-show="sensor.type==selectedType || selectedType=='all'">
                     <div>
-                        <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId">{{ sensor.mchId }}</router-link>
+                        <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId+'/type/'+sensor.type" >{{ sensor.mchId }}</router-link>
                         <br><br>name : {{ sensor.description }} 
                         <br><br>mchId : {{ sensor.mchId }}
                         <br><br>value : {{ sensorDataStore[sensor.mchId] }}
@@ -36,13 +36,12 @@ export default {
         return {
             sensorDataStore:{}, 
             selectedType:'all', 
-            notSelected:true,
         }
     },
     created:function(){
         this.dashboardInterval = setInterval(()=>{
                 for(let index in this.mchList){
-                    axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId})
+                    axios.post(`${this.$store.state.BACK_SERVER}/getTempMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId})
                     .then(res =>{
                         this.$set(this.sensorDataStore, this.mchList[index].mchId, res.data.value)
                     })

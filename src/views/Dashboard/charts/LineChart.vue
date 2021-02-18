@@ -25,7 +25,7 @@
     created () {
       this.getDust();
       //처음에 10개 가져오는 것
-      axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId})
+      axios.post(`${this.$store.state.BACK_SERVER}/getDustMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId})
       .then(res =>{
         for (let incomingData of res.data) {
           this.datacollection.labels.push("");
@@ -36,7 +36,7 @@
       })
 
       this.chartInterval = setInterval(()=>{
-        axios.post(`${this.$store.state.BACK_SERVER}/getMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId})
+        axios.post(`${this.$store.state.BACK_SERVER}/getDustMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId})
         .then(response =>{
           this.datacollection.labels.push("");
           for (let dataset of this.datacollection.datasets) {
