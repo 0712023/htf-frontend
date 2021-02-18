@@ -19,7 +19,7 @@ const routes = [{
         component: () => import ('../views/Vendor/Vendor.vue')
     },
     {
-        path: '/sensor/:desc/mchid/:mchId',
+        path: '/sensor/:desc/mchid/:mchId/type/:type',
         name: 'Sensor',
         component: () => import ('../views/Member/Sensor.vue'),
     },

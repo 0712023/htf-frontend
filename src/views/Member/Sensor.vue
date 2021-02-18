@@ -13,10 +13,10 @@
                 <div class="box1" style="color:gray">
                     <LineChart class="chart"/>
                 </div>
-                <div class="box1" style="color:gray">
+                <div class="box1" style="color:gray" v-if="$route.params.type.includes('Temp')">
                     <BarChart class="chart"/>
                 </div>
-                <div class="box1" style="color:gray">
+                <div class="box1" style="color:gray" v-if="$route.params.type.includes('Humid')">
                     <RadarChart class="chart"/>
                 </div>
                 <div class="box1" style="color:gray">
@@ -38,7 +38,8 @@ import BubbleChart from '../Dashboard/charts/BubbleChart'
 import ScatterChart from '../Dashboard/charts/ScatterChart'
 export default {
     props:{
-        sensorName: String
+        sensorName: String,
+        type: String
     },
     watch: {
         $route() {
