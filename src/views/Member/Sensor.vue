@@ -10,7 +10,7 @@
         </div>
         <div style="width:100%;">
             <div  class="wrap">
-                <div class="box1" style="color:gray">
+                <div class="box1" style="color:gray" v-if="$route.params.type.includes('Dust')">
                     <LineChart class="chart"/>
                 </div>
                 <div class="box1" style="color:gray" v-if="$route.params.type.includes('Temp')">
@@ -19,12 +19,12 @@
                 <div class="box1" style="color:gray" v-if="$route.params.type.includes('Humid')">
                     <RadarChart class="chart"/>
                 </div>
-                <div class="box1" style="color:gray">
+                <!-- <div class="box1" style="color:gray">
                     <BubbleChart class="chart"/>
                 </div>
                 <div class="box1" style="color:gray">
                     <ScatterChart class="chart"/>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -34,8 +34,8 @@
 import LineChart from '../Dashboard/charts/LineChart'
 import BarChart from '../Dashboard/charts/BarChart'
 import RadarChart from '../Dashboard/charts/RadarChart'
-import BubbleChart from '../Dashboard/charts/BubbleChart'
-import ScatterChart from '../Dashboard/charts/ScatterChart'
+// import BubbleChart from '../Dashboard/charts/BubbleChart'
+// import ScatterChart from '../Dashboard/charts/ScatterChart'
 export default {
     props:{
         sensorName: String,
@@ -47,7 +47,8 @@ export default {
         }
     },
     components:{
-        LineChart,BarChart,RadarChart,BubbleChart,ScatterChart
+        LineChart,BarChart,RadarChart,
+        // BubbleChart,ScatterChart,
     },
     computed:{
         memId:function(){
