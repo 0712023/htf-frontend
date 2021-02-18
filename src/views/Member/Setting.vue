@@ -1,8 +1,7 @@
 <template>
   <div id="standard">
-    <modal name="UpdateMember"><UpdateMember /></modal> <br>
     <div>
-      <button @click="modalshow">Update Password</button> <br>
+      <UpdateMember />
     </div>
     <div>
       <UpdateMachine />
@@ -11,7 +10,7 @@
 </template>
 
 <script>
-import UpdateMember from "../Modal/UpdateMember";
+import UpdateMember from "../Updates/UpdateMember";
 import UpdateMachine from "../Updates/UpdateMachine";
 import EventBus from "../../store/Eventbus";
 export default {
@@ -20,7 +19,7 @@ export default {
     this.$modal.hide("UpdateMember");
   },
   components: {
-    UpdateMember, UpdateMachine
+    UpdateMachine, UpdateMember
   },
   created: function () {
     EventBus.$on("modal", () => this.$modal.hide("UpdateMember"));

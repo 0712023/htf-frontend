@@ -101,7 +101,13 @@ export default {
     EventBus.$on('member', ()=>{this.updateMemId();this.updateMembers()});
     EventBus.$on('admin', this.updateAdminId);
     EventBus.$on('mchList', this.updatemchList);
-    EventBus.$on('modal', ()=>{this.getMachineListByMemId();this.getMachineListByVendorId();});
+    EventBus.$on('modal', ()=>{
+      if(this.$cookies.get("memId")!= null){
+        this.getMachineListByMemId();
+      } else {
+        this.getMachineListByVendorId();
+      }
+    });
     EventBus.$on('kakao', this.setKakaoToken);
   },
   methods:{
@@ -134,8 +140,9 @@ export default {
     getMachineListByMemId(){
       axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookies.get("memId")})
       .then((res)=>{
-          this.$cookies.set("mchList", JSON.stringify(res.data))
-          this.mchList = res.data
+        console.log(res.data);
+        this.$cookies.set("mchList", JSON.stringify(res.data))
+        this.mchList = res.data;
       })
     },
     getMachineListByVendorId(){
