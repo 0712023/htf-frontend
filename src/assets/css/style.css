@@ -75,6 +75,7 @@ table {
     -webkit-backdrop-filter: blur( 6.5px);
     border-radius: 10px;
     opacity: 100%;
+    overflow: scroll;
 }
 
 tr:first-child th:first-child {

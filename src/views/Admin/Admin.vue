@@ -5,6 +5,9 @@
             <h3>Number of Members : {{members.length}}</h3>
           </div>
           <div class="wrap">
+            <div class="box1">
+              <ChatModule/>
+            </div>
             <!-- <div class="top-long-box" style="grid-column: 1 / span 3;"></div> -->
             <div v-for="(value, index) in members" :key="index">
               <div class="box1" @click="toUser(value.memId)">
@@ -24,7 +27,12 @@
 <script type="module">
 import axios from 'axios';
 import EventBus from '../../store/Eventbus';
+import ChatModule from '../ChatModule'
+
 export default {
+  components: {
+    ChatModule,
+  },
   created:function(){
     //MemberRegister modal이 가려지면(즉, 새로운 member를 등록했을 경우) 새로운 member List를 받아옴
     EventBus.$on('modal',this.getMember);

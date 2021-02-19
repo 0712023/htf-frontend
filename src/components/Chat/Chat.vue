@@ -153,11 +153,14 @@ export default {
   left: 0;
   top: 50px;
   bottom: 0;
-  width: 260px;
+  width: 35%;
   overflow-x: hidden;
 }
 
 .right-panel {
+  width: 65%;
+  height: 100%;
+  float: right;
   margin-left: 260px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="chatmodule">
     <select-username
       v-if="!usernameAlreadySelected"
       @input="onUsernameSelection"
@@ -14,7 +14,7 @@ import Chat from "../components/Chat/Chat";
 import socket from "../socket";
 
 export default {
-  name: "App",
+  name: "ChatModule",
   components: {
     Chat,
     SelectUsername,
@@ -72,7 +72,9 @@ body {
   src: url("/fonts/Lato-Regular.ttf");
 }
 
-#app {
+#chatmodule {
+  height: 100%;
+  overflow-y: scroll;
   font-family: Lato, Arial, sans-serif;
   font-size: 14px;
 }
