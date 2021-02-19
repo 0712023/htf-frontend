@@ -16,6 +16,7 @@ export default {
             Eventbus.$emit('admin', false);
             Eventbus.$emit('vendor', false);
             localStorage.removeItem('sessionID');
+            localStorage.removeItem('loglevel:webpack-dev-server');
             this.$router.push('/');
         }
     }
