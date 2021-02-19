@@ -15,6 +15,7 @@ export default {
             Eventbus.$emit('member', false);
             Eventbus.$emit('admin', false);
             Eventbus.$emit('vendor', false);
+            localStorage.removeItem('sessionID');
             this.$router.push('/');
         }
     }

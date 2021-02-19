@@ -3,7 +3,7 @@ const Redis = require("ioredis");
 const redisClient = new Redis();
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: "http://localhost:8081",
+    origin: "http://localhost:8080",
   },
   adapter: require("socket.io-redis")({
     pubClient: redisClient,
@@ -38,8 +38,8 @@ io.use(async (socket, next) => {
   if (!username) {
     return next(new Error("invalid username"));
   }
-  socket.sessionID = randomId();
-  socket.userID = randomId();
+  socket.sessionID = username;
+  socket.userID = username;
   socket.username = username;
   next();
 });
