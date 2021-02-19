@@ -12,6 +12,7 @@
                     <th width="300" :key="key" v-if="key!='memId'" >{{key}}</th>
                 </template>
                 <th width="300">update type</th>
+                <th width="300">delete machine</th>
             </tr>
             </thead>
             <tbody>
@@ -21,6 +22,7 @@
                         <td :key="key" v-if="key=='vendorId'">{{val.vendorId}}</td>
                     </template>
                     <td><button @click="updateMachineType(machine.type, machine.mchId)">update</button></td>
+                    <td><button @click="deleteMachine(machine.mchId)">delete</button></td>
                 </tr>
             </tbody>
         </table> 
@@ -62,7 +64,7 @@ export default {
         },
         getMachineList(){
             //backend server에 vendorId를 가진 모든 machine List를 요청
-            axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookies.get("vendorId")})
+            axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`, {"vendorId":this.$cookies.get("vendorId")})
             .then((res)=>{
                 //반환받은 machine List를 저장
                 this.mchList = res.data;
@@ -74,6 +76,13 @@ export default {
             this.type = type;
             this.$modal.show("UpdateMachineType", {"type":type});
         },
+        deleteMachine(mchId){
+            axios.post(`${this.$store.state.BACK_SERVER}/deleteMachineByMchId`, {mchId:mchId})
+            .then(()=>{
+                alert("delete machine "+mchId);
+                this.getMachineList();
+            })
+        }
     }
 }
 </script>
