@@ -17,7 +17,7 @@
         <li>
           <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId+'/type/'+sensor.type"> - {{ sensor.description }}</router-link>
         </li>
-        <li v-if="!adminId">
+        <li v-if="memRank == 'enterprise'">
           <router-link to="/three">Three</router-link>
         </li>
         <li v-if="!adminId">
@@ -90,15 +90,16 @@ export default {
       memId:this.$cookies.get("memId"),
       adminId:this.$cookies.get("adminId"),
       vendorId:this.$cookies.get("vendorId"),
-      mchList:JSON.parse(this.$cookies.get("mchList")),
-      members:JSON.parse(this.$cookies.get("members")),
+      mchList:[],
+      members:[],
       kakaoToken:this.$cookies.get("kakaoToken"),
+      memRank:this.$cookies.get("memRank"),
     }
   },
   created:function(){
     EventBus.$on('login', this.updateLogin);
     EventBus.$on('vendor', this.updateVendorId);
-    EventBus.$on('member', ()=>{this.updateMemId();this.updateMembers()});
+    EventBus.$on('member', (memId)=>{this.updateMemId(memId);});
     EventBus.$on('admin', this.updateAdminId);
     EventBus.$on('mchList', this.updatemchList);
     EventBus.$on('modal', ()=>{
@@ -109,22 +110,25 @@ export default {
       }
     });
     EventBus.$on('kakao', this.setKakaoToken);
+    EventBus.$on('toggle', ()=>{
+      if(this.memId){
+        this.getMachineListByMemId();
+      } else if(this.adminId){
+        this.getMemberListByAdid();
+      } else if(this.vendorId){
+        this.getMachineListByVendorId();
+      }
+    });
   },
   methods:{
     updateLogin:function(s){
       this.login = s;
     },
-    updatemchList:function(s){
-      this.mchList = s;
-    },
-    updateMembers:function(){
-      this.members = JSON.parse(this.$cookies.get("members"));
-    },
     setKakaoToken:function(s){
       this.kakaoToken = s;
     },
-    updateMemId:function(){
-      this.memId = this.$cookies.get("memId");
+    updateMemId:function(memId){
+      this.memId = memId;
     },
     updateAdminId:function(){
       this.adminId = this.$cookies.get("adminId");
@@ -138,25 +142,26 @@ export default {
       this.memId = false;
     },
     getMachineListByMemId(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookies.get("memId")})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.memId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then((res)=>{
-        console.log(res.data);
-        this.$cookies.set("mchList", JSON.stringify(res.data))
         this.mchList = res.data;
       })
     },
+    getMemberListByAdid(){
+      axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookies.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+      .then((res) =>{
+        this.members = res.data;
+      })
+    },
     getMachineListByVendorId(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookies.get("vendorId")})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`,{"vendorId":this.$cookies.get("vendorId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then((res)=>{
-          this.$cookies.set("mchList", JSON.stringify(res.data))
-          this.mchList = res.data
+        this.mchList = res.data
       })
     },
     toUser (memberId) {
-      console.log(memberId);
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then(res =>{
-        this.$cookies.set("mchList", JSON.stringify(res.data));
         this.$cookies.set("memId", memberId);
         EventBus.$emit('mchList', res.data);
         EventBus.$emit('member', true);

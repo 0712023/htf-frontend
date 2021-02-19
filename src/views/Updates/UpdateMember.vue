@@ -55,7 +55,7 @@ export default {
         },
         getMemberData(){
             this.$modal.hide("UpdateMember");   
-            axios.post(`${this.$store.state.BACK_SERVER}/getMember`, {"memId":this.$cookies.get("memId")})
+            axios.post(`${this.$store.state.BACK_SERVER}/getMember`, {"memId":this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
             .then((res)=>{
                 let resJson = {};
                 for(let key of this.dataColumn){

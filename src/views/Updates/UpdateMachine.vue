@@ -35,7 +35,11 @@ export default {
     UpdateMachine
   },
   mounted() {
-    this.mchList = this.mchList.concat(JSON.parse(this.$cookies.get("mchList")))
+    axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+        .then((res)=>{
+            console.log(res.data);
+            this.mchList = res.data;
+        })
   },
   data() {
     return {
@@ -46,21 +50,26 @@ export default {
   },
   methods: {
     updateMachineDesc(desc, mchIdInPut) {
-      this.mchId = mchIdInPut;
-      this.description = desc;
-      this.$modal.show("UpdateMachine", {"desc":desc});
+            if(this.$cookies.get("memRank") != 'basic'){
+              this.mchId = mchIdInPut;
+              this.description = desc;
+              this.$modal.show("UpdateMachine", {"desc":desc});
+            } else {
+              alert("basic grade can't update machine description");
+              this.$router.push("/subscribe/");
+            }
     },
     getMachineList(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId":this.$cookies.get("memId")})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId":this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then((res)=>{
           this.$cookies.set("mchList", JSON.stringify(res.data))
           this.mchList = res.data
       })
     },
     deleteMachine(mchId){
-      axios.post(`${this.$store.state.BACK_SERVER}/deleteMeasurebyMchId`, {"mchId":mchId})
+      axios.post(`${this.$store.state.BACK_SERVER}/deleteMeasurebyMchId`, {"mchId":mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then(()=>{
-        axios.post(`${this.$store.state.BACK_SERVER}/deleteMachine`, {"mchId":mchId})
+        axios.post(`${this.$store.state.BACK_SERVER}/deleteMachine`, {"mchId":mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then(()=>{
           alert("delete machine "+mchId);
           this.getMachineList();

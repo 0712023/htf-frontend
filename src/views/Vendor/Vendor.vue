@@ -27,13 +27,15 @@
 <script>
 import axios from 'axios'
 export default {
-    computed:{
-        mchList(){
-            return JSON.parse(this.$cookies.get("mchList"));
-        },
+    mounted(){
+        axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`, {"vendorId": this.$cookies.get("vendorId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+        .then((res)=>{
+            this.mchList = res.data;
+        })
     },
     data(){
         return {
+            mchList:null,
             sensorDataStore:{}, 
             selectedType:'all', 
         }
@@ -41,7 +43,7 @@ export default {
     created:function(){
         this.dashboardInterval = setInterval(()=>{
                 for(let index in this.mchList){
-                    axios.post(`${this.$store.state.BACK_SERVER}/getTempMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId})
+                    axios.post(`${this.$store.state.BACK_SERVER}/getTempMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
                     .then(res =>{
                         this.$set(this.sensorDataStore, this.mchList[index].mchId, res.data.value)
                     })

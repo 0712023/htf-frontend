@@ -19,7 +19,7 @@ export default {
         axios.post(`https://kauth.kakao.com/oauth/token`, params)
         .then((res)=>{
             //반환받은 카카오 토큰 정보를 다시 포장하여 backend의 member DB의 token을 update
-            axios.post(`${this.$store.state.BACK_SERVER}/updateMemberToken`, {memId:this.$cookies.get("memId"), kakaoToken:res.data.access_token})
+            axios.post(`${this.$store.state.BACK_SERVER}/updateMemberToken`, {memId:this.$cookies.get("memId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
             .then((res)=>{
                 //쿠키에 kakaoToken 설정함으로써 카카오토큰 가입하라는 배너를 보이지 않게 함
                 this.$cookies.set("kakaoToken", res.data);

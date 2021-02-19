@@ -20,7 +20,7 @@ export default {
     methods:{
         updateMachineType() {
             //backend server로 machine DB의 type을 props로 전달받은 type으로 update
-            axios.post(`${this.$store.state.BACK_SERVER}/updateMachineType`,{mchId: this.mchIdProps, type: this.newType})
+            axios.post(`${this.$store.state.BACK_SERVER}/updateMachineType`,{mchId: this.mchIdProps, type: this.newType}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
             .then(() => {
                 alert("type update success!");
                 //UpdateMachineType modal을 가림

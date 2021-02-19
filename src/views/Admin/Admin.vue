@@ -33,19 +33,25 @@ export default {
   components: {
     ChatModule,
   },
+  mounted(){
+    axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookies.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+    .then((res) =>{
+      this.members = res.data;
+    })
+  },
   created:function(){
     //MemberRegister modal이 가려지면(즉, 새로운 member를 등록했을 경우) 새로운 member List를 받아옴
     EventBus.$on('modal',this.getMember);
   },
   data: function () {
     return {
-      members:JSON.parse(this.$cookies.get("members"))
+      members:null
     };
   },
   methods: {
     toUser (memId) {
       //member box를 클릭했을 경우 해당 member의 machine List를 불러옴
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memId})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then(res =>{
         //memId, 반환받은 machine List를 쿠키에 저장
         this.$cookies.set("mchList", JSON.stringify(res.data));
@@ -59,7 +65,7 @@ export default {
     },
     getMember(){
       //backend server로 AdminId에 속한 Member List 요청
-      axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookies.get("adminId")})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookies.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then(res =>{
         //반환받은 Member List 쿠키에 저장
         this.$cookies.set("members", JSON.stringify(res.data))

@@ -63,7 +63,7 @@ export default {
   methods: {
     UpdateMember() {
       //backend server로 멤버의 rank를 basic으로 update 요청
-      axios.post(`${this.$store.state.BACK_SERVER}/updateMemberRank`,{ memId: this.id, memRank: 'basic' })
+      axios.post(`${this.$store.state.BACK_SERVER}/updateMemberRank`,{ memId: this.id, memRank: 'basic' }, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then(() => {
         //쿠키에 memRank를 basic으로 설정
         this.$cookies.set("memRank", "basic");

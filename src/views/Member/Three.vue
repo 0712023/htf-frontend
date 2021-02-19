@@ -13,25 +13,27 @@ import * as OrbitControls from "../../assets/js/OrbitControls.module.js";
 // import {STLLoader} from '../assets/js/STLLoader.js';
 import { GLTFLoader } from "../../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
-
+import axios from 'axios';
 export default {
   data: function () {
     return {
       controls: 1,
       objects: [],
-      mchList: this.$cookies.get("mchList"),
+      mchList: null
     };
   },
   mounted() {
-    this.initThree();
+    axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+    .then((res)=>{
+      this.initThree(res.data);
+    })
   },
   methods: {
-    initThree() {
+    initThree(test) {
       let FRONT_SEVER = this.$store.state.FRONT_SERVER;
       let raycaster = new THREE.Raycaster();
       let mouse = new THREE.Vector2();
       const objects = [];
-      let test = JSON.parse(this.mchList);
       console.log(test);
       const scene = new THREE.Scene();
       scene.background = new THREE.Color("#eee");

@@ -19,13 +19,16 @@
 <script>
 import axios from 'axios'
 export default {
-    computed:{
-        mchList(){
-            return JSON.parse(this.$cookies.get("mchList"));
-        },
+    mounted(){
+        axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+        .then((res)=>{
+            console.log(res.data);
+            this.mchList = res.data;
+        })
     },
     data(){
         return {
+            mchList:null,
             sensorDataStore:{},
         };
     },
@@ -34,7 +37,7 @@ export default {
         this.dashboardInterval = setInterval(()=>{
             //모든 machine들의 최신 데이터를 backend server에 요청
             for(let index in this.mchList){
-                axios.post(`${this.$store.state.BACK_SERVER}/getTempMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId})
+                axios.post(`${this.$store.state.BACK_SERVER}/getTempMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
                 .then(res =>{
                     //반환받은 데이터의 value값을 sensorDataStore에 저장 (key:mchId, value:data.value)
                     this.$set(this.sensorDataStore, this.mchList[index].mchId, res.data.value)

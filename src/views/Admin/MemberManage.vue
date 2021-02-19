@@ -54,7 +54,7 @@ export default {
         },
         getMemberList(){
             //backend server에 member List를 요청
-            axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId":this.$cookies.get("adminId")})
+            axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId":this.$cookies.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
             .then((res)=>{
                 //반환받은 member List를 데이터에 저장
                 this.memberList = res.data;
@@ -62,7 +62,7 @@ export default {
         },
         deleteMember(memId){
             //backend server에 member를 삭제시킴
-            axios.post(`${this.$store.state.BACK_SERVER}/deleteMember`, {"memId":memId})
+            axios.post(`${this.$store.state.BACK_SERVER}/deleteMember`, {"memId":memId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
             .then(()=>{
                 alert("goodbye "+memId);
                 this.getMemberList();
