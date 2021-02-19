@@ -5,6 +5,11 @@ const io = require("socket.io")(httpServer, {
   },
 });
 
+var mysql_dbc = require('./db/db_con')();
+var connection = mysql_dbc.init();
+mysql_dbc.test_open(connection);
+
+
 const crypto = require("crypto");
 const randomId = () => crypto.randomBytes(8).toString("hex");
 
@@ -12,6 +17,7 @@ const { InMemorySessionStore } = require("./sessionStore");
 const sessionStore = new InMemorySessionStore();
 
 const { InMemoryMessageStore } = require("./messageStore");
+const { timeStamp } = require("console");
 const messageStore = new InMemoryMessageStore();
 
 io.use((socket, next) => {
@@ -55,32 +61,86 @@ io.on("connection", (socket) => {
   // fetch existing users
   const users = [];
   const messagesPerUser = new Map();
-  messageStore.findMessagesForUser(socket.userID).forEach((message) => {
-    const { from, to } = message;
-    const otherUser = socket.userID === from ? to : from;
-    if (messagesPerUser.has(otherUser)) {
-      messagesPerUser.get(otherUser).push(message);
-    } else {
-      messagesPerUser.set(otherUser, [message]);
-    }
-  });
-  sessionStore.findAllSessions().forEach((session) => {
-    users.push({
-      userID: session.userID,
-      username: session.username,
-      connected: session.connected,
-      messages: messagesPerUser.get(session.userID) || [],
-    });
-  });
-  socket.emit("users", users);
 
-  // notify existing users
+  connection.query(`SELECT * FROM messages WHERE to_id='`+socket.userID+`' OR from_id='`+socket.userID+`'`,(err, rows)=>{
+    console.log(err);
+    rows.forEach((messageRow)=>{
+      const message = {content: messageRow.content, from: messageRow.from_id, to: messageRow.to_id}
+      const { from, to } = message;
+      const otherUser = socket.userID === from ? to : from;
+      if (messagesPerUser.has(otherUser)) {
+        messagesPerUser.get(otherUser).push(message);
+      } else {
+        messagesPerUser.set(otherUser, [message]);
+      }
+
+    });
+    console.log(messagesPerUser.keys());
+    console.log(Array.from(messagesPerUser.keys()));
+    console.log(sessionStore.findAllSessions());
+    
+    Array.from(messagesPerUser.keys()).forEach((userID) => {
+      let connectedStatus = false;
+      try {
+        connectedStatus = sessionStore.findAllSessions().find(element => element.userID == userID).connected;
+      } catch (error) {error}
+      users.push({
+        userID: userID,
+        username: userID,
+        connected: connectedStatus,
+        messages: messagesPerUser.get(userID) || [],
+      });
+    });
+    
+    // sessionStore.findAllSessions().forEach((session) => {
+    //   users.push({
+    //     userID: session.userID,
+    //     username: session.username,
+    //     connected: session.connected,
+    //     messages: messagesPerUser.get(session.userID) || [],
+    //   });
+    // });
+
+    socket.emit("users", users);
+  })
+
   socket.broadcast.emit("user connected", {
     userID: socket.userID,
     username: socket.username,
     connected: true,
-    messages: [],
+    // messages: messagesPerUser.get(socket.userID), //여기가 비어서 시작하는게 근본적인 문제
   });
+
+  //여기가 메세지 로딩부분
+  // messageStore.findMessagesForUser(socket.userID).forEach((message) => {
+  //   const { from, to } = message;
+  //   console.log(message);
+  //   const otherUser = socket.userID === from ? to : from;
+  //   if (messagesPerUser.has(otherUser)) {
+  //     messagesPerUser.get(otherUser).push(message);
+  //   } else {
+  //     messagesPerUser.set(otherUser, [message]);
+  //   }
+  // });
+
+
+  // sessionStore.findAllSessions().forEach((session) => {
+  //   users.push({
+  //     userID: session.userID,
+  //     username: session.username,
+  //     connected: session.connected,
+  //     messages: messagesPerUser.get(session.userID) || [],
+  //   });
+  // });
+  // socket.emit("users", users);
+
+  // notify existing users
+  // socket.broadcast.emit("user connected", {
+  //   userID: socket.userID,
+  //   username: socket.username,
+  //   connected: true,
+  //   messages: [],
+  // });
 
   // forward the private message to the right recipient (and to other tabs of the sender)
   socket.on("private message", ({ content, to }) => {
@@ -90,6 +150,13 @@ io.on("connection", (socket) => {
       to,
     };
     socket.to(to).to(socket.userID).emit("private message", message);
+
+
+    //메세지 저장부분 - 여길 db 연결 링크로 사용하면 된다.
+    connection.query(`INSERT INTO messages (content, from_id, to_id, created) VALUES ('`+content+`','`+socket.userID+`','`+to+`',`+Date.now()+`)`,(err, rows)=>{
+      console.log(err);
+      console.log(rows);
+    })
     messageStore.saveMessage(message);
   });
 
