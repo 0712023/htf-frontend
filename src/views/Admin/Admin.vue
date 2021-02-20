@@ -5,6 +5,9 @@
             <h3>Number of Members : {{members.length}}</h3>
           </div>
           <div class="wrap">
+            <div class="box1">
+              <PieChart :memberlist='members'/>
+            </div>
             <!-- <div class="top-long-box" style="grid-column: 1 / span 3;"></div> -->
             <div v-for="(value, index) in members" :key="index">
               <div class="box1" @click="toUser(value.memId)">
@@ -24,8 +27,12 @@
 <script type="module">
 import axios from 'axios';
 import EventBus from '../../store/Eventbus';
+import PieChart from '../Dashboard/charts/PieChart';
 
 export default {
+  components: {
+    PieChart
+  },
   mounted(){
     axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookies.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
     .then((res) =>{

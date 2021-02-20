@@ -25,12 +25,6 @@
     mounted () {
       this.fillData();
     },
-    created() {
-
-    },
-    destroyed() {
-
-    },
     methods: {
       typeCounter (list, finder) {
         let count = 0;

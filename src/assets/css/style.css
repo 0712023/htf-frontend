@@ -294,6 +294,13 @@ input {
     max-width: 28vh;
 }
 
+#pie-chart {
+    height: 28vw;
+    width: 28vw;
+    max-height: 28vh;
+    max-width: 28vh;
+}
+
 /*sidebar*/
 
 .slide-enter-active,

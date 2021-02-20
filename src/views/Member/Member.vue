@@ -1,6 +1,9 @@
 <template>
     <div>
         <div style="width:100%;">
+            <div class="top-long-box" style="height: 50px">
+                좋은하루 되세요!
+            </div>
             <div  class="wrap" >
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
                     <div>

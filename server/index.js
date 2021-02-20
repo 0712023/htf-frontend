@@ -68,7 +68,7 @@ io.on("connection", (socket) => {
 
     });
 
-    //멤버의 경우에는 해당 adId의 
+    //멤버의 경우에는 해당 adId의 멤버들을 불러오고 멤버 id로 된 방에 조인하는게 맞지 않을까?
     Array.from(messagesPerUser.keys()).forEach((userID) => {
 
       let connectedStatus = false;
