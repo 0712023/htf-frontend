@@ -1,5 +1,6 @@
 <template>
   <div class="small">
+    <h3>Machines by type</h3>
     <Doughnut-chart :chart-data="datacollection"></Doughnut-chart>
   </div>
 </template>

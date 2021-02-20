@@ -19,7 +19,7 @@
         <li>
           <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId+'/type/'+sensor.type"> - {{ sensor.description }}</router-link>
         </li>
-        <li v-if="memRank == 'enterprise'">
+        <li v-if="this.$cookies.get('memRank') == 'enterprise'">
           <router-link to="/three">Three</router-link>
         </li>
         <li v-if="!adminId">
