@@ -2,10 +2,17 @@
     <div>
         <div style="width:100%;">
             <div class="top-long-box" style="height: 50px">
-                좋은하루 되세요!
+                좋은하루 되세요! 
+                <select v-model="selectedType">
+                    <option value="all" selected>all</option>
+                    <option :value="typeSelector" v-for="typeSelector in new Set(mchList.map(v => v.type))" :key='typeSelector'>{{typeSelector}}</option>
+                </select>
             </div>
             <div  class="wrap" >
-                <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
+                <div class="box1">
+                    <DoughnutChart :machineList='mchList'/>
+                </div>
+                <div class="box1" v-for="sensor in mchList" :key="sensor.mchId" v-show="sensor.type==selectedType || selectedType=='all'">
                     <div>
                         <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId + '/type/' + sensor.type">{{ sensor.description }}</router-link>
                         <hr><br>name : {{ sensor.description }} 
@@ -21,8 +28,12 @@
 
 <script>
 import axios from 'axios'
+import DoughnutChart from '../Dashboard/charts/DoughnutChart'
 
 export default {
+    components: {
+        DoughnutChart,
+    },
     mounted(){
         axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then((res)=>{
@@ -34,6 +45,7 @@ export default {
         return {
             mchList:null,
             sensorDataStore:{},
+            selectedType:'all',
         };
     },
     created:function(){
