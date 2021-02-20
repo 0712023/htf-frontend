@@ -119,9 +119,10 @@ ul.sidebar-panel-nav>li>a {
     padding-bottom: 0.5em;
     transition: 0.5s;
 }
+
 ul.sidebar-panel-nav>li>a:hover {
-    background-color: #969696;
-    transform: scale(1.1,1.1);
+    background-color: #257cdf;
+    transform: scale(1.1, 1.1);
 }
 
 .right-message-panel {
@@ -137,6 +138,7 @@ ul.sidebar-panel-nav>li>a:hover {
     transition: 0.5s;
     opacity: 30%;
 }
+
 .right-message-panel:hover {
     right: -10%;
     opacity: 100%;
@@ -167,7 +169,7 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid #ebebeb;
+    border-bottom: 1px solid #EBEBEB;
     margin-top: 25px;
     margin-bottom: 25px;
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37);
@@ -179,11 +181,12 @@ button:hover {
     background: linear-gradient( 45deg, rgb(255, 255, 255) 0%, rgb(250, 252, 255) 48%, rgba(255, 255, 255) 100%);
     transition: 0.5s;
 }
+
 .top-long-box:hover {
     border-width: 1px;
     border-color: rgb(168, 168, 168);
     background: rgb(231, 231, 231);
-    transform: scale(1.02,1.02);
+    transform: scale(1.02, 1.02);
     opacity: 80%;
 }
 
@@ -207,6 +210,7 @@ button:hover {
     opacity: 50%;
     background: linear-gradient( 45deg, rgb(255, 255, 255) 0%, rgb(250, 252, 255) 48%, rgba(255, 255, 255) 100%);
 }
+
 
 /* User Page */
 
@@ -234,7 +238,7 @@ button:hover {
     border-width: 1px;
     border-color: rgb(168, 168, 168);
     background: rgb(242, 248, 255);
-    transform: scale(1.1,1.1);
+    transform: scale(1.1, 1.1);
     opacity: 80%;
 }
 
@@ -300,6 +304,7 @@ input {
     max-height: 25vh;
     max-width: 25vh;
 }
+
 
 /*sidebar*/
 

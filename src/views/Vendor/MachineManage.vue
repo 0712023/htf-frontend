@@ -2,7 +2,7 @@
     <div id="standard">     
        <h2>Machine List</h2> <br>
        <div class="top-long-box">
-            <font size="2em">
+            <font size="3em">
                 type 변경시 명칭은 'Temp', 'Humid', 'Dust' 등의 앞부분과 / 'Sensor', 'Machine' 등의 뒷부분을 통일하여 변경해주시기 바랍니다. <br>
                 <br><br>
                 ex) TempSensor, DustMachine, DustFan
