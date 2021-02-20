@@ -11,6 +11,12 @@
       <ChatModule/>
     </div>
     <Sidebar>
+      <div class="userProfile">
+        <div>
+          Welcome! <br>
+          {{currentUser}}
+        </div>
+      </div>
       <!-- member의 기본 관리 메뉴 -->
       <ul class="sidebar-panel-nav" v-if="memId">
         <li>
@@ -91,12 +97,17 @@ export default {
       memRank:this.$cookies.get("memRank"),
     }
   },
+  computed: {
+    currentUser: function() {
+      return this.userName()
+    },
+  },
   created:function(){
     EventBus.$on('login', this.updateLogin);
     EventBus.$on('vendor', this.updateVendorId);
     EventBus.$on('member', (memId)=>{this.updateMemId(memId);});
     EventBus.$on('admin', this.updateAdminId);
-    EventBus.$on('mchList', this.updatemchList);
+    EventBus.$on('mchList', (mchList)=>{this.updatemchList(mchList)});
     EventBus.$on('modal', ()=>{
       if(this.$cookies.get("memId")!= null){
         this.getMachineListByMemId();
@@ -162,6 +173,14 @@ export default {
         EventBus.$emit('member', true);
         this.$router.push('../member/'+memberId);
       })
+    },
+    userName() {
+      if(this.adminId) {
+        return "Admin - " + this.adminId;
+      } else if (this.memId) {
+        return "Member - " + this.memId;
+      }
+      return "Vendor - " + this.vendorId;
     },
   }
 };
