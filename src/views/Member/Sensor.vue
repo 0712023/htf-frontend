@@ -4,19 +4,19 @@
             <div  class="wrap">
                 <div class="box1" style="color:gray" v-if="memId!=null">
                     <div>
-                        this sensor is : {{$route.params.desc}} <br><br>
-                        type : {{$route.params.type}} <br><br>
+                        this sensor is : {{$route.params.desc}} <br><hr>
+                        type : {{$route.params.type}} <br><hr>
                         <div>
-                            go back to : <router-link :to="'/member/'+memId">{{memId}}</router-link> <br>
+                            <router-link :to="'/member/'+memId">go back to : {{memId}}</router-link> <br>
                         </div>
                     </div>
                 </div>
                 <div class="box1" style="color:gray" v-if="vendorId!=null">
                     <div>
-                        this sensor is : {{$route.params.desc}} <br><br>
-                        type : {{$route.params.type}} <br><br>
+                        this sensor is : {{$route.params.desc}} <br><hr>
+                        type : {{$route.params.type}} <br><hr>
                         <div>
-                            go back to : <router-link :to="'/vendor/'+vendorId">{{vendorId}}</router-link> <br>
+                            <router-link :to="'/vendor/'+vendorId">go back to : {{vendorId}}</router-link> <br>
                         </div>
                     </div>
                 </div>
