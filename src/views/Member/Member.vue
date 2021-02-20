@@ -6,6 +6,7 @@
                     <div>
                         <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId + '/type/' + sensor.type">{{ sensor.description }}</router-link>
                         <br><br>name : {{ sensor.description }} 
+                        <br><br>type : {{ sensor.type }}
                         <br><br>mchId : {{ sensor.mchId }}<span v-if="sensor.type.includes('Temp')"><br><br>Temparature : {{ sensorDataStore[sensor.mchId] }} °C</span>
                         <br><br>vendorId : {{ sensor.vendorId.vendorId }}
                     </div>
@@ -17,6 +18,7 @@
 
 <script>
 import axios from 'axios'
+
 export default {
     mounted(){
         axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})

@@ -9,6 +9,9 @@
         </div>
         <div style="width:100%;">
             <div  class="wrap" >
+                <div class="box1">
+                    <DoughnutChart :machineList='mchList'/>
+                </div>
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId" v-show="sensor.type==selectedType || selectedType=='all'">
                     <div>
                         <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId+'/type/'+sensor.type" >{{ sensor.mchId }}</router-link>
@@ -25,7 +28,12 @@
 
 <script>
 import axios from 'axios'
+import DoughnutChart from '../Dashboard/charts/DoughnutChart'
+
 export default {
+    components: {
+        DoughnutChart,
+    },
     mounted(){
         axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`, {"vendorId": this.$cookies.get("vendorId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then((res)=>{

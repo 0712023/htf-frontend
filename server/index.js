@@ -68,8 +68,9 @@ io.on("connection", (socket) => {
 
     });
 
-    //해당 userID의 경우도 추가하는 걸 추가해야함
+    //멤버의 경우에는 해당 adId의 
     Array.from(messagesPerUser.keys()).forEach((userID) => {
+
       let connectedStatus = false;
       try {
         connectedStatus = sessionStore.findAllSessions().find(element => element.userID == userID).connected;
@@ -80,8 +81,9 @@ io.on("connection", (socket) => {
         connected: connectedStatus,
         messages: messagesPerUser.get(userID) || [],
       });
+
     });
-    // 오른쪽에 사이드 채팅바 튀어나오는 걸로. 
+
     socket.emit("users", users);
   })
 

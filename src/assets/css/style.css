@@ -143,7 +143,6 @@ ul.sidebar-panel-nav>li>a:hover {
 
 button {
     align-items: center;
-    /* 수직 가운데 정렬 */
     border: 1px solid #257cdf86;
     border-radius: 5px;
     background-color: rgba(0, 0, 0, 0);
@@ -246,9 +245,7 @@ button:hover {
     overflow: hidden;
     display: grid;
     align-items: center;
-    /* 수직 가운데 정렬 */
     justify-content: center;
-    /* 수평 가운데 정렬 */
     grid-template-columns: repeat(auto-fill, minmax(33%, auto));
     grid-auto-rows: minmax(320px, 40vh);
     grid-auto-flow: dense;
@@ -289,6 +286,12 @@ input {
     max-width: 20vh;
 }
 
+#doughnut-chart {
+    height: 28vw;
+    width: 28vw;
+    max-height: 28vh;
+    max-width: 28vh;
+}
 
 /*sidebar*/
 
