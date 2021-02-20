@@ -149,16 +149,16 @@ export default {
 
 <style scoped>
 .left-panel {
-  position: fixed;
+  position: absolute;
   left: 0;
-  top: 50px;
+  top: 0;
   bottom: 0;
-  width: 35%;
+  width: 25%;
   overflow-x: hidden;
 }
 
 .right-panel {
-  width: 65%;
+  width: 75%;
   height: 100%;
   float: right;
   margin-left: 260px;

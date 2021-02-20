@@ -7,7 +7,9 @@
       <kakaoRegister/>
     </div>
     <div class="body"><router-view></router-view></div>
-    
+    <div class="right-message-panel" v-if="login">
+      <ChatModule/>
+    </div>
     <Sidebar>
       <!-- member의 기본 관리 메뉴 -->
       <ul class="sidebar-panel-nav" v-if="memId">
@@ -29,9 +31,6 @@
         <li v-if="adminId">
           <router-link :to="'/admin/'+adminId" v-on:click.native="backToAdmin">Back to Admin</router-link>
         </li>
-        <li>
-          <router-link to="/chatModule/">Chat Module</router-link>
-        </li>
       </ul>
         <!-- admin의 기본 관리 메뉴 -->
       <ul class="sidebar-panel-nav" v-if="!memId && adminId" >
@@ -45,9 +44,6 @@
         <li>
           <router-link :to="'/memberManage'">Member Manager</router-link>
         </li>
-        <li>
-          <router-link to="/chatModule/">Chat Module</router-link>
-        </li>
       </ul>
       <!-- vendor 의 기본 관리 메뉴-->
       <ul class="sidebar-panel-nav" v-if="vendorId">
@@ -60,9 +56,6 @@
         <li v-if="vendorId">
           <router-link to="/machineManage/">Machine Manage</router-link>
         </li>
-        <li>
-          <router-link to="/chatModule/">Chat Module</router-link>
-        </li>
       </ul>
     </Sidebar>
   </div>
@@ -74,6 +67,7 @@ import Sidebar from "./components/Menu/Sidebar.vue";
 import Logout from './components/Logout.vue';
 import EventBus from './store/Eventbus';
 import kakaoRegister from './components/KakaoRegisterButton'
+import ChatModule from './views/ChatModule'
 import axios from 'axios';
 
 export default {
@@ -82,7 +76,8 @@ export default {
     Burger,
     Sidebar,
     Logout,
-    kakaoRegister
+    kakaoRegister,
+    ChatModule
   },
   data(){
     return {

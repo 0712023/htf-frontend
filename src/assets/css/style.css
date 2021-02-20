@@ -123,6 +123,24 @@ ul.sidebar-panel-nav>li>a:hover {
     transform: scale(1.1,1.1);
 }
 
+.right-message-panel {
+    width: 60%;
+    height: 50%;
+    border: 2px solid rgb(148, 148, 148);
+    background-color: rgb(242, 245, 255);
+    position: fixed;
+    top: 25%;
+    right: -55%;
+    border-radius: 10px;
+    padding: 5px;
+    transition: 0.5s;
+    opacity: 30%;
+}
+.right-message-panel:hover {
+    right: -10%;
+    opacity: 100%;
+}
+
 button {
     align-items: center;
     /* 수직 가운데 정렬 */

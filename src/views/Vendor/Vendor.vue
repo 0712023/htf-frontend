@@ -13,8 +13,7 @@
                     <div>
                         <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId+'/type/'+sensor.type" >{{ sensor.mchId }}</router-link>
                         <br><br>name : {{ sensor.description }} 
-                        <br><br>mchId : {{ sensor.mchId }}
-                        <br><br>value : {{ sensorDataStore[sensor.mchId] }}
+                        <br><br>mchId : {{ sensor.mchId }}<span v-if="sensor.type.includes('Temp')"><br><br>Temparature : {{ sensorDataStore[sensor.mchId] }} °C</span>
                         <br><br>type : {{ sensor.type }}
                         <br><br>vendorId : {{ sensor.vendorId.vendorId }}
                     </div>
