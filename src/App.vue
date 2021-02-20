@@ -136,9 +136,6 @@ export default {
     updateMemId:function(memId){
       this.memId = memId;
     },
-    updatemchList:function(mchList){
-      this.mchList = mchList;
-    },
     updateAdminId:function(){
       this.adminId = this.$cookies.get("adminId");
     },
@@ -175,7 +172,6 @@ export default {
         EventBus.$emit('mchList', res.data);
         EventBus.$emit('member', true);
         this.$router.push('../member/'+memberId);
-        document.location.reload();
       })
     },
     userName() {
