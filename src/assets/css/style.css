@@ -76,6 +76,7 @@ table {
     border-radius: 10px;
     opacity: 100%;
     overflow: scroll;
+    font-size: smaller;
 }
 
 tr:first-child th:first-child {
@@ -109,19 +110,29 @@ ul.sidebar-panel-nav {
 }
 
 ul.sidebar-panel-nav>li>a {
+    padding-left: 10px;
     color: #fff;
     text-decoration: none;
     font-size: 1.5rem;
     display: block;
     padding-bottom: 0.5em;
+    transition: 0.5s;
+}
+ul.sidebar-panel-nav>li>a:hover {
+    background-color: #969696;
+    transform: scale(1.1,1.1);
 }
 
 button {
+    align-items: center;
+    /* 수직 가운데 정렬 */
     border: 1px solid #257cdf86;
     border-radius: 5px;
     background-color: rgba(0, 0, 0, 0);
     color: #257cdf86;
     padding: 5px;
+    height: 35px;
+    transition: 0.5s;
 }
 
 button:hover {
@@ -148,12 +159,20 @@ button:hover {
     border: 1px solid rgba( 255, 255, 255, 0.18);
     opacity: 100%;
     background: linear-gradient( 45deg, rgb(255, 255, 255) 0%, rgb(250, 252, 255) 48%, rgba(255, 255, 255) 100%);
+    transition: 0.5s;
+}
+.top-long-box:hover {
+    border-width: 1px;
+    border-color: rgb(168, 168, 168);
+    background: rgb(231, 231, 231);
+    transform: scale(1.02,1.02);
+    opacity: 80%;
 }
 
 .footer {
     z-index: -5;
     position: relative;
-    bottom: -150px;
+    bottom: -300px;
     background-color: rgb(144, 27, 247);
     height: 200px;
     margin-left: 3vw;
@@ -170,7 +189,6 @@ button:hover {
     opacity: 50%;
     background: linear-gradient( 45deg, rgb(255, 255, 255) 0%, rgb(250, 252, 255) 48%, rgba(255, 255, 255) 100%);
 }
-
 
 /* User Page */
 
@@ -191,9 +209,14 @@ button:hover {
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18);
     opacity: 100%;
+    transition: 0.5s;
 }
 
 .box1:hover {
+    border-width: 1px;
+    border-color: rgb(168, 168, 168);
+    background: rgb(242, 248, 255);
+    transform: scale(1.1,1.1);
     opacity: 80%;
 }
 

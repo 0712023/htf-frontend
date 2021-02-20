@@ -62,7 +62,7 @@
         }
       },
       getWeather () {
-        axios.post(`${this.$store.state.BACK_SERVER}/naverHumidtyCrawler`, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+        axios.get(`${this.$store.state.BACK_SERVER}/naverHumidtyCrawler`, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then(res =>{
           document.getElementById("outdoorHumidity").innerHTML = res.data;
         })

@@ -70,7 +70,7 @@
         }
       },
       getDust () {
-        axios.post(`${this.$store.state.BACK_SERVER}/naverDust`, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+        axios.get(`${this.$store.state.BACK_SERVER}/naverDust`, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then(res =>{
           document.getElementById("outdoorDust").innerHTML = parseInt(res.data);
         })

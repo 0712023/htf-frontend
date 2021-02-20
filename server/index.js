@@ -9,16 +9,8 @@ var mysql_dbc = require('./db/db_con')();
 var connection = mysql_dbc.init();
 mysql_dbc.test_open(connection);
 
-
-const crypto = require("crypto");
-const randomId = () => crypto.randomBytes(8).toString("hex");
-
 const { InMemorySessionStore } = require("./sessionStore");
 const sessionStore = new InMemorySessionStore();
-
-const { InMemoryMessageStore } = require("./messageStore");
-const { timeStamp } = require("console");
-const messageStore = new InMemoryMessageStore();
 
 io.use((socket, next) => {
   const sessionID = socket.handshake.auth.sessionID;
@@ -63,7 +55,7 @@ io.on("connection", (socket) => {
   const messagesPerUser = new Map();
 
   connection.query(`SELECT * FROM messages WHERE to_id='`+socket.userID+`' OR from_id='`+socket.userID+`'`,(err, rows)=>{
-    console.log(err);
+    if (!err) {console.log(err)}
     rows.forEach((messageRow)=>{
       const message = {content: messageRow.content, from: messageRow.from_id, to: messageRow.to_id}
       const { from, to } = message;
@@ -75,10 +67,8 @@ io.on("connection", (socket) => {
       }
 
     });
-    console.log(messagesPerUser.keys());
-    console.log(Array.from(messagesPerUser.keys()));
-    console.log(sessionStore.findAllSessions());
-    
+
+    //해당 userID의 경우도 추가하는 걸 추가해야함
     Array.from(messagesPerUser.keys()).forEach((userID) => {
       let connectedStatus = false;
       try {
@@ -91,16 +81,7 @@ io.on("connection", (socket) => {
         messages: messagesPerUser.get(userID) || [],
       });
     });
-    
-    // sessionStore.findAllSessions().forEach((session) => {
-    //   users.push({
-    //     userID: session.userID,
-    //     username: session.username,
-    //     connected: session.connected,
-    //     messages: messagesPerUser.get(session.userID) || [],
-    //   });
-    // });
-
+    // 오른쪽에 사이드 채팅바 튀어나오는 걸로. 
     socket.emit("users", users);
   })
 
@@ -108,39 +89,7 @@ io.on("connection", (socket) => {
     userID: socket.userID,
     username: socket.username,
     connected: true,
-    // messages: messagesPerUser.get(socket.userID), //여기가 비어서 시작하는게 근본적인 문제
   });
-
-  //여기가 메세지 로딩부분
-  // messageStore.findMessagesForUser(socket.userID).forEach((message) => {
-  //   const { from, to } = message;
-  //   console.log(message);
-  //   const otherUser = socket.userID === from ? to : from;
-  //   if (messagesPerUser.has(otherUser)) {
-  //     messagesPerUser.get(otherUser).push(message);
-  //   } else {
-  //     messagesPerUser.set(otherUser, [message]);
-  //   }
-  // });
-
-
-  // sessionStore.findAllSessions().forEach((session) => {
-  //   users.push({
-  //     userID: session.userID,
-  //     username: session.username,
-  //     connected: session.connected,
-  //     messages: messagesPerUser.get(session.userID) || [],
-  //   });
-  // });
-  // socket.emit("users", users);
-
-  // notify existing users
-  // socket.broadcast.emit("user connected", {
-  //   userID: socket.userID,
-  //   username: socket.username,
-  //   connected: true,
-  //   messages: [],
-  // });
 
   // forward the private message to the right recipient (and to other tabs of the sender)
   socket.on("private message", ({ content, to }) => {
@@ -150,14 +99,10 @@ io.on("connection", (socket) => {
       to,
     };
     socket.to(to).to(socket.userID).emit("private message", message);
-
-
     //메세지 저장부분 - 여길 db 연결 링크로 사용하면 된다.
-    connection.query(`INSERT INTO messages (content, from_id, to_id, created) VALUES ('`+content+`','`+socket.userID+`','`+to+`',`+Date.now()+`)`,(err, rows)=>{
-      console.log(err);
-      console.log(rows);
+    connection.query(`INSERT INTO messages (content, from_id, to_id, created) VALUES ('`+content+`','`+socket.userID+`','`+to+`',`+Date.now()+`)`,(err)=>{
+      if (!err) {console.log(err)}
     })
-    messageStore.saveMessage(message);
   });
 
   // notify users upon disconnection
