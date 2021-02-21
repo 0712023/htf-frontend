@@ -41,7 +41,6 @@
           <router-link :to="'/admin/'+this.adminId">Member List</router-link>
         </li>
         <li>
-          <!-- <router-link v-for="member in members" :key="member.memId" :to="'/member/'+member.memId"> - {{ member.memId }}</router-link> -->
           <a v-for="member in members" href="#" :key="member.memId" @click="toUser(member.memId)" style="color: #FFF;"> - {{ member.memId }}</a>
         </li>
         <li>
@@ -128,8 +127,8 @@ export default {
     setKakaoToken:function(s){
       this.kakaoToken = s;
     },
-    updateMemId:function(memId){
-      this.memId = memId;
+    updateMemId:function(s){
+      this.memId = s;
     },
     updateAdminId:function(){
       this.adminId = this.$cookies.get("adminId");
@@ -143,7 +142,7 @@ export default {
       this.memId = false;
     },
     getMachineListByMemId(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.memId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then((res)=>{
         this.mchList = res.data;
       })
@@ -160,13 +159,13 @@ export default {
         this.mchList = res.data
       })
     },
-    toUser (memberId) {
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memberId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+    toUser (memId) {
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": memId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then(res =>{
-        this.$cookies.set("memId", memberId);
+        this.$cookies.set("memId", memId);
         EventBus.$emit('mchList', res.data);
-        EventBus.$emit('member', true);
-        this.$router.push('../member/'+memberId);
+        EventBus.$emit('member', memId);
+        this.$router.push('../member/'+memId);
       })
     },
     userName() {
