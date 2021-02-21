@@ -17,12 +17,18 @@ export default {
         params.append('client_secret', this.$store.state.CLIENT_SECRET);
         axios.post(`https://kauth.kakao.com/oauth/token`, params)
         .then((res)=>{
+            let kakaoToken = res.data.access_token;
             //반환받은 카카오 토큰 정보를 다시 포장하여 backend의 admin DB의 token을 update
-            axios.post(`${this.$store.state.BACK_SERVER}/updateAdminToken`, {adId:this.$cookies.get("adId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+            axios.post(`${this.$store.state.BACK_SERVER}/updateAdminToken`, {adId:this.$cookies.get("adId"), kakaoToken:kakaoToken}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
             .then(()=>{
-                //admin 카카오 토큰 저장 후 쿠키 삭제
-                this.$cookies.remove("accesstoken");
-                this.$cookies.remove("adId");
+                if(this.$cookies.get("adminId")){
+                    //로그인 상태에서 토큰 발급시 쿠키에 토큰 저장
+                    this.$cookies.set("kakaoToken", kakaoToken);
+                } else{
+                    //회원가입시 토큰 발급시 쿠키 삭제
+                    this.$cookies.remove("accesstoken");
+                    this.$cookies.remove("adId");
+                }
                 //'login' 페이지로 이동
                 this.$router.push("/");
             })
