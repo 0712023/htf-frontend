@@ -42,6 +42,7 @@
       this.chartInterval = setInterval(()=>{
         axios.post(`${this.$store.state.BACK_SERVER}/getDustMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then(response =>{
+          this.datacollection.labels.push("");
           this.datacollection.datasets[0].data.push((response.data.value));
         })
         axios.post(`${this.$store.state.BACK_SERVER}/getDustTenMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
@@ -49,7 +50,7 @@
           this.datacollection.datasets[1].data.push((response.data.value));
         })
 
-        if (this.datacollection.datasets[0].length>9) {
+        if (this.datacollection.datasets[0].data.length>9) {
           this.datacollection.labels.shift();
           for (let dataset of this.datacollection.datasets) {
             dataset.data.shift();
