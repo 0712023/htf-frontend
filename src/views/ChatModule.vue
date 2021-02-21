@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-bottom: 100px;">
+  <div id="chatmodule">
     <select-username
       v-if="!usernameAlreadySelected"
       @input="onUsernameSelection"
@@ -14,7 +14,7 @@ import Chat from "../components/Chat/Chat";
 import socket from "../socket";
 
 export default {
-  name: "App",
+  name: "ChatModule",
   components: {
     Chat,
     SelectUsername,
@@ -26,19 +26,20 @@ export default {
   },
   methods: {
     onUsernameSelection(username) {
-      this.usernameAlreadySelected = false;
+      this.usernameAlreadySelected = true;
       socket.auth = { username };
       socket.connect();
     },
   },
   created() {
     const sessionID = localStorage.getItem("sessionID");
+
     if (sessionID) {
       this.usernameAlreadySelected = true;
       socket.auth = { sessionID };
       socket.connect();
     }
-    
+
     socket.on("session", ({ sessionID, userID }) => {
       // attach the session ID to the next reconnection attempts
       socket.auth = { sessionID };
@@ -71,7 +72,9 @@ body {
   src: url("/fonts/Lato-Regular.ttf");
 }
 
-#app {
+#chatmodule {
+  height: 100%;
+  overflow-y: scroll;
   font-family: Lato, Arial, sans-serif;
   font-size: 14px;
 }

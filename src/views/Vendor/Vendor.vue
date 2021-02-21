@@ -9,12 +9,14 @@
         </div>
         <div style="width:100%;">
             <div  class="wrap" >
+                <div class="box1">
+                    <DoughnutChart :machineList='mchList'/>
+                </div>
                 <div class="box1" v-for="sensor in mchList" :key="sensor.mchId" v-show="sensor.type==selectedType || selectedType=='all'">
                     <div>
                         <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId+'/type/'+sensor.type" >{{ sensor.mchId }}</router-link>
-                        <br><br>name : {{ sensor.description }} 
-                        <br><br>mchId : {{ sensor.mchId }}
-                        <br><br>value : {{ sensorDataStore[sensor.mchId] }}
+                        <hr><br>name : {{ sensor.description }} 
+                        <br><br>mchId : {{ sensor.mchId }}<span v-if="sensor.type.includes('Temp')"><br><br>Temparature : {{ sensorDataStore[sensor.mchId] }} °C</span>
                         <br><br>type : {{ sensor.type }}
                         <br><br>vendorId : {{ sensor.vendorId.vendorId }}
                     </div>
@@ -26,14 +28,21 @@
 
 <script>
 import axios from 'axios'
+import DoughnutChart from '../Dashboard/charts/DoughnutChart'
+
 export default {
-    computed:{
-        mchList(){
-            return JSON.parse(this.$cookies.get("mchList"));
-        },
+    components: {
+        DoughnutChart,
+    },
+    mounted(){
+        axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByVendorId`, {"vendorId": this.$cookies.get("vendorId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+        .then((res)=>{
+            this.mchList = res.data;
+        })
     },
     data(){
         return {
+            mchList:null,
             sensorDataStore:{}, 
             selectedType:'all', 
         }
@@ -41,7 +50,7 @@ export default {
     created:function(){
         this.dashboardInterval = setInterval(()=>{
                 for(let index in this.mchList){
-                    axios.post(`${this.$store.state.BACK_SERVER}/getTempMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId})
+                    axios.post(`${this.$store.state.BACK_SERVER}/getTempMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
                     .then(res =>{
                         this.$set(this.sensorDataStore, this.mchList[index].mchId, res.data.value)
                     })

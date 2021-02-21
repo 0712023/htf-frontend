@@ -1,32 +1,21 @@
 const httpServer = require("http").createServer();
-const Redis = require("ioredis");
-const redisClient = new Redis();
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: "http://localhost:8081",
+    origin: "http://localhost:8080",
   },
-  adapter: require("socket.io-redis")({
-    pubClient: redisClient,
-    subClient: redisClient.duplicate(),
-  }),
 });
 
-const { setupWorker } = require("@socket.io/sticky");
-const crypto = require("crypto");
-const randomId = () => crypto.randomBytes(8).toString("hex");
+var mysql_dbc = require('./db/db_con')();
+var connection = mysql_dbc.init();
+mysql_dbc.test_open(connection);
 
+const { InMemorySessionStore } = require("./sessionStore");
+const sessionStore = new InMemorySessionStore();
 
-
-const { RedisSessionStore } = require("./sessionStore");
-const sessionStore = new RedisSessionStore(redisClient);
-
-const { RedisMessageStore } = require("./messageStore");
-const messageStore = new RedisMessageStore(redisClient);
-
-io.use(async (socket, next) => {
-   const sessionID = socket.handshake.auth.sessionID;
+io.use((socket, next) => {
+  const sessionID = socket.handshake.auth.sessionID;
   if (sessionID) {
-    const session = await sessionStore.findSession(sessionID);
+    const session = sessionStore.findSession(sessionID);
     if (session) {
       socket.sessionID = sessionID;
       socket.userID = session.userID;
@@ -38,13 +27,13 @@ io.use(async (socket, next) => {
   if (!username) {
     return next(new Error("invalid username"));
   }
-  socket.sessionID = randomId();
-  socket.userID = randomId();
+  socket.sessionID = username;
+  socket.userID = username;
   socket.username = username;
   next();
 });
 
-io.on("connection", async (socket) => {
+io.on("connection", (socket) => {
   // persist session
   sessionStore.saveSession(socket.sessionID, {
     userID: socket.userID,
@@ -63,36 +52,45 @@ io.on("connection", async (socket) => {
 
   // fetch existing users
   const users = [];
-  const [messages, sessions] = await Promise.all([
-    messageStore.findMessagesForUser(socket.userID),
-    sessionStore.findAllSessions(),
-  ]);
   const messagesPerUser = new Map();
-  messages.forEach((message) => {
-    const { from, to } = message;
-    const otherUser = socket.userID === from ? to : from;
-    if (messagesPerUser.has(otherUser)) {
-      messagesPerUser.get(otherUser).push(message);
-    } else {
-      messagesPerUser.set(otherUser, [message]);
-    }
-  });
-  sessions.forEach((session) => {
-    users.push({
-      userID: session.userID,
-      username: session.username,
-      connected: session.connected,
-      messages: messagesPerUser.get(session.userID) || [],
-    });
-  });
-  socket.emit("users", users);
 
-  // notify existing users
+  connection.query(`SELECT * FROM messages WHERE to_id='`+socket.userID+`' OR from_id='`+socket.userID+`'`,(err, rows)=>{
+    if (!err) {console.log(err)}
+    rows.forEach((messageRow)=>{
+      const message = {content: messageRow.content, from: messageRow.from_id, to: messageRow.to_id}
+      const { from, to } = message;
+      const otherUser = socket.userID === from ? to : from;
+      if (messagesPerUser.has(otherUser)) {
+        messagesPerUser.get(otherUser).push(message);
+      } else {
+        messagesPerUser.set(otherUser, [message]);
+      }
+
+    });
+
+    //멤버의 경우에는 해당 adId의 멤버들을 불러오고 멤버 id로 된 방에 조인하는게 맞지 않을까?
+    Array.from(messagesPerUser.keys()).forEach((userID) => {
+
+      let connectedStatus = false;
+      try {
+        connectedStatus = sessionStore.findAllSessions().find(element => element.userID == userID).connected;
+      } catch (error) {error}
+      users.push({
+        userID: userID,
+        username: userID,
+        connected: connectedStatus,
+        messages: messagesPerUser.get(userID) || [],
+      });
+
+    });
+
+    socket.emit("users", users);
+  })
+
   socket.broadcast.emit("user connected", {
     userID: socket.userID,
     username: socket.username,
     connected: true,
-    messages: [],
   });
 
   // forward the private message to the right recipient (and to other tabs of the sender)
@@ -103,7 +101,10 @@ io.on("connection", async (socket) => {
       to,
     };
     socket.to(to).to(socket.userID).emit("private message", message);
-    messageStore.saveMessage(message);
+    //메세지 저장부분 - 여길 db 연결 링크로 사용하면 된다.
+    connection.query(`INSERT INTO messages (content, from_id, to_id, created) VALUES ('`+content+`','`+socket.userID+`','`+to+`',`+Date.now()+`)`,(err)=>{
+      if (!err) {console.log(err)}
+    })
   });
 
   // notify users upon disconnection
@@ -123,4 +124,8 @@ io.on("connection", async (socket) => {
   });
 });
 
-setupWorker(io);
+const PORT = process.env.PORT || 3000;
+
+httpServer.listen(PORT, () =>
+  console.log(`server listening at http://localhost:${PORT}`)
+);

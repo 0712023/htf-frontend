@@ -18,7 +18,7 @@ export default {
         axios.post(`https://kauth.kakao.com/oauth/token`, params)
         .then((res)=>{
             //반환받은 카카오 토큰 정보를 다시 포장하여 backend의 admin DB의 token을 update
-            axios.post(`${this.$store.state.BACK_SERVER}/updateAdminToken`, {adId:this.$cookies.get("adId"), kakaoToken:res.data.access_token})
+            axios.post(`${this.$store.state.BACK_SERVER}/updateAdminToken`, {adId:this.$cookies.get("adId"), kakaoToken:res.data.access_token}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
             .then(()=>{
                 //admin 카카오 토큰 저장 후 쿠키 삭제
                 this.$cookies.remove("accesstoken");

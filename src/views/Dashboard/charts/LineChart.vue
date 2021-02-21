@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    외부 미세먼지 : <span id="outdoorDust"></span>
+    외부 미세먼지 : <span id="outdoorDust"></span> PM / 현재 미세먼지 : <span id="dustStatus"></span>
     <line-chart :chart-data="datacollection"></line-chart>
     {{$route.params.mchId}}
   </div>
@@ -25,26 +25,39 @@
     created () {
       this.getDust();
       //처음에 10개 가져오는 것
-      axios.post(`${this.$store.state.BACK_SERVER}/getDustMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId})
+      axios.post(`${this.$store.state.BACK_SERVER}/getDustMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then(res =>{
         for (let incomingData of res.data) {
           this.datacollection.labels.push("");
-          for (let dataset of this.datacollection.datasets) {
-            dataset.data.push((incomingData.value));
-          }
+          this.datacollection.datasets[0].data.push((incomingData.value));
+        }
+      })
+      axios.post(`${this.$store.state.BACK_SERVER}/getDustTenMeasureListByMchIdTo10`, {"mchId": this.$route.params.mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+      .then(res =>{
+        for (let incomingData of res.data) {
+          this.datacollection.datasets[1].data.push((incomingData.value));
         }
       })
 
       this.chartInterval = setInterval(()=>{
-        axios.post(`${this.$store.state.BACK_SERVER}/getDustMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId})
+        axios.post(`${this.$store.state.BACK_SERVER}/getDustMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then(response =>{
           this.datacollection.labels.push("");
-          for (let dataset of this.datacollection.datasets) {
-            dataset.data.push((response.data.value));
+          this.datacollection.datasets[0].data.push((response.data.value));
+          if (response.data.value < 16) {
+            document.getElementById('dustStatus').innerHTML = '좋음';
+          } else if (response.data.value < 36) {
+            document.getElementById('dustStatus').innerHTML = '보통';
+          } else {
+            document.getElementById('dustStatus').innerHTML = '나쁨';
           }
         })
+        axios.post(`${this.$store.state.BACK_SERVER}/getDustTenMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+        .then(response =>{
+          this.datacollection.datasets[1].data.push((response.data.value));
+        })
 
-        if (this.datacollection.labels.length>9) {
+        if (this.datacollection.datasets[0].data.length>9) {
           this.datacollection.labels.shift();
           for (let dataset of this.datacollection.datasets) {
             dataset.data.shift();
@@ -62,7 +75,12 @@
           labels: [],
           datasets: [
             {
-              label: '내부 미세먼지',
+              label: 'PM2.5',
+              backgroundColor: '#05700f86',
+              data: []
+            },
+            {
+              label: 'PM10',
               backgroundColor: '#257cdf86',
               data: []
             }
@@ -70,7 +88,7 @@
         }
       },
       getDust () {
-        axios.post(`${this.$store.state.BACK_SERVER}/naverDust`)
+        axios.get(`${this.$store.state.BACK_SERVER}/naverDust`, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then(res =>{
           document.getElementById("outdoorDust").innerHTML = parseInt(res.data);
         })

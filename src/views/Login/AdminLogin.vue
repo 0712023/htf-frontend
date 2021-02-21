@@ -49,15 +49,13 @@ export default {
                 }
                 //admin id로 모든 멤버 아이디 불러오기
                 axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.id}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
-                .then(res =>{
+                .then(() =>{
                     //로그인 정보 및 memberList 데이터 쿠키에 저장
                     this.$cookies.set("adminId", this.id);
                     this.$cookies.set("login", "login");
-                    this.$cookies.set("members", JSON.stringify(res.data));
                     //사이드바 및 로그아웃 버튼 활성화
                     EventBus.$emit('login', true);
                     EventBus.$emit('admin', true);
-                    EventBus.$emit('members', res.data);
                     //admin페이지로 이동
                     this.$router.push('admin/'+this.id);
                 })

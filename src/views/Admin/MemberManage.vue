@@ -8,6 +8,7 @@
                 <template v-for="(val, key) in memberList[0]">
                     <th width="500" :key="key" v-if="key=='memId' || key=='memRank'">{{key}}</th>
                 </template>
+                <th>회원탈퇴</th>
             </tr>
             </thead>
             <tbody>
@@ -16,6 +17,7 @@
                     <template v-for="(val, key) in member">
                         <td width="500" :key="key" v-if="key=='memId' || key=='memRank'">{{val}}</td>
                     </template>
+                    <td><button @click="deleteMember(member.memId)">delete</button></td>
                 </tr>
             </tbody>
         </table> 
@@ -52,10 +54,18 @@ export default {
         },
         getMemberList(){
             //backend server에 member List를 요청
-            axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`,{"adId":this.$cookies.get("adminId")})
+            axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId":this.$cookies.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
             .then((res)=>{
                 //반환받은 member List를 데이터에 저장
                 this.memberList = res.data;
+            })
+        },
+        deleteMember(memId){
+            //backend server에 member를 삭제시킴
+            axios.post(`${this.$store.state.BACK_SERVER}/deleteMember`, {"memId":memId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+            .then(()=>{
+                alert("goodbye "+memId);
+                this.getMemberList();
             })
         }
     }

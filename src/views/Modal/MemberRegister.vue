@@ -29,7 +29,7 @@ export default {
 				this.id = "";
 			} else{
 				//backend server로 회원가입 요청
-				axios.post(`${this.$store.state.BACK_SERVER}/insertMember`, {"memId":this.id,"memPw":this.pw,"adId":{"adId": this.$cookies.get("adminId")}})
+				axios.post(`${this.$store.state.BACK_SERVER}/insertMember`, {"memId":this.id,"memPw":this.pw,"adId":{"adId": this.$cookies.get("adminId")}}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
 				.then(()=>{
 					alert("member add success!");
 					//MemberResgister modal을 가림

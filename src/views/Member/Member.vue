@@ -1,13 +1,23 @@
 <template>
     <div>
         <div style="width:100%;">
+            <div class="top-long-box" style="height: 50px">
+                좋은하루 되세요! 
+                <select v-model="selectedType">
+                    <option value="all" selected>all</option>
+                    <option :value="typeSelector" v-for="typeSelector in new Set(mchList.map(v => v.type))" :key='typeSelector'>{{typeSelector}}</option>
+                </select>
+            </div>
             <div  class="wrap" >
-                <div class="box1" v-for="sensor in mchList" :key="sensor.mchId">
+                <div class="box1">
+                    <DoughnutChart :machineList='mchList'/>
+                </div>
+                <div class="box1" v-for="sensor in mchList" :key="sensor.mchId" v-show="sensor.type==selectedType || selectedType=='all'">
                     <div>
                         <router-link :to="'/sensor/'+sensor.description + '/mchid/' + sensor.mchId + '/type/' + sensor.type">{{ sensor.description }}</router-link>
-                        <br><br>name : {{ sensor.description }} 
-                        <br><br>mchId : {{ sensor.mchId }}
-                        <br><br>value : {{ sensorDataStore[sensor.mchId] }}
+                        <hr><br>name : {{ sensor.description }} 
+                        <br><br>type : {{ sensor.type }}
+                        <br><br>mchId : {{ sensor.mchId }}<span v-if="sensor.type.includes('Temp')"><br><br>Temparature : {{ sensorDataStore[sensor.mchId] }} °C</span>
                         <br><br>vendorId : {{ sensor.vendorId.vendorId }}
                     </div>
                 </div>
@@ -18,15 +28,24 @@
 
 <script>
 import axios from 'axios'
+import DoughnutChart from '../Dashboard/charts/DoughnutChart'
+
 export default {
-    computed:{
-        mchList(){
-            return JSON.parse(this.$cookies.get("mchList"));
-        },
+    components: {
+        DoughnutChart,
+    },
+    mounted(){
+        axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+        .then((res)=>{
+            console.log(res.data);
+            this.mchList = res.data;
+        })
     },
     data(){
         return {
+            mchList:null,
             sensorDataStore:{},
+            selectedType:'all',
         };
     },
     created:function(){
@@ -34,7 +53,7 @@ export default {
         this.dashboardInterval = setInterval(()=>{
             //모든 machine들의 최신 데이터를 backend server에 요청
             for(let index in this.mchList){
-                axios.post(`${this.$store.state.BACK_SERVER}/getTempMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId})
+                axios.post(`${this.$store.state.BACK_SERVER}/getTempMeasureListByMchIdTo1`, {"mchId": this.mchList[index].mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
                 .then(res =>{
                     //반환받은 데이터의 value값을 sensorDataStore에 저장 (key:mchId, value:data.value)
                     this.$set(this.sensorDataStore, this.mchList[index].mchId, res.data.value)

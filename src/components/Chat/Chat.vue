@@ -68,16 +68,19 @@ export default {
     });
 
     const initReactiveProperties = (user) => {
-      user.messages = [];
       user.hasNewMessages = false;
     };
 
     socket.on("users", (users) => {
       users.forEach((user) => {
+        user.messages.forEach((message) => {
+          message.fromSelf = message.from === socket.userID;
+        });
         for (let i = 0; i < this.users.length; i++) {
           const existingUser = this.users[i];
           if (existingUser.userID === user.userID) {
             existingUser.connected = user.connected;
+            existingUser.messages = user.messages;
             return;
           }
         }
@@ -146,17 +149,18 @@ export default {
 
 <style scoped>
 .left-panel {
-  padding-top: 100px;
-  padding-bottom: 100px;
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 260px;
+  width: 25%;
   overflow-x: hidden;
 }
 
 .right-panel {
+  width: 75%;
+  height: 100%;
+  float: right;
   margin-left: 260px;
 }
 </style>

@@ -8,6 +8,7 @@
                   <th width="500" :key="key" v-if="key!='memId'" >{{key}}</th>
               </template>
               <th width="500">update</th>
+              <th width="500">delete</th>
             </tr>
             </thead>
             
@@ -17,8 +18,8 @@
                         <td width="500" :key="key" v-if="key!='memId' && key!='vendorId'">{{val}}</td>
                         <td width="500" :key="key" v-if="key=='vendorId'">{{val.vendorId}}</td>
                     </template>
-                    <!-- <td width="500"><input type="text" v-model="description"></td> -->
                     <td width="500"><button @click="updateMachineDesc(machine.description, machine.mchId)">update</button></td>
+                    <td width="500"><button @click="deleteMachine(machine.mchId)">delete</button></td>
                 </tr>
             </tbody>
         </table> <br>
@@ -34,7 +35,11 @@ export default {
     UpdateMachine
   },
   mounted() {
-    this.mchList = this.mchList.concat(JSON.parse(this.$cookies.get("mchList")))
+    axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+        .then((res)=>{
+            console.log(res.data);
+            this.mchList = res.data;
+        })
   },
   data() {
     return {
@@ -44,16 +49,31 @@ export default {
     };
   },
   methods: {
-    updateMachineDesc(desc,mchIdInPut) {
-      this.mchId = mchIdInPut;
-      this.description = desc;
-      this.$modal.show("UpdateMachine", {"desc":desc});
+    updateMachineDesc(desc, mchIdInPut) {
+            if(this.$cookies.get("memRank") != 'basic'){
+              this.mchId = mchIdInPut;
+              this.description = desc;
+              this.$modal.show("UpdateMachine", {"desc":desc});
+            } else {
+              alert("basic grade can't update machine description");
+              this.$router.push("/subscribe/");
+            }
     },
     getMachineList(){
-      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookies.get("memId")})
+      axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId":this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then((res)=>{
           this.$cookies.set("mchList", JSON.stringify(res.data))
           this.mchList = res.data
+      })
+    },
+    deleteMachine(mchId){
+      axios.post(`${this.$store.state.BACK_SERVER}/deleteMeasurebyMchId`, {"mchId":mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+      .then(()=>{
+        axios.post(`${this.$store.state.BACK_SERVER}/deleteMachine`, {"mchId":mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+        .then(()=>{
+          alert("delete machine "+mchId);
+          this.getMachineList();
+        })
       })
     }
   },

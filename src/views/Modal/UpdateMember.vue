@@ -39,7 +39,7 @@ export default {
         this.re_pw = "";
       } else {
         //backend server에 member DB의 pw를 새로운 pw로 수정함
-        axios.post(`${this.$store.state.BACK_SERVER}/updateMemberPw`, {"memId":this.$cookies.get("memId"), "memPw":this.pw})
+        axios.post(`${this.$store.state.BACK_SERVER}/updateMemberPw`, {"memId":this.$cookies.get("memId"), "memPw":this.pw}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then(() => {
           alert("update success!");
           //UpdateMember modal을 가림
@@ -60,7 +60,7 @@ export default {
         }
         //props로 전달받은 update column의 제일 앞 글자를 대문자로 바꿈 -> backend server의 memberController의 url에 match시켜주기 위함
         let method = this.updateColumn.replace(this.updateColumn[0], this.updateColumn[0].toUpperCase());
-        axios.post(`${this.$store.state.BACK_SERVER}/updateMember${method}`, body)
+        axios.post(`${this.$store.state.BACK_SERVER}/updateMember${method}`, body, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then(() => {
           alert("update success!");
           //UpdateMember modal을 가림

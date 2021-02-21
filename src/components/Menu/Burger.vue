@@ -12,7 +12,7 @@
 </template>
 <script>
 import Constant from '../../store/Constant'
-
+import EventBus from '../../store/Eventbus'
 export default {
   computed: {
     isBurgerActive() {
@@ -21,6 +21,7 @@ export default {
   },
   methods: {
     toggle() {
+      EventBus.$emit('toggle', true);
       this.$store.commit(Constant.TOGGLENAV);
     }
   }

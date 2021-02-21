@@ -18,7 +18,7 @@
     </ul>
 
     <form @submit.prevent="onSubmit" class="form">
-      <textarea v-model="input" placeholder="Your message..." class="input" />
+      <textarea v-model="input" placeholder="Your message..." class="input" /><br>
       <button :disabled="!isValid" class="send-button">Send</button>
     </form>
   </div>

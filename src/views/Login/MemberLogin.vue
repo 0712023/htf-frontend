@@ -30,30 +30,23 @@ export default {
                     this.$cookies.set("accesstoken", res.data["htfToken"]);
                     this.$cookies.set("kakaoToken", res.data["kakaoToken"]);
                     this.$cookies.set("memRank", res.data["memRank"]);
-                    // EventBus.$emit("kakao", res.data["kakaoToken"]); //필요없는 것 같은데 일단 주석
-                }
-                // axios.defaults.headers.common["x-access-token"] = res.data; //필요없는 것 같은데 일단 주석
-                //memId로 machineList 불러오기
-                axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.id}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
-                .then(res =>{
+
                     //로그인 정보 및 machineList 데이터 쿠키에 저장
                     this.$cookies.set("memId", this.id);
                     this.$cookies.set("login", "login");
-                    this.$cookies.set("mchList", JSON.stringify(res.data));
                     
                     //사이드바 및 로그아웃 버튼 활성화
                     EventBus.$emit('login', true);
-                    EventBus.$emit('member', true);
-                    EventBus.$emit('mchList', res.data);
+                    EventBus.$emit('member', this.id);
 
-                    if(this.$cookies.get("memRank") === "null"){
+                    if(res.data["memRank"] === null){
                         //memRank가 존재하지 않을 경우 subscribe 페이지로 이동
                         this.$router.push("/subscribe/");
                     } else {
                         //memRank가 존재할 경우 멤버 페이지로 이동
                         this.$router.push('member/'+this.id);
                     }
-                })
+                }
             })
         },
     }

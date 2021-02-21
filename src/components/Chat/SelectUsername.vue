@@ -2,7 +2,7 @@
   <div class="select-username">
     <form @submit.prevent="onSubmit">
       <input v-model="username" placeholder="Your username..." readonly/>
-      <button :disabled="!isValid">Send</button>
+      <button :disabled="!isValid">Go</button>
     </form>
   </div>
 </template>

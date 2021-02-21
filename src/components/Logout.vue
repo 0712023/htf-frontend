@@ -1,5 +1,7 @@
 <template>
-    <button @click="logout">logout</button>
+    <div>
+        <button @click="logout">logout</button>
+    </div>
 </template>
 
 <script>
@@ -15,6 +17,8 @@ export default {
             Eventbus.$emit('member', false);
             Eventbus.$emit('admin', false);
             Eventbus.$emit('vendor', false);
+            localStorage.removeItem('sessionID');
+            localStorage.removeItem('loglevel:webpack-dev-server');
             this.$router.push('/');
         }
     }
