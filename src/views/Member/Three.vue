@@ -1,7 +1,6 @@
 <template>
   <div>
     <canvas id="three"></canvas>
-    <button @click="zom()">sw</button>
   </div>
 </template>
 <script type="module">
@@ -62,21 +61,6 @@ export default {
       dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
       scene.add(dirLight);
 
-        const gt = new THREE.TextureLoader().load("grasslight-big.jpg");
-      const gg = new THREE.PlaneGeometry(16000, 16000);
-      const gm = new THREE.MeshPhongMaterial({ color: 0xffffff, map: gt });
-
-      const ground = new THREE.Mesh(gg, gm);
-      ground.rotation.x = -Math.PI / 2;
-      ground.material.map.repeat.set(64, 64);
-      ground.material.map.wrapS = THREE.RepeatWrapping;
-      ground.material.map.wrapT = THREE.RepeatWrapping;
-      ground.material.map.encoding = THREE.sRGBEncoding;
-      ground.receiveShadow = true;
-      scene.add(ground);
-      // ground.url = null;
-      // objects.push(ground);
-
       const controls = new OrbitControls.OrbitControls(
         camera,
         renderer.domElement
@@ -131,28 +115,9 @@ export default {
       }
 
       for (let i = 0; i < test.length; i++) {
-        // const geometry1 = new THREE.BoxGeometry(25, 25, 25);
-        // const material1 = new THREE.MeshBasicMaterial({
-        //   color: 0x000000,
-        //   wireframe: false,
-        // });
-        // const cube = new THREE.Mesh(geometry1, material1);
-        // // cube.position.y = 100;
-        // cube.url =
-        //   "http://127.0.0.1:8081/sensor/" +
-        //   test[i].description +
-        //   "/mchid/" +
-        //   test[i].mchId;
-        // cube.position.z = -i * 100;
-        // cube.position.y = 110;
-        // cube.description = test[i].description;
-        // scene.add(cube);
-        // objects.push(cube);
-        // textmaker(cube);
         const gltfLoader = new GLTFLoader();
           gltfLoader.load("raspberry_pi_3/scene.gltf", (gltf) => {
           let model = gltf.scene;
-          // model.scale.set(20, 20, 20);
           model.scale.set(5, 5, 5);
            model.url =
             FRONT_SEVER + 
@@ -165,53 +130,24 @@ export default {
             model.position.x = xmaker(i);  
         model.description = test[i].description;
           scene.add(model);
-          // objects.push(model);
           textmaker(i, model.description);
         });
         
       
       }
       
-      // const size = 10000;
-      // const divisions = 100;
-      // const gridHelper = new THREE.GridHelper(size, divisions);
-      // scene.add(gridHelper);
+      const size = 10000;
+      const divisions = 100;
+      const gridHelper = new THREE.GridHelper(size, divisions);
+      scene.add(gridHelper);
 
-      // const gltfLoader1 = new GLTFLoader();
-      // gltfLoader1.load("ancient_chinese_courtyard_park/scene.gltf", (gltf) => {
-      //   let model = gltf.scene;
-      //   model.scale.set(5, 5, 5);
-      //   // model.position.x = -500;
-      //   model.position.y = 5;
-      //   // model.position.z = 300;
-      //   scene.add(model);
-      // });
+      
       const gltfLoader1 = new GLTFLoader();
       gltfLoader1.load("apartment/scene.gltf", (gltf) => {
         let model = gltf.scene;
         model.scale.set(0.5, 0.5, 0.5);
-        // model.position.x = -500;
-        // model.position.y = -350;
-        // model.position.z = 300;
         scene.add(model);
       });
-
-      // const loader = new STLLoader();
-      // 	loader.load( 'assem.stl', function ( geometry ) {
-
-      // 		const material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-      // 		const mesh = new THREE.Mesh( geometry, material );
-
-      // 		mesh.position.set( 0, - 0.25, 0.6 );
-      // 		mesh.rotation.set( 0, - Math.PI / 2, 0 );
-      // 		mesh.scale.set( 2, 2, 2 );
-
-      // 		mesh.castShadow = true;
-      // 		mesh.receiveShadow = true;
-
-      // 		scene.add( mesh );
-
-      // 	} );
 
       function animate() {
         controls.update();
@@ -306,13 +242,6 @@ export default {
         }else if(i == 4){
           return 30
         }
-      }
-    },
-    zom: function () {
-      if (this.controls.screenSpacePanning == true) {
-        this.controls.screenSpacePanning = false;
-      } else {
-        this.controls.screenSpacePanning = true;
       }
     },
   },
