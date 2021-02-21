@@ -3,7 +3,7 @@
         Machine Id : {{mchIdProps}}
         <br><br>
         New Type : <span><input type="text" v-model="newType"></span>
-        <button @click="updateMachineType">수정 완료</button>
+        <button @click="updateMachineType">update</button>
     </div>
 </template>
 

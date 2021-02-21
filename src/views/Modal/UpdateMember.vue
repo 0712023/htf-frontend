@@ -4,7 +4,7 @@
     <input v-if="updateColumn != 'memPw'" type="text" :placeholder="'new '+updateColumn" v-model="column">
     <input v-if="updateColumn == 'memPw'" type="password" placeholder="pw" v-model="pw">
     <input v-if="updateColumn == 'memPw'" type="password" placeholder="rewrite pw" v-model="re_pw">
-    <button @click="UpdateMember(updateColumn)">Update {{updateColumn}}</button>
+    <button @click="UpdateMember(updateColumn)">update {{updateColumn}}</button>
   </div>
 </template>
 

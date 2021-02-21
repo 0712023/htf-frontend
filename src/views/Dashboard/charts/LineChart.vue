@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    외부 미세먼지 : <span id="outdoorDust"></span> PM10 / 현재 미세먼지 : <span id="dustStatus"></span>
+    External Fine Dust : <span id="outdoorDust"></span> <br> Fine Dust Status : <span id="dustStatus"></span>
     <line-chart :chart-data="datacollection" :options="chartOptions"></line-chart>
     {{$route.params.mchId}}
   </div>
@@ -59,11 +59,11 @@
         .then(response =>{
           this.datacollection.datasets[1].data.push((response.data.value));
           if (response.data.value < 16) {
-            document.getElementById('dustStatus').innerHTML = '좋음';
+            document.getElementById('dustStatus').innerHTML = '<span style="color:blue;">Good</span>';
           } else if (response.data.value < 36) {
-            document.getElementById('dustStatus').innerHTML = '보통';
+            document.getElementById('dustStatus').innerHTML = '<span style="color:Orange;">So-so</span>';
           } else {
-            document.getElementById('dustStatus').innerHTML = '나쁨';
+            document.getElementById('dustStatus').innerHTML = '<span style="color:Red;">Bad</span>';
           }
         })
 

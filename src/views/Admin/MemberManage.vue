@@ -8,7 +8,7 @@
                 <template v-for="(val, key) in memberList[0]">
                     <th width="500" :key="key" v-if="key=='memId' || key=='memRank'">{{key}}</th>
                 </template>
-                <th>회원탈퇴</th>
+                <th>delete</th>
             </tr>
             </thead>
             <tbody>

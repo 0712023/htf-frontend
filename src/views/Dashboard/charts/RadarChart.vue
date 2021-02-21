@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    외부 습도 : <span id="outdoorHumidity"></span>
+    External Humidity : <span id="outdoorHumidity"></span>
     <Radar-chart :chart-data="datacollection" chart:update="addData()" :options="chartOptions"></Radar-chart>
     {{$route.params.mchId}}
   </div>

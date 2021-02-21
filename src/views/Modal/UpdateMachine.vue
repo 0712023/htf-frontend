@@ -3,7 +3,7 @@
         Machine Id : {{mchIdProps}}
         <br>
         New Description <input type="text" v-model="newDescription"><br>
-        <button @click="UpdateMachine">수정 완료</button>
+        <button @click="UpdateMachine">update</button>
     </div>
 </template>
 
