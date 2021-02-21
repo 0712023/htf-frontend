@@ -1,7 +1,7 @@
 <template>
   <div class="small">
     현재 외부 온도 : <span id="outdoorTemp"></span> °C
-    <Bar-chart :chart-data="datacollection"></Bar-chart>
+    <Bar-chart :chart-data="datacollection" :options="chartOptions"></Bar-chart>
     {{$route.params.mchId}}
   </div>
 </template>
@@ -16,7 +16,17 @@
     },
     data () {
       return {
-        datacollection: {backgroundColor: '#f87979',}
+        datacollection: {backgroundColor: '#f87979',},
+        chartOptions: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                min: -10,
+                stepSize : 6,
+              }
+            }]
+          }
+        },
       }
     },
     mounted () {

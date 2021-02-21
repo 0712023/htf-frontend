@@ -1,7 +1,7 @@
 <template>
   <div class="small">
     외부 습도 : <span id="outdoorHumidity"></span>
-    <Radar-chart :chart-data="datacollection" chart:update="addData()"></Radar-chart>
+    <Radar-chart :chart-data="datacollection" chart:update="addData()" :options="chartOptions"></Radar-chart>
     {{$route.params.mchId}}
   </div>
 </template>
@@ -16,7 +16,15 @@
     },
     data () {
       return {
-        datacollection: {}
+        datacollection: {},
+        chartOptions: {
+          scale: {
+              ticks: {
+                  beginAtZero: true,
+                  min: 0,
+              }
+          }
+        },
       }
     },
     mounted () {

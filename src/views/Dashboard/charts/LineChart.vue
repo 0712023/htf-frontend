@@ -1,7 +1,7 @@
 <template>
   <div class="small">
     외부 미세먼지 : <span id="outdoorDust"></span> PM / 현재 미세먼지 : <span id="dustStatus"></span>
-    <line-chart :chart-data="datacollection"></line-chart>
+    <line-chart :chart-data="datacollection" :options="chartOptions"></line-chart>
     {{$route.params.mchId}}
   </div>
 </template>
@@ -16,7 +16,17 @@
     },
     data () {
       return {
-        datacollection: {}
+        datacollection: {},
+        chartOptions: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                min: 0,
+                stepSize : 6,
+              }
+            }]
+          }
+        },
       }
     },
     mounted () {
@@ -72,7 +82,6 @@
     methods: {
       resetData () {
         this.datacollection = {
-          labels: [],
           datasets: [
             {
               label: 'PM2.5',
