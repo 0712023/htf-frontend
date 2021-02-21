@@ -20,13 +20,13 @@
       <!-- member의 기본 관리 메뉴 -->
       <ul class="sidebar-panel-nav" v-if="memId">
         <li>
-          <router-link :to="'/member/'+memId">Member</router-link>
+          <router-link :to="'/member/'+memId">Sensor List</router-link>
         </li>
         <li>
           <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId+'/type/'+sensor.type"> - {{ sensor.description }}</router-link>
         </li>
         <li v-if="this.$cookies.get('memRank') == 'enterprise'">
-          <router-link to="/three">Three</router-link>
+          <router-link to="/three">3D Modelling</router-link>
         </li>
         <li v-if="!adminId">
           <router-link to="/setting/">Setting</router-link>
@@ -35,7 +35,7 @@
           <router-link to="/subscribe/">Subscribe</router-link>
         </li>
         <li v-if="adminId">
-          <router-link :to="'/admin/'+adminId" v-on:click.native="backToAdmin">Back to Admin</router-link>
+          <router-link :to="'/admin/'+adminId" v-on:click.native="backToAdmin">Back to Member List</router-link>
         </li>
       </ul>
         <!-- admin의 기본 관리 메뉴 -->
@@ -48,13 +48,13 @@
           <a v-for="member in members" href="#" :key="member.memId" @click="toUser(member.memId)" style="color: #FFF;"> - {{ member.memId }}</a>
         </li>
         <li>
-          <router-link :to="'/memberManage'">Member Manager</router-link>
+          <router-link :to="'/memberManage'">Member Manage</router-link>
         </li>
       </ul>
       <!-- vendor 의 기본 관리 메뉴-->
       <ul class="sidebar-panel-nav" v-if="vendorId">
           <li>
-          <router-link :to="'/vendor/'+vendorId">Vendor</router-link>
+          <router-link :to="'/vendor/'+vendorId">Machine List</router-link>
         </li>
         <li>
           <router-link v-for="sensor in mchList" :key="sensor.mchId" :to="'/sensor/'+sensor.description+'/mchid/'+sensor.mchId+'/type/'+sensor.type"> - {{ sensor.mchId }}</router-link>
