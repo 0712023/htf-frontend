@@ -3,9 +3,6 @@
     <nav class="main-nav" v-show="login">
       <Burger/><logout/>
     </nav>
-    <div class="top-long-box" v-if="memId && (kakaoToken=='null') && !adminId">
-      <kakaoRegister/>
-    </div>
     <div class="body"><router-view></router-view></div>
     <div class="right-message-panel" v-if="login">
       <ChatModule/>
@@ -72,7 +69,6 @@ import Burger from "./components/Menu/Burger.vue";
 import Sidebar from "./components/Menu/Sidebar.vue";
 import Logout from './components/Logout.vue';
 import EventBus from './store/Eventbus';
-import kakaoRegister from './components/KakaoRegisterButton'
 import ChatModule from './views/ChatModule'
 import axios from 'axios';
 
@@ -82,7 +78,6 @@ export default {
     Burger,
     Sidebar,
     Logout,
-    kakaoRegister,
     ChatModule
   },
   data(){

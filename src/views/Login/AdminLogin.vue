@@ -47,12 +47,12 @@ export default {
                     //로그인 성공시 쿠키에 access token를 넣어줌
                     this.$cookies.set("accesstoken", res.data);
                 }
-                //admin id로 모든 멤버 아이디 불러오기
                 axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.id}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
-                .then(() =>{
+                .then((response) =>{
                     //로그인 정보 및 memberList 데이터 쿠키에 저장
                     this.$cookies.set("adminId", this.id);
                     this.$cookies.set("login", "login");
+                    this.$cookies.set("kakaoToken",response.data[0]['adId']['kakaoToken'] || 'null')
                     //사이드바 및 로그아웃 버튼 활성화
                     EventBus.$emit('login', true);
                     EventBus.$emit('admin', true);

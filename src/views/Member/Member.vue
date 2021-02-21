@@ -1,6 +1,9 @@
 <template>
     <div>
         <div style="width:100%;">
+            <div class="top-long-box" v-if="(this.$cookies.get('kakaoToken')=='null')">
+                <kakaoRegister/>
+            </div>
             <div class="top-long-box" style="height: 50px">
                 좋은하루 되세요! 
                 <select v-model="selectedType">
@@ -29,10 +32,12 @@
 <script>
 import axios from 'axios'
 import DoughnutChart from '../Dashboard/charts/DoughnutChart'
+import kakaoRegister from '../../components/KakaoRegisterButton'
 
 export default {
     components: {
         DoughnutChart,
+        kakaoRegister,
     },
     mounted(){
         axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId": this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})

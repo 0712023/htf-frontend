@@ -1,6 +1,9 @@
 <template>
     <div>
         <div style="width:100%;">
+          <div class="top-long-box" v-if="(this.$cookies.get('kakaoToken')=='null')">
+            <kakaoRegister/>
+          </div>
           <div class="top-long-box">
             <h3>Number of Members : {{members.length}}</h3>
           </div>
@@ -28,10 +31,12 @@
 import axios from 'axios';
 import EventBus from '../../store/Eventbus';
 import PieChart from '../Dashboard/charts/PieChart';
+import kakaoRegister from '../../components/KakaoRegisterButton'
 
 export default {
   components: {
-    PieChart
+    PieChart,
+    kakaoRegister
   },
   mounted(){
     axios.post(`${this.$store.state.BACK_SERVER}/getMemberListByAdId`, {"adId": this.$cookies.get("adminId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})

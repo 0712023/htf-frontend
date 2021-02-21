@@ -50,14 +50,14 @@ export default {
   },
   methods: {
     updateMachineDesc(desc, mchIdInPut) {
-            if(this.$cookies.get("memRank") != 'basic'){
-              this.mchId = mchIdInPut;
-              this.description = desc;
-              this.$modal.show("UpdateMachine", {"desc":desc});
-            } else {
-              alert("basic grade can't update machine description");
-              this.$router.push("/subscribe/");
-            }
+      if(this.$cookies.get("memRank") != 'basic'){
+        this.mchId = mchIdInPut;
+        this.description = desc;
+        this.$modal.show("UpdateMachine", {"desc":desc});
+      } else {
+        alert("basic grade can't update machine description");
+        this.$router.push("/subscribe/");
+      }
     },
     getMachineList(){
       axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`, {"memId":this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
@@ -67,6 +67,7 @@ export default {
       })
     },
     deleteMachine(mchId){
+      confirm("정말 삭제하시겠습니까? : " + mchId);
       axios.post(`${this.$store.state.BACK_SERVER}/deleteMeasurebyMchId`, {"mchId":mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
       .then(()=>{
         axios.post(`${this.$store.state.BACK_SERVER}/deleteMachine`, {"mchId":mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
