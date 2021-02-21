@@ -12,7 +12,7 @@ export default new Vuex.Store({
     ADMIN_REDIRECT_URI:'http://localhost:8081/adminKakaoToken', //admin 카카오 토큰 획득 성공시 redirect되는 url
     MEMBER_REDIRECT_URI:'http://localhost:8081/memberKakaoToken', //member 카카오 토큰 획득 성공시 redirect되는 url
     CLIENT_SECRET:'1yEGMIcIASa5ceBAo5ZZzh1Zld4R2fmO', //카카오 App의 client secret key
-    BACK_SERVER:'http://studioj.ddns.net:8082', //HTF 프로젝트의 backend server
+    BACK_SERVER:'http://studioj.ddns.net', //HTF 프로젝트의 backend server
     FRONT_SERVER:'http://localhost:8081' //HTF 프로젝트의 frontend server
   },
   mutations: {

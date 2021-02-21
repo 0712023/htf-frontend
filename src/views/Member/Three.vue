@@ -108,7 +108,9 @@ export default {
           "/sensor/" +
           test[i].description +
           "/mchid/" +
-          test[i].mchId;
+          test[i].mchId +
+          "/type/" +
+          test[i].type;
             objects.push(text);
           }
         );
@@ -124,7 +126,9 @@ export default {
           "/sensor/" +
           test[i].description +
           "/mchid/" +
-          test[i].mchId;
+          test[i].mchId +
+          "/type/" +
+          test[i].type;
           model.position.y = 130;
             model.position.z = zmaker(i);
             model.position.x = xmaker(i);  
