@@ -60,18 +60,18 @@ export default {
       dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
       scene.add(dirLight);
 
-      //   const gt = new THREE.TextureLoader().load("grasslight-big.jpg");
-      // const gg = new THREE.PlaneGeometry(16000, 16000);
-      // const gm = new THREE.MeshPhongMaterial({ color: 0xffffff, map: gt });
+        const gt = new THREE.TextureLoader().load("grasslight-big.jpg");
+      const gg = new THREE.PlaneGeometry(16000, 16000);
+      const gm = new THREE.MeshPhongMaterial({ color: 0xffffff, map: gt });
 
-      // const ground = new THREE.Mesh(gg, gm);
-      // ground.rotation.x = -Math.PI / 2;
-      // ground.material.map.repeat.set(64, 64);
-      // ground.material.map.wrapS = THREE.RepeatWrapping;
-      // ground.material.map.wrapT = THREE.RepeatWrapping;
-      // ground.material.map.encoding = THREE.sRGBEncoding;
-      // ground.receiveShadow = true;
-      // scene.add(ground);
+      const ground = new THREE.Mesh(gg, gm);
+      ground.rotation.x = -Math.PI / 2;
+      ground.material.map.repeat.set(64, 64);
+      ground.material.map.wrapS = THREE.RepeatWrapping;
+      ground.material.map.wrapT = THREE.RepeatWrapping;
+      ground.material.map.encoding = THREE.sRGBEncoding;
+      ground.receiveShadow = true;
+      scene.add(ground);
       // ground.url = null;
       // objects.push(ground);
 
@@ -170,11 +170,20 @@ export default {
       
       }
       
-      const size = 10000;
-      const divisions = 100;
-      const gridHelper = new THREE.GridHelper(size, divisions);
-      scene.add(gridHelper);
+      // const size = 10000;
+      // const divisions = 100;
+      // const gridHelper = new THREE.GridHelper(size, divisions);
+      // scene.add(gridHelper);
 
+      // const gltfLoader1 = new GLTFLoader();
+      // gltfLoader1.load("ancient_chinese_courtyard_park/scene.gltf", (gltf) => {
+      //   let model = gltf.scene;
+      //   model.scale.set(5, 5, 5);
+      //   // model.position.x = -500;
+      //   model.position.y = 5;
+      //   // model.position.z = 300;
+      //   scene.add(model);
+      // });
       const gltfLoader1 = new GLTFLoader();
       gltfLoader1.load("apartment/scene.gltf", (gltf) => {
         let model = gltf.scene;
