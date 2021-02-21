@@ -19,7 +19,7 @@ export default {
         .then((res)=>{
             let kakaoToken = res.data.access_token;
             //반환받은 카카오 토큰 정보를 다시 포장하여 backend의 admin DB의 token을 update
-            axios.post(`${this.$store.state.BACK_SERVER}/updateAdminToken`, {adId:this.$cookies.get("adId"), kakaoToken:kakaoToken}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
+            axios.post(`${this.$store.state.BACK_SERVER}/updateAdminToken`, {adId:this.$cookies.get("adminId"), kakaoToken:kakaoToken}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
             .then(()=>{
                 if(this.$cookies.get("adminId")){
                     //로그인 상태에서 토큰 발급시 쿠키에 토큰 저장

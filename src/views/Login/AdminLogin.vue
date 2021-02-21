@@ -52,6 +52,7 @@ export default {
                     //로그인 정보 및 memberList 데이터 쿠키에 저장
                     this.$cookies.set("adminId", this.id);
                     this.$cookies.set("login", "login");
+                    console.log(response.data[0]['adId']);
                     this.$cookies.set("kakaoToken",response.data[0]['adId']['kakaoToken'] || 'null')
                     //사이드바 및 로그아웃 버튼 활성화
                     EventBus.$emit('login', true);

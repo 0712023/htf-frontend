@@ -12,7 +12,6 @@ export default {
     methods:{
         getKakaoToken(){
             //카카오톡 Message 수신 동의 페이지로 redirect
-            alert(this.$cookies.get('adminId'));
             if(this.$cookies.get('adminId')){
                 location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${this.$store.state.RESTAPIKEY}&redirect_uri=${this.$store.state.ADMIN_REDIRECT_URI}&response_type=code&scope=friends`;
             }else{
