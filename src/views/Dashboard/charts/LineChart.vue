@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    외부 미세먼지 : <span id="outdoorDust"></span> PM
+    외부 미세먼지 : <span id="outdoorDust"></span> PM / 현재 미세먼지 : <span id="dustStatus"></span>
     <line-chart :chart-data="datacollection"></line-chart>
     {{$route.params.mchId}}
   </div>
@@ -44,6 +44,13 @@
         .then(response =>{
           this.datacollection.labels.push("");
           this.datacollection.datasets[0].data.push((response.data.value));
+          if (response.data.value < 16) {
+            document.getElementById('dustStatus').innerHTML = '좋음';
+          } else if (response.data.value < 36) {
+            document.getElementById('dustStatus').innerHTML = '보통';
+          } else {
+            document.getElementById('dustStatus').innerHTML = '나쁨';
+          }
         })
         axios.post(`${this.$store.state.BACK_SERVER}/getDustTenMeasureListByMchIdTo1`, {"mchId": this.$route.params.mchId}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
         .then(response =>{
