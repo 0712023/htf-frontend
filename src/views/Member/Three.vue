@@ -12,20 +12,29 @@ import * as OrbitControls from "../../assets/js/OrbitControls.module.js";
 // import {STLLoader} from '../assets/js/STLLoader.js';
 import { GLTFLoader } from "../../assets/js/GLTFLoader.js";
 // import house from "../assets/img/tower_house_design/scene.gltf";
-import axios from 'axios';
+import axios from "axios";
 export default {
   data: function () {
     return {
       controls: 1,
       objects: [],
-      mchList: null
+      mchList: null,
     };
   },
   mounted() {
-    axios.post(`${this.$store.state.BACK_SERVER}/getMachineListByMemId`,{"memId":this.$cookies.get("memId")}, {headers: { Authorization: `Bearer ${this.$cookies.get("accesstoken")}`}})
-    .then((res)=>{
-      this.initThree(res.data);
-    })
+    axios
+      .post(
+        `${this.$store.state.BACK_SERVER}/getMachineListByMemId`,
+        { memId: this.$cookies.get("memId") },
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("accesstoken")}`,
+          },
+        }
+      )
+      .then((res) => {
+        this.initThree(res.data);
+      });
   },
   methods: {
     initThree(test) {
@@ -33,14 +42,15 @@ export default {
       let raycaster = new THREE.Raycaster();
       let mouse = new THREE.Vector2();
       const objects = [];
-      console.log(test);
+
+      //setting scene
       const scene = new THREE.Scene();
       scene.background = new THREE.Color("#eee");
-
       const canvas = document.querySelector("#three");
       const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
       renderer.shadowMap.enabled = true;
 
+      // setting camera
       const camera = new THREE.PerspectiveCamera(
         50,
         window.innerWidth / window.innerHeight,
@@ -49,18 +59,17 @@ export default {
       );
       camera.position.set(400, 200, 0);
 
+      // setting light
       const hemLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
       hemLight.position.set(0, 48, 0);
       scene.add(hemLight);
-
       const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
-
       dirLight.position.set(-10, 8, -5);
-
       dirLight.castShadow = true;
       dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
       scene.add(dirLight);
 
+      // setting controls
       const controls = new OrbitControls.OrbitControls(
         camera,
         renderer.domElement
@@ -72,6 +81,7 @@ export default {
       controls.maxDistance = 1000;
       controls.maxPolarAngle = Math.PI / 2;
 
+      // making text
       function textmaker(i, description) {
         const fontLoader = new THREE.FontLoader();
         fontLoader.load(
@@ -99,53 +109,45 @@ export default {
             geometry.translate(xMid, 0, 0);
 
             let text = new THREE.Mesh(geometry, material);
-            text.position.x = xmaker(i)
+            text.position.x = xmaker(i);
             text.position.y = 160;
             text.position.z = zmaker(i);
             scene.add(text);
             text.url =
-            FRONT_SEVER + 
-          "/sensor/" +
-          test[i].description +
-          "/mchid/" +
-          test[i].mchId +
-          "/type/" +
-          test[i].type;
+              FRONT_SEVER +
+              "/sensor/" +
+              test[i].description +
+              "/mchid/" +
+              test[i].mchId +
+              "/type/" +
+              test[i].type;
             objects.push(text);
           }
         );
       }
 
+      // making sensor model
       for (let i = 0; i < test.length; i++) {
         const gltfLoader = new GLTFLoader();
-          gltfLoader.load("raspberry_pi_3/scene.gltf", (gltf) => {
+        gltfLoader.load("raspberry_pi_3/scene.gltf", (gltf) => {
           let model = gltf.scene;
           model.scale.set(5, 5, 5);
-           model.url =
-            FRONT_SEVER + 
-          "/sensor/" +
-          test[i].description +
-          "/mchid/" +
-          test[i].mchId +
-          "/type/" +
-          test[i].type;
           model.position.y = 130;
-            model.position.z = zmaker(i);
-            model.position.x = xmaker(i);  
-        model.description = test[i].description;
+          model.position.z = zmaker(i);
+          model.position.x = xmaker(i);
+          model.description = test[i].description;
           scene.add(model);
           textmaker(i, model.description);
         });
-        
-      
       }
-      
+
+      // making grid
       const size = 10000;
       const divisions = 100;
       const gridHelper = new THREE.GridHelper(size, divisions);
       scene.add(gridHelper);
 
-      
+      // making home
       const gltfLoader1 = new GLTFLoader();
       gltfLoader1.load("apartment/scene.gltf", (gltf) => {
         let model = gltf.scene;
@@ -153,6 +155,7 @@ export default {
         scene.add(model);
       });
 
+      // animate
       function animate() {
         controls.update();
         renderer.render(scene, camera);
@@ -164,6 +167,8 @@ export default {
           camera.updateProjectionMatrix();
         }
       }
+
+      //add event
       document.addEventListener("mousemove", onDocumentMouseMove);
       document.addEventListener("click", onDocumentMouseDown);
       document.addEventListener("keydown", onDocumentKeyDown);
@@ -183,13 +188,13 @@ export default {
         }
         return needResize;
       }
-
+        
       function onDocumentMouseDown(event) {
         event.preventDefault();
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1.1;
         raycaster.setFromCamera(mouse, camera);
-        console.log(objects)
+        console.log(objects);
         for (let i = 0; i < objects.length; i++) {
           const intersects = raycaster.intersectObject(objects[i]);
 
@@ -220,31 +225,31 @@ export default {
           }
         }
       }
-      function xmaker(i){
-        if(i == 0){
-          return -90
-        }else if(i == 1){
-          return -90
-        }else if(i == 2){
-          return 100
-        }else if(i == 3){
-          return 0
-        }else if(i == 4){
-          return 150
+      function xmaker(i) {
+        if (i == 0) {
+          return -90;
+        } else if (i == 1) {
+          return -90;
+        } else if (i == 2) {
+          return 100;
+        } else if (i == 3) {
+          return 0;
+        } else if (i == 4) {
+          return 150;
         }
       }
 
-      function zmaker(i){
-        if(i == 0){
-          return 50
-        }else if(i == 1){
-          return 185
-        }else if(i == 2){
-          return 70
-        }else if(i == 3){
-          return -100
-        }else if(i == 4){
-          return 30
+      function zmaker(i) {
+        if (i == 0) {
+          return 50;
+        } else if (i == 1) {
+          return 185;
+        } else if (i == 2) {
+          return 70;
+        } else if (i == 3) {
+          return -100;
+        } else if (i == 4) {
+          return 30;
         }
       }
     },
