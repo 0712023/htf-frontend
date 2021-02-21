@@ -1,5 +1,5 @@
 <template>
-	<div id="standard2"><br>
+	<div id="standard2">
 		Register New Machine
 		<select class="form-select" id="specificSizeSelect" v-model="memId">
 			<option v-for="member in memList" :key="member.memId" :value="member.memId">{{member.memId}}</option>
