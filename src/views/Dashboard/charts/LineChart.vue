@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    외부 미세먼지 : <span id="outdoorDust"></span> PM / 현재 미세먼지 : <span id="dustStatus"></span>
+    외부 미세먼지 : <span id="outdoorDust"></span> PM10 / 현재 미세먼지 : <span id="dustStatus"></span>
     <line-chart :chart-data="datacollection" :options="chartOptions"></line-chart>
     {{$route.params.mchId}}
   </div>
