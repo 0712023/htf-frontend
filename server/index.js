@@ -91,7 +91,7 @@ io.on("connection", (socket) => {
         users.push({
           userID: session.userID,
           username: session.userID,
-          connected: true,
+          connected: session.connected,
           messages:[]
         })
       }
