@@ -99,9 +99,8 @@ export default {
   created:function(){
     EventBus.$on('login', this.updateLogin);
     EventBus.$on('vendor', this.updateVendorId);
-    EventBus.$on('member', (memId)=>{this.updateMemId(memId);});
+    EventBus.$on('member', this.updateMemId);
     EventBus.$on('admin', this.updateAdminId);
-    EventBus.$on('mchList', (mchList)=>{this.updatemchList(mchList)});
     EventBus.$on('modal', ()=>{
       if(this.$cookies.get("memId")!= null){
         this.getMachineListByMemId();
@@ -127,8 +126,8 @@ export default {
     setKakaoToken:function(s){
       this.kakaoToken = s;
     },
-    updateMemId:function(s){
-      this.memId = s;
+    updateMemId:function(){
+      this.memId = this.$cookies.get("memId");
     },
     updateAdminId:function(){
       this.adminId = this.$cookies.get("adminId");

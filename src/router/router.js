@@ -85,26 +85,32 @@ router.beforeEach(function(to, from, next) {
     if (to.path == "/adminKakaoToken" || to.path == "/kakaoSub") {
         //admin register 시 kakaotoken 획득 및 member가 정기 구독 요청 위해 생성한 페이지 이동
         next();
-    } else if ((memId == null && adminId == null && vendorId == null) && to.fullPath != "/") {
+    }
+    if ((memId == null && adminId == null && vendorId == null) && to.path != "/") {
         //member, admin, vender 로그인 없이 'login'페이지 외 접근시 차단
         alert("please log in");
         router.push("/");
-    } else if (memRank == "null" && from.path == "/subscribe/") {
+    }
+    if (memRank === "null" && memId != null) {
+        VueCookies.set("memRank", 'temp');
         //member 로그인 시 구독 정보(memRank) 없을 시 항상 강제로 subscribe 페이지로 이동
         router.push("/subscribe");
-    } else if (memId != null && to.fullPath == "/") {
+        VueCookies.set("memRank", 'null');
+    }
+    if (memId != null && to.fullPath == "/") {
         //member 로그인 상태에서 'login'페이지 접근시 차단
         router.push("/member/" + memId);
-    } else if (adminId != null && to.fullPath == "/") {
+    }
+    if (adminId != null && to.fullPath == "/") {
         //admin 로그인 상태에서 'login'페이지 접근시 차단
         router.push("/admin/" + adminId);
-    } else if (vendorId != null && to.fullPath == "/") {
+    }
+    if (vendorId != null && to.fullPath == "/") {
         //vendor 로그인 상태에서 'login'페이지 접근시 차단
         router.push("/vendor/" + vendorId);
-    } else {
-        //그 외에는 전부 원하는 페이지로 이동
-        next();
     }
+    //그 외에는 전부 원하는 페이지로 이동
+    next();
 });
 
 export default router
