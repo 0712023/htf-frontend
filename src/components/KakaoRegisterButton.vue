@@ -15,7 +15,7 @@ export default {
             if(this.$cookies.get('adminId')){
                 location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${this.$store.state.RESTAPIKEY}&redirect_uri=${this.$store.state.ADMIN_REDIRECT_URI}&response_type=code&scope=friends,talk_message`;
             }else{
-                location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${this.$store.state.RESTAPIKEY}&redirect_uri=${this.$store.state.MEMBER_REDIRECT_URI}&response_type=code&scope=friends`;
+                location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${this.$store.state.RESTAPIKEY}&redirect_uri=${this.$store.state.MEMBER_REDIRECT_URI}&response_type=code&scope=friends,talk_message`;
             }
         },
     },
