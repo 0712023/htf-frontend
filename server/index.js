@@ -1,7 +1,8 @@
 const httpServer = require("http").createServer();
+const axios = require('axios');
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: "http://localhost:8080",
+    origin: "http://localhost:8081",
   },
 });
 
@@ -68,7 +69,7 @@ io.on("connection", (socket) => {
 
     });
 
-    //멤버의 경우에는 해당 adId의 멤버들을 불러오고 멤버 id로 된 방에 조인하는게 맞지 않을까?
+    //여기에 멤버id 혹은 admin id를 통해 불러온 adid와 memberlist를 합쳐 리스트를 만드는게 맞다.
     Array.from(messagesPerUser.keys()).forEach((userID) => {
 
       let connectedStatus = false;
@@ -84,6 +85,19 @@ io.on("connection", (socket) => {
 
     });
 
+    sessionStore.findAllSessions().forEach((session)=>{
+      if (!users.find(element => element.userID == session.userID)) {
+        console.log(session.userID);
+        users.push({
+          userID: session.userID,
+          username: session.userID,
+          connected: true,
+          messages:[]
+        })
+      }
+    })
+
+    console.log(users);
     socket.emit("users", users);
   })
 
@@ -91,6 +105,7 @@ io.on("connection", (socket) => {
     userID: socket.userID,
     username: socket.username,
     connected: true,
+    messages: [],
   });
 
   // forward the private message to the right recipient (and to other tabs of the sender)
