@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    현재 외부 온도 : <span id="outdoorTemp"></span> °C
+    External Temperature : <span id="outdoorTemp"></span> °C
     <Bar-chart :chart-data="datacollection" :options="chartOptions"></Bar-chart>
     {{$route.params.mchId}}
   </div>
@@ -73,7 +73,7 @@
           labels: [],
           datasets: [
             {
-              label: '내부 온도',
+              label: 'Internal Temperature',
               backgroundColor: '#257cdf86',
               data: []
             },

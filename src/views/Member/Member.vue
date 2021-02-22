@@ -5,7 +5,7 @@
                 <kakaoRegister/>
             </div>
             <div class="top-long-box" style="height: 50px">
-                좋은하루 되세요! 
+                Select Your Sensor :  
                 <select v-model="selectedType">
                     <option value="all" selected>all</option>
                     <option :value="typeSelector" v-for="typeSelector in new Set(mchList.map(v => v.type))" :key='typeSelector'>{{typeSelector}}</option>

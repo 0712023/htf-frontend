@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    <h3>Members by rank</h3>
+    <h3>Members by Rank</h3>
     <Pie-chart :chart-data="datacollection"></Pie-chart>
   </div>
 </template>
