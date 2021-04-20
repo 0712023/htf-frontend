@@ -75,6 +75,8 @@ export default {
             .then(()=>{
                 alert("delete machine "+mchId);
                 this.getMachineList();
+            }).catch(err => {
+                alert(err)
             })
         }
     }
